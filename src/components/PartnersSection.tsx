@@ -6,11 +6,15 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 export const PartnersSection = () => {
+  const plugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: false })
+  );
+
   const partners = [
     {
       name: "Microsoft",
@@ -91,6 +95,7 @@ export const PartnersSection = () => {
               align: "start",
               loop: true,
             }}
+            plugins={[plugin.current]}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
@@ -100,10 +105,6 @@ export const PartnersSection = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="hidden md:block">
-              <CarouselPrevious className="hidden md:flex -left-12" />
-              <CarouselNext className="hidden md:flex -right-12" />
-            </div>
           </Carousel>
         </motion.div>
       </div>
