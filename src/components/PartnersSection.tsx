@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Building } from "lucide-react";
 import { PartnerLogo } from "./PartnerLogo";
@@ -51,9 +50,9 @@ export const PartnersSection = () => {
   ];
 
   return (
-    <section id="parceiros" className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section id="parceiros" className="py-16 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +87,7 @@ export const PartnersSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
           <Carousel
             opts={{
@@ -98,9 +97,9 @@ export const PartnersSection = () => {
             plugins={[plugin.current]}
             className="w-full"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent className="-ml-2 md:-ml-3">
               {partners.map((partner, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={index} className="pl-2 md:pl-3 basis-1/2 md:basis-1/4 lg:basis-1/5">
                   <PartnerLogo {...partner} />
                 </CarouselItem>
               ))}
