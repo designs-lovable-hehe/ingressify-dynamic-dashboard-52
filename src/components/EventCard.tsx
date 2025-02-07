@@ -1,6 +1,6 @@
 
-import { Calendar, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { Calendar, MapPin, Star } from "lucide-react";
 
 interface EventCardProps {
   title: string;
@@ -37,7 +37,10 @@ export const EventCard = ({ title, date, image, rating, location }: EventCardPro
             <span>{rating}</span>
           </div>
         </div>
-        <p className="mt-2 text-sm text-gray-600">{location}</p>
+        <div className="mt-2 flex items-center text-sm text-gray-600">
+          <MapPin className="w-4 h-4 mr-1" />
+          <span>{location}</span>
+        </div>
       </div>
     </motion.div>
   );
