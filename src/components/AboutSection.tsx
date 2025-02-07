@@ -46,9 +46,9 @@ export const AboutSection = () => {
             viewport={{ once: true }}
           >
             <img
-              src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
+              src="https://images.unsplash.com/photo-1531297484001-80022131f5a1"
               alt="Sobre nós"
-              className="rounded-lg shadow-xl"
+              className="rounded-lg shadow-xl w-full object-cover aspect-[4/3]"
             />
             <div className="absolute -bottom-6 -right-6 p-6 bg-white rounded-lg shadow-lg">
               <div className="flex items-center space-x-2">
