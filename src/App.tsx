@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Events from "./pages/Events";
 import Partners from "./pages/Partners";
+import PartnerLogin from "./pages/PartnerLogin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/eventos" element={<Events />} />
           <Route path="/parceiros" element={<Partners />} />
+          <Route path="/parceiros/login" element={<PartnerLogin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,10 @@
 
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="pt-32 pb-20 relative">
       <div className="container mx-auto px-4">
@@ -30,6 +33,7 @@ export const HeroSection = () => {
             className="px-8 py-3 bg-primary text-white rounded-lg font-semibold shadow-lg hover:bg-primary/90 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/parceiros/login")}
           >
             Comece agora
           </motion.button>
