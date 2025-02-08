@@ -4,6 +4,14 @@ import { motion } from "framer-motion";
 import { CheckCircle, ChevronLeft, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import StepIndicator from "@/components/StepIndicator";
+
+const steps = [
+  { number: 1, title: "Informações Básicas" },
+  { number: 2, title: "Endereço" },
+  { number: 3, title: "Documentos" },
+  { number: 4, title: "Revisão" },
+];
 
 const CompanyReview = () => {
   const navigate = useNavigate();
@@ -25,6 +33,8 @@ const CompanyReview = () => {
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
+
+      <StepIndicator currentStep={4} steps={steps} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
