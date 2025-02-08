@@ -66,7 +66,7 @@ const Events = () => {
       <GeometricBackground />
       <Header />
       
-      <main className="container mx-auto px-4 pt-32 pb-16">
+      <main className="container mx-auto px-4 py-8">
         {/* Título da página */}
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}

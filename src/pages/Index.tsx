@@ -13,11 +13,13 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <GeometricBackground />
       <Header />
-      <HeroSection />
-      <PopularEvents />
-      <AboutSection />
-      <PartnersSection />
-      <ContactSection />
+      <main className="py-8">
+        <HeroSection />
+        <PopularEvents />
+        <AboutSection />
+        <PartnersSection />
+        <ContactSection />
+      </main>
       <Footer />
     </div>
   );
