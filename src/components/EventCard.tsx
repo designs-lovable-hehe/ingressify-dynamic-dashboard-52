@@ -34,7 +34,7 @@ export const EventCard = ({ title, date, image, participants, location }: EventC
           </div>
           <div className="flex items-center">
             <Users className="w-4 h-4 mr-1" />
-            <span>{participants} participantes</span>
+            <span>{participants}</span>
           </div>
         </div>
         <div className="mt-2 flex items-center text-sm text-gray-600">
@@ -45,3 +45,4 @@ export const EventCard = ({ title, date, image, participants, location }: EventC
     </motion.div>
   );
 };
+

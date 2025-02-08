@@ -8,22 +8,22 @@ export const PopularEvents = () => {
       title: "Festival de Música 2024",
       date: "15 Mar 2024",
       image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
-      rating: 4.8,
-      location: "São Paulo, SP",
+      participants: 1250,
+      location: "São Paulo SP",
     },
     {
       title: "Tech Conference",
       date: "22 Mar 2024",
       image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-      rating: 4.9,
-      location: "Rio de Janeiro, RJ",
+      participants: 850,
+      location: "Rio de Janeiro RJ",
     },
     {
       title: "Show de Stand-up",
       date: "30 Mar 2024",
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
-      rating: 4.7,
-      location: "Curitiba, PR",
+      participants: 320,
+      location: "Curitiba PR",
     },
   ];
 
@@ -50,3 +50,4 @@ export const PopularEvents = () => {
     </section>
   );
 };
+
