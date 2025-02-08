@@ -20,12 +20,13 @@ const CompanyReview = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // TODO: Save all data to backend
     toast({
       title: "Sucesso!",
       description: "Cadastro da empresa finalizado com sucesso.",
     });
-    // TODO: Redirect to partner dashboard
+    
+    // Redirect to partner dashboard
+    navigate("/parceiros/dashboard");
   };
 
   return (

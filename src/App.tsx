@@ -13,6 +13,7 @@ import CompanyBasicInfo from "./pages/company/CompanyBasicInfo";
 import CompanyAddress from "./pages/company/CompanyAddress";
 import CompanyDocuments from "./pages/company/CompanyDocuments";
 import CompanyReview from "./pages/company/CompanyReview";
+import PartnerDashboard from "./pages/PartnerDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/empresa/endereco" element={<CompanyAddress />} />
           <Route path="/empresa/documentos" element={<CompanyDocuments />} />
           <Route path="/empresa/revisao" element={<CompanyReview />} />
+          <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
