@@ -73,7 +73,7 @@ const Events = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl font-bold text-gray-900 mb-12 text-center"
         >
-          Eventos Disponíveis
+          Encontre Eventos Incríveis
         </motion.h1>
 
         {/* Filtros */}
