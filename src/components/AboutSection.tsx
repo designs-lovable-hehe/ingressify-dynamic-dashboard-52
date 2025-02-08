@@ -46,8 +46,8 @@ export const AboutSection = () => {
             viewport={{ once: true }}
           >
             <img
-              src="https://images.unsplash.com/photo-1531297484001-80022131f5a1"
-              alt="Sobre nós"
+              src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
+              alt="Evento com tecnologia moderna"
               className="rounded-lg shadow-xl w-full object-cover aspect-[4/3]"
             />
             <div className="absolute -bottom-6 -right-6 p-6 bg-white rounded-lg shadow-lg">
