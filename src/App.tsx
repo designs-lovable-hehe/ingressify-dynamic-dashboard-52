@@ -9,6 +9,10 @@ import Events from "./pages/Events";
 import Partners from "./pages/Partners";
 import PartnerLogin from "./pages/PartnerLogin";
 import PartnerRegister from "./pages/PartnerRegister";
+import CompanyBasicInfo from "./pages/company/CompanyBasicInfo";
+import CompanyAddress from "./pages/company/CompanyAddress";
+import CompanyDocuments from "./pages/company/CompanyDocuments";
+import CompanyReview from "./pages/company/CompanyReview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/parceiros" element={<Partners />} />
           <Route path="/parceiros/login" element={<PartnerLogin />} />
           <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
+          <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
+          <Route path="/empresa/endereco" element={<CompanyAddress />} />
+          <Route path="/empresa/documentos" element={<CompanyDocuments />} />
+          <Route path="/empresa/revisao" element={<CompanyReview />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

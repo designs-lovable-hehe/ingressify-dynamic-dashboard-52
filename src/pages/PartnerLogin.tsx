@@ -1,14 +1,34 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LogIn, Mail, Lock } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const PartnerLogin = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Por favor, preencha todos os campos.",
+      });
+      return;
+    }
+
+    // TODO: Add authentication logic
+    navigate("/empresa/informacoes-basicas");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 p-4">
@@ -31,7 +51,7 @@ const PartnerLogin = () => {
             Faça login para gerenciar seus eventos
           </p>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email
@@ -66,7 +86,7 @@ const PartnerLogin = () => {
               </div>
             </div>
 
-            <Button className="w-full" size="lg">
+            <Button type="submit" className="w-full" size="lg">
               <LogIn className="w-4 h-4 mr-2" />
               Entrar
             </Button>
