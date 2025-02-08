@@ -8,6 +8,7 @@ import Landing from "./pages/Landing";
 import Events from "./pages/Events";
 import Partners from "./pages/Partners";
 import PartnerLogin from "./pages/PartnerLogin";
+import PartnerRegister from "./pages/PartnerRegister";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/eventos" element={<Events />} />
           <Route path="/parceiros" element={<Partners />} />
           <Route path="/parceiros/login" element={<PartnerLogin />} />
+          <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

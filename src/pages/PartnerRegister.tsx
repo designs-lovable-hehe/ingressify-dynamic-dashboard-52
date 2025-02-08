@@ -1,14 +1,17 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { LogIn, Mail, Lock } from "lucide-react";
+import { UserPlus, Mail, Lock, User, Building2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const PartnerLogin = () => {
+const PartnerRegister = () => {
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 p-4">
@@ -26,12 +29,46 @@ const PartnerLogin = () => {
             <Logo />
           </div>
 
-          <h2 className="text-2xl font-bold text-center mb-2">Área de Parceiros</h2>
+          <h2 className="text-2xl font-bold text-center mb-2">Cadastro de Parceiro</h2>
           <p className="text-gray-600 text-center mb-8">
-            Faça login para gerenciar seus eventos
+            Crie sua conta para começar a divulgar seus eventos
           </p>
 
           <form className="space-y-6">
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-medium text-gray-700">
+                Nome Completo
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="pl-10"
+                  placeholder="Seu nome completo"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="companyName" className="text-sm font-medium text-gray-700">
+                Nome da Empresa
+              </label>
+              <div className="relative">
+                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <Input
+                  id="companyName"
+                  type="text"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  className="pl-10"
+                  placeholder="Nome da sua empresa"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email
@@ -66,23 +103,34 @@ const PartnerLogin = () => {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                Confirmar Senha
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
             <Button className="w-full" size="lg">
-              <LogIn className="w-4 h-4 mr-2" />
-              Entrar
+              <UserPlus className="w-4 h-4 mr-2" />
+              Criar Conta
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <a href="#" className="text-sm text-primary hover:underline">
-              Esqueceu sua senha?
-            </a>
-          </div>
-
           <div className="mt-8 pt-6 border-t text-center">
             <p className="text-gray-600">
-              Ainda não é parceiro?{" "}
-              <a href="/parceiros/cadastro" className="text-primary hover:underline font-medium">
-                Cadastre-se aqui
+              Já tem uma conta?{" "}
+              <a href="/parceiros/login" className="text-primary hover:underline font-medium">
+                Faça login aqui
               </a>
             </p>
           </div>
@@ -92,4 +140,4 @@ const PartnerLogin = () => {
   );
 };
 
-export default PartnerLogin;
+export default PartnerRegister;
