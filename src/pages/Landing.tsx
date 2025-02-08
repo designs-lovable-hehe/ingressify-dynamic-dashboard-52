@@ -4,9 +4,39 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 
+const ParticleBackground = () => {
+  return (
+    <div className="fixed inset-0 -z-10">
+      {Array.from({ length: 50 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 bg-primary/10 rounded-full"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, Math.random() * 100 - 50],
+            x: [0, Math.random() * 100 - 50],
+            scale: [1, Math.random() * 0.5 + 0.5],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: Math.random() * 5 + 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-gray-50/50 backdrop-blur-[2px]" />
+    </div>
+  );
+};
+
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-white/80 to-gray-50/80 flex flex-col relative overflow-hidden">
+      <ParticleBackground />
       <div className="container mx-auto px-4 py-8">
         <Logo />
       </div>
@@ -19,7 +49,7 @@ const Landing = () => {
           >
             <Link
               to="/eventos"
-              className="block p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all group"
+              className="block p-8 bg-white/80 backdrop-blur rounded-2xl shadow-lg hover:shadow-xl transition-all group"
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Encontrar Eventos</h2>
               <p className="text-gray-600 mb-6">
@@ -39,7 +69,7 @@ const Landing = () => {
           >
             <Link
               to="/parceiros"
-              className="block p-8 bg-primary/10 rounded-2xl shadow-lg hover:shadow-xl transition-all group"
+              className="block p-8 bg-primary/10 backdrop-blur rounded-2xl shadow-lg hover:shadow-xl transition-all group"
             >
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Área de Parceiros</h2>
               <p className="text-gray-600 mb-6">
