@@ -59,9 +59,22 @@ export function RevenueChart() {
                     fill="var(--color-revenue)"
                     radius={[4, 4, 0, 0]}
                   />
-                  <ChartTooltip>
-                    <ChartTooltipContent />
-                  </ChartTooltip>
+                  <ChartTooltip
+                    cursor={{ fill: 'transparent' }}
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="rounded-lg border bg-background p-2 shadow-sm">
+                            <div className="grid grid-cols-2 gap-2">
+                              <span className="font-medium">Revenue:</span>
+                              <span>R${payload[0].value}</span>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
                 </RechartsBarChart>
               </ResponsiveContainer>
             </ChartContainer>
