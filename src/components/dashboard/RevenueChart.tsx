@@ -1,16 +1,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
+import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { motion } from "framer-motion";
 
 const data = [
-  { month: "Jan", revenue: 2500 },
-  { month: "Feb", revenue: 1500 },
-  { month: "Mar", revenue: 10000 },
-  { month: "Apr", revenue: 4000 },
-  { month: "May", revenue: 5000 },
-  { month: "Jun", revenue: 3500 },
-  { month: "Jul", revenue: 4000 },
+  { month: "Jan", online: 1500, offline: 1000 },
+  { month: "Feb", online: 800, offline: 700 },
+  { month: "Mar", online: 6000, offline: 4000 },
+  { month: "Apr", online: 2500, offline: 1500 },
+  { month: "May", online: 3000, offline: 2000 },
+  { month: "Jun", online: 2000, offline: 1500 },
+  { month: "Jul", online: 2500, offline: 1500 },
 ];
 
 export function RevenueChart() {
@@ -27,7 +27,20 @@ export function RevenueChart() {
         <CardContent>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={data}>
+              <AreaChart
+                data={data}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient id="colorOnline" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#9b87f5" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#9b87f5" stopOpacity={0.2}/>
+                  </linearGradient>
+                  <linearGradient id="colorOffline" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#7E69AB" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#7E69AB" stopOpacity={0.2}/>
+                  </linearGradient>
+                </defs>
                 <XAxis 
                   dataKey="month" 
                   axisLine={false}
@@ -44,21 +57,29 @@ export function RevenueChart() {
                   width={65}
                 />
                 <Tooltip
-                  cursor={{ fill: "transparent" }}
                   contentStyle={{
                     background: "white",
                     border: "1px solid #e2e8f0",
                     borderRadius: "8px",
                     padding: "8px",
                   }}
-                  formatter={(value) => [`R$ ${value}`, "Receita"]}
+                  formatter={(value: number) => [`R$ ${value}`, "Receita"]}
                 />
-                <Bar
-                  dataKey="revenue"
-                  fill="#9b87f5"
-                  radius={[4, 4, 0, 0]}
+                <Area
+                  type="monotone"
+                  dataKey="online"
+                  stackId="1"
+                  stroke="#9b87f5"
+                  fill="url(#colorOnline)"
                 />
-              </RechartsBarChart>
+                <Area
+                  type="monotone"
+                  dataKey="offline"
+                  stackId="1"
+                  stroke="#7E69AB"
+                  fill="url(#colorOffline)"
+                />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
