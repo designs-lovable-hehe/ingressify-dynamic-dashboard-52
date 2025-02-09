@@ -1,10 +1,11 @@
+
 import { useParams } from "react-router-dom";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users, Building2, CreditCard, Award, Ticket, BadgeCheck, Users2 } from "lucide-react";
+import { Calendar, MapPin, Users, Building2, CreditCard, Award, Ticket, BadgeCheck, Users2, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 const EventDetails = () => {
@@ -15,6 +16,7 @@ const EventDetails = () => {
     title: "Festival de Música 2024",
     date: "15 Mar 2024",
     time: "16:00",
+    duration: "8 horas",
     image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
     participants: 1250,
     location: "São Paulo SP",
@@ -86,13 +88,13 @@ const EventDetails = () => {
               />
             </motion.div>
 
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between space-y-6">
               <div>
                 <motion.h1
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                  className="text-5xl font-bold text-gray-900 mb-3 leading-tight"
                 >
                   {event.title}
                 </motion.h1>
@@ -101,7 +103,7 @@ const EventDetails = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="flex flex-wrap gap-2 mb-8"
+                  className="flex flex-wrap gap-2 mb-4"
                 >
                   {event.tags.map((tag, index) => (
                     <Badge
@@ -118,13 +120,20 @@ const EventDetails = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="grid grid-cols-2 gap-6 mb-8"
+                  className="grid grid-cols-2 gap-4 mb-6"
                 >
                   <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
                     <Calendar className="w-6 h-6 text-[#8B5CF6]" />
                     <div>
                       <p className="text-sm text-gray-500">Data e Hora</p>
                       <p className="text-gray-900 font-medium">{event.date} às {event.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
+                    <Clock className="w-6 h-6 text-[#8B5CF6]" />
+                    <div>
+                      <p className="text-sm text-gray-500">Duração</p>
+                      <p className="text-gray-900 font-medium">{event.duration}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
@@ -311,3 +320,4 @@ const EventDetails = () => {
 };
 
 export default EventDetails;
+
