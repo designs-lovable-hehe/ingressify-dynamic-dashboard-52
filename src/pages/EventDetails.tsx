@@ -68,99 +68,166 @@ const EventDetails = () => {
       <GeometricBackground />
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          {/* Hero Section */}
-          <div className="rounded-xl overflow-hidden mb-8 shadow-xl">
-            <img
-              src={event.image}
-              alt={event.title}
-              className="w-full h-[500px] object-cover"
-            />
-          </div>
+          {/* Hero Section with Improved Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="rounded-2xl overflow-hidden shadow-2xl bg-white/20 backdrop-blur-sm border border-white/20"
+            >
+              <img
+                src={event.image}
+                alt={event.title}
+                className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg mb-8">
-                <h1 className="text-4xl font-bold text-gray-900 mb-3">{event.title}</h1>
+            <div className="flex flex-col justify-between">
+              <div>
+                <motion.h1
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                >
+                  {event.title}
+                </motion.h1>
                 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex flex-wrap gap-2 mb-8"
+                >
                   {event.tags.map((tag, index) => (
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="bg-[#8B5CF6]/10 text-[#8B5CF6] hover:bg-[#8B5CF6]/20"
+                      className="bg-[#8B5CF6]/10 text-[#8B5CF6] hover:bg-[#8B5CF6]/20 px-4 py-1 text-sm font-medium"
                     >
                       {tag}
                     </Badge>
                   ))}
-                </div>
+                </motion.div>
                 
-                <div className="flex flex-wrap gap-6 mb-6">
-                  <div className="flex items-center text-gray-600">
-                    <Calendar className="w-5 h-5 mr-2" />
-                    <span>{event.date} às {event.time}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Users className="w-5 h-5 mr-2" />
-                    <span>{event.participants} participantes</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="w-5 h-5 mr-2" />
-                    <span>{event.location}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <Users2 className="w-5 h-5 mr-2" />
-                    <span>Idade: {event.ageRequirement}</span>
-                  </div>
-                </div>
-
-                <div className="prose max-w-none mb-8">
-                  <h2 className="text-2xl font-semibold mb-4">Sobre o Evento</h2>
-                  <p className="text-gray-600 leading-relaxed">{event.description}</p>
-                </div>
-
-                <div className="mb-8">
-                  <h2 className="text-2xl font-semibold mb-4">Destaques</h2>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {event.highlights.map((highlight, index) => (
-                      <li key={index} className="flex items-start">
-                        <Award className="w-5 h-5 text-[#8B5CF6] mr-2 mt-1 flex-shrink-0" />
-                        <span className="text-gray-600">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h2 className="text-2xl font-semibold mb-4">Local</h2>
-                  <p className="text-gray-600 mb-2">{event.address}</p>
-                  <div className="rounded-lg overflow-hidden h-[200px] bg-gray-100">
-                    {/* Aqui você pode adicionar um mapa real usando Google Maps ou similar */}
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                      <MapPin className="w-8 h-8 text-gray-400" />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="grid grid-cols-2 gap-6 mb-8"
+                >
+                  <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
+                    <Calendar className="w-6 h-6 text-[#8B5CF6]" />
+                    <div>
+                      <p className="text-sm text-gray-500">Data e Hora</p>
+                      <p className="text-gray-900 font-medium">{event.date} às {event.time}</p>
                     </div>
                   </div>
-                </div>
+                  <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
+                    <Users className="w-6 h-6 text-[#8B5CF6]" />
+                    <div>
+                      <p className="text-sm text-gray-500">Participantes</p>
+                      <p className="text-gray-900 font-medium">{event.participants}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
+                    <MapPin className="w-6 h-6 text-[#8B5CF6]" />
+                    <div>
+                      <p className="text-sm text-gray-500">Localização</p>
+                      <p className="text-gray-900 font-medium">{event.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-white/60 backdrop-blur-sm p-4 rounded-xl">
+                    <Users2 className="w-6 h-6 text-[#8B5CF6]" />
+                    <div>
+                      <p className="text-sm text-gray-500">Faixa Etária</p>
+                      <p className="text-gray-900 font-medium">{event.ageRequirement}</p>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="prose max-w-none"
+              >
+                <p className="text-gray-600 leading-relaxed text-lg">{event.description}</p>
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content with Improved Styling */}
+            <div className="lg:col-span-2">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl mb-8 border border-white/20"
+              >
+                <h2 className="text-2xl font-semibold mb-6 flex items-center">
+                  <Award className="w-6 h-6 text-[#8B5CF6] mr-2" />
+                  Destaques do Evento
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {event.highlights.map((highlight, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index }}
+                      className="flex items-start bg-white/60 p-4 rounded-xl hover:shadow-md transition-shadow"
+                    >
+                      <Award className="w-5 h-5 text-[#8B5CF6] mr-3 mt-1 flex-shrink-0" />
+                      <span className="text-gray-700">{highlight}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20"
+              >
+                <h2 className="text-2xl font-semibold mb-6 flex items-center">
+                  <MapPin className="w-6 h-6 text-[#8B5CF6] mr-2" />
+                  Localização
+                </h2>
+                <p className="text-gray-600 mb-4">{event.address}</p>
+                <div className="rounded-xl overflow-hidden h-[300px] bg-gray-100">
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <MapPin className="w-12 h-12 text-gray-400" />
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              {/* Organizer Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg mb-6">
-                <h2 className="text-xl font-semibold mb-4">Empresa Organizadora</h2>
-                <div className="space-y-4">
+            {/* Sidebar with Enhanced Design */}
+            <div className="lg:col-span-1 space-y-8">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.9 }}
+                className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20"
+              >
+                <h2 className="text-xl font-semibold mb-6">Empresa Organizadora</h2>
+                <div className="space-y-6">
                   <div className="flex items-center">
                     <img
                       src={event.organizer.image}
                       alt={event.organizer.name}
-                      className="w-16 h-16 rounded-lg object-cover mr-4"
+                      className="w-16 h-16 rounded-xl object-cover mr-4"
                     />
                     <div>
                       <div className="flex items-center gap-2">
@@ -175,40 +242,44 @@ const EventDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2 text-gray-600 mb-2">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-gray-600">
                       <Building2 className="w-4 h-4" />
                       <span>{event.organizer.yearsInBusiness} anos no mercado</span>
                     </div>
                     <p className="text-sm text-gray-600">{event.organizer.description}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Tickets Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg sticky top-6">
-                <h2 className="text-xl font-semibold mb-4">Ingressos</h2>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1 }}
+                className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl sticky top-6 border border-white/20"
+              >
+                <h2 className="text-xl font-semibold mb-6">Ingressos</h2>
                 <div className="space-y-4">
                   {event.ticketTypes.map((ticket) => (
                     <div
                       key={ticket.id}
-                      className="p-4 border border-gray-200 rounded-lg hover:border-[#8B5CF6] transition-colors"
+                      className="p-4 border border-gray-100 rounded-xl hover:border-[#8B5CF6] transition-colors bg-white/60"
                     >
-                      <div className="flex justify-between items-start mb-2">
+                      <div className="flex justify-between items-start mb-3">
                         <div>
                           <h3 className="font-medium text-gray-900">{ticket.name}</h3>
                           <p className="text-sm text-gray-600">{ticket.available} disponíveis</p>
                         </div>
                         <span className="font-semibold text-[#8B5CF6]">{ticket.price}</span>
                       </div>
-                      <Button className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED]">
+                      <Button className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] transition-colors">
                         <Ticket className="w-4 h-4 mr-2" />
                         Comprar
                       </Button>
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>
