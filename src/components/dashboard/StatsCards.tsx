@@ -1,6 +1,6 @@
 
 import { BarChart3, Users, DollarSign, Star } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
 export function StatsCards() {
@@ -35,15 +35,17 @@ export function StatsCards() {
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
     >
       {stats.map((stat, index) => (
-        <Card key={index} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              {stat.title}
-            </CardTitle>
-            <stat.icon className="w-4 h-4 text-[#9b87f5]" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stat.value}</div>
+        <Card key={index} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all border-none">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-1">{stat.title}</p>
+                <p className="text-2xl font-semibold">{stat.value}</p>
+              </div>
+              <div className="bg-[#9b87f5]/10 p-2 rounded-lg">
+                <stat.icon className="w-5 h-5 text-[#9b87f5]" />
+              </div>
+            </div>
           </CardContent>
         </Card>
       ))}
