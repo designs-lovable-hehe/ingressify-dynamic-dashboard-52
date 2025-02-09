@@ -10,6 +10,7 @@ import EventDetails from "./pages/EventDetails";
 import Partners from "./pages/Partners";
 import PartnerLogin from "./pages/PartnerLogin";
 import PartnerRegister from "./pages/PartnerRegister";
+import UserLogin from "./pages/UserLogin";
 import CompanyBasicInfo from "./pages/company/CompanyBasicInfo";
 import CompanyAddress from "./pages/company/CompanyAddress";
 import CompanyDocuments from "./pages/company/CompanyDocuments";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/parceiros" element={<Partners />} />
           <Route path="/parceiros/login" element={<PartnerLogin />} />
           <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
+          <Route path="/login" element={<UserLogin />} />
           <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
           <Route path="/empresa/endereco" element={<CompanyAddress />} />
           <Route path="/empresa/documentos" element={<CompanyDocuments />} />
