@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
 import { motion } from "framer-motion";
 
 const data = [
@@ -42,6 +42,16 @@ export function RevenueChart() {
                   stroke="#888888"
                   tickFormatter={(value) => `R$${value}`}
                   width={65}
+                />
+                <Tooltip
+                  cursor={{ fill: "transparent" }}
+                  contentStyle={{
+                    background: "white",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    padding: "8px",
+                  }}
+                  formatter={(value) => [`R$ ${value}`, "Receita"]}
                 />
                 <Bar
                   dataKey="revenue"
