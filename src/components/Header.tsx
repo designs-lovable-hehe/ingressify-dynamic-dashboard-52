@@ -42,7 +42,11 @@ export const Header = () => {
             </motion.a>
           </nav>
           <Link to="/login">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-2 hover:bg-primary hover:text-primary-foreground"
+            >
               <LogIn className="w-4 h-4" />
               <span>Entrar</span>
             </Button>
@@ -52,4 +56,3 @@ export const Header = () => {
     </header>
   );
 };
-
