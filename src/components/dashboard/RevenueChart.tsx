@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { motion } from "framer-motion";
 
 const data = [
@@ -26,14 +27,44 @@ export function RevenueChart() {
         </CardHeader>
         <CardContent>
           <div className="h-[300px] w-full">
-            <BarChart
-              data={data}
-              categories={["revenue"]}
-              index="month"
-              colors={["#9b87f5"]}
-              valueFormatter={(value) => `R$${value}`}
-              yAxisWidth={65}
-            />
+            <ChartContainer
+              config={{
+                revenue: {
+                  theme: {
+                    light: "#9b87f5",
+                    dark: "#9b87f5",
+                  },
+                },
+              }}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart data={data}>
+                  <XAxis 
+                    dataKey="month" 
+                    axisLine={false}
+                    tickLine={false}
+                    fontSize={12}
+                    stroke="#888888"
+                  />
+                  <YAxis 
+                    axisLine={false}
+                    tickLine={false}
+                    fontSize={12}
+                    stroke="#888888"
+                    tickFormatter={(value) => `R$${value}`}
+                    width={65}
+                  />
+                  <Bar
+                    dataKey="revenue"
+                    fill="var(--color-revenue)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <ChartTooltip>
+                    <ChartTooltipContent />
+                  </ChartTooltip>
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </CardContent>
       </Card>
