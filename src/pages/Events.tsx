@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Filter, MapPin } from "lucide-react";
+import { Calendar, Clock, Filter, MapPin, TrendingUp } from "lucide-react";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { EventCard } from "@/components/EventCard";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 const Events = () => {
   const [state, setState] = useState("");
@@ -16,22 +17,30 @@ const Events = () => {
   const [date, setDate] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("");
 
-  const events = [
+  const trendingEvents = [
     {
+      id: "1",
       title: "Festival de Música 2024",
       date: "15 Mar 2024",
       image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
       participants: 1250,
       location: "São Paulo SP",
+      trending: true,
     },
     {
+      id: "2",
       title: "Tech Conference",
       date: "22 Mar 2024",
       image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
       participants: 850,
       location: "Rio de Janeiro RJ",
+      trending: true,
     },
+  ];
+
+  const events = [
     {
+      id: "3",
       title: "Show de Stand-up",
       date: "30 Mar 2024",
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
@@ -39,6 +48,7 @@ const Events = () => {
       location: "Curitiba PR",
     },
     {
+      id: "4",
       title: "Festival Gastronômico",
       date: "05 Abr 2024",
       image: "https://images.unsplash.com/photo-1555244162-803834f70033",
@@ -46,6 +56,7 @@ const Events = () => {
       location: "Belo Horizonte MG",
     },
     {
+      id: "5",
       title: "Exposição de Arte",
       date: "12 Abr 2024",
       image: "https://images.unsplash.com/photo-1531058020387-3be344556be6",
@@ -53,6 +64,7 @@ const Events = () => {
       location: "Salvador BA",
     },
     {
+      id: "6",
       title: "Show de Rock",
       date: "19 Abr 2024",
       image: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
@@ -67,7 +79,6 @@ const Events = () => {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        {/* Título da página */}
         <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,7 +87,25 @@ const Events = () => {
           Encontre Eventos Incríveis
         </motion.h1>
 
-        {/* Filtros */}
+        {/* Trending Events Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-semibold flex items-center gap-2 mb-6 text-[#8B5CF6]">
+            <TrendingUp className="w-6 h-6" /> Em Alta
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {trendingEvents.map((event) => (
+              <Link key={event.id} to={`/eventos/${event.id}`}>
+                <EventCard {...event} />
+              </Link>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Filters */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -147,22 +176,24 @@ const Events = () => {
           </Card>
         </motion.div>
 
-        {/* Lista de Eventos */}
+        {/* All Events */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="space-y-8"
         >
+          <h2 className="text-2xl font-semibold mb-6">Todos os Eventos</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {events.map((event, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <EventCard {...event} />
-              </motion.div>
+            {events.map((event) => (
+              <Link key={event.id} to={`/eventos/${event.id}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <EventCard {...event} />
+                </motion.div>
+              </Link>
             ))}
           </div>
         </motion.div>
