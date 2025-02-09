@@ -1,11 +1,10 @@
-
 import { useParams } from "react-router-dom";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users, Building2, CreditCard, Star, Ticket, BadgeCheck, Users2 } from "lucide-react";
+import { Calendar, MapPin, Users, Building2, CreditCard, Award, Ticket, BadgeCheck, Users2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const EventDetails = () => {
@@ -129,7 +128,7 @@ const EventDetails = () => {
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {event.highlights.map((highlight, index) => (
                       <li key={index} className="flex items-start">
-                        <Star className="w-5 h-5 text-[#8B5CF6] mr-2 mt-1 flex-shrink-0" />
+                        <Award className="w-5 h-5 text-[#8B5CF6] mr-2 mt-1 flex-shrink-0" />
                         <span className="text-gray-600">{highlight}</span>
                       </li>
                     ))}
@@ -169,7 +168,7 @@ const EventDetails = () => {
                         )}
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
-                        <Star className="w-4 h-4 text-yellow-400 mr-1" />
+                        <Award className="w-4 h-4 text-yellow-400 mr-1" />
                         <span>{event.organizer.rating} • {event.organizer.eventsProduced} eventos</span>
                       </div>
                     </div>
@@ -219,4 +218,3 @@ const EventDetails = () => {
 };
 
 export default EventDetails;
-
