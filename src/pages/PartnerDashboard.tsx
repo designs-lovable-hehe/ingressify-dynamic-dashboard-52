@@ -1,29 +1,11 @@
 
 import { motion } from "framer-motion";
-import {
-  BarChart3,
-  Users,
-  CreditCard,
-  Building2,
-  Star,
-  ArrowUpRight,
-  MessageSquare,
-  DollarSign,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { StatsCards } from "@/components/dashboard/StatsCards";
+import { RevenueChart } from "@/components/dashboard/RevenueChart";
+import { RecentActivity } from "@/components/dashboard/RecentActivity";
+import { QuickActions } from "@/components/dashboard/QuickActions";
 
-const revenueData = [
-  { month: 'Jan', revenue: 2500 },
-  { month: 'Feb', revenue: 1500 },
-  { month: 'Mar', revenue: 10000 },
-  { month: 'Apr', revenue: 4000 },
-  { month: 'May', revenue: 5000 },
-  { month: 'Jun', revenue: 3500 },
-  { month: 'Jul', revenue: 4000 },
-];
-
-const PartnerDashboard = () => {
+export default function PartnerDashboard() {
   return (
     <div className="min-h-screen bg-white p-6">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -44,192 +26,17 @@ const PartnerDashboard = () => {
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          <Card className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Eventos Realizados
-              </CardTitle>
-              <BarChart3 className="w-4 h-4 text-[#9b87f5]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">12</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Participantes
-              </CardTitle>
-              <Users className="w-4 h-4 text-[#9b87f5]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,482</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Faturamento
-              </CardTitle>
-              <DollarSign className="w-4 h-4 text-[#9b87f5]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">R$ 24.580</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                Avaliação Média
-              </CardTitle>
-              <Star className="w-4 h-4 text-[#9b87f5]" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">4.8</div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <StatsCards />
 
         {/* Revenue Chart & Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Revenue Chart */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-2"
-          >
-            <Card className="bg-white rounded-xl shadow-sm h-[400px]">
-              <CardHeader>
-                <CardTitle>Receita Mensal</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <AreaChart data={revenueData}>
-                    <defs>
-                      <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#9b87f5" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#9b87f5" stopOpacity={0.1}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
-                    <XAxis dataKey="month" className="text-xs" />
-                    <YAxis 
-                      className="text-xs"
-                      tickFormatter={(value) => `R$${value}`}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="revenue"
-                      stroke="#9b87f5"
-                      fillOpacity={1}
-                      fill="url(#colorRevenue)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Recent Activity */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Card className="bg-white rounded-xl shadow-sm h-[400px]">
-              <CardHeader>
-                <CardTitle>Atividade Recente</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {[
-                    {
-                      title: "Workshop de Marketing Digital",
-                      icon: Users,
-                    },
-                    {
-                      title: "Novo Pagamento Recebido",
-                      icon: CreditCard,
-                    },
-                    {
-                      title: "Avaliação do Evento",
-                      icon: Star,
-                    },
-                    {
-                      title: "Nova Mensagem",
-                      icon: MessageSquare,
-                    },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center space-x-4">
-                      <div className="bg-[#9b87f5]/10 p-2 rounded-full">
-                        <item.icon className="w-4 h-4 text-[#9b87f5]" />
-                      </div>
-                      <p className="text-sm font-medium">{item.title}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+          <RevenueChart />
+          <RecentActivity />
         </div>
 
         {/* Quick Actions */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Card className="bg-white rounded-xl shadow-sm">
-            <CardHeader>
-              <CardTitle>Ações Rápidas</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  {
-                    title: "Criar Novo Evento",
-                    icon: Building2,
-                  },
-                  {
-                    title: "Ver Participantes",
-                    icon: Users,
-                  },
-                  {
-                    title: "Relatório Financeiro",
-                    icon: DollarSign,
-                  },
-                  {
-                    title: "Central de Mensagens",
-                    icon: MessageSquare,
-                  },
-                ].map((action, index) => (
-                  <button
-                    key={index}
-                    className="p-4 rounded-lg bg-[#9b87f5]/5 hover:bg-[#9b87f5]/10 transition-colors flex items-center space-x-3"
-                  >
-                    <div className="bg-[#9b87f5]/10 p-2 rounded-full">
-                      <action.icon className="w-4 h-4 text-[#9b87f5]" />
-                    </div>
-                    <span className="text-sm font-medium">{action.title}</span>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <QuickActions />
       </div>
     </div>
   );
-};
-
-export default PartnerDashboard;
+}
