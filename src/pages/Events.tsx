@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Filter, MapPin, TrendingUp } from "lucide-react";
+import { Calendar, Clock, Filter, MapPin, Search, TrendingUp } from "lucide-react";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
 import { Input } from "@/components/ui/input";
@@ -74,26 +74,50 @@ const Events = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-white via-purple-50 to-white">
       <GeometricBackground />
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        <motion.h1 
+      <main className="container mx-auto px-4 py-12">
+        <motion.div 
+          className="max-w-3xl mx-auto text-center mb-16"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-gray-900 mb-12 text-center"
+          transition={{ duration: 0.5 }}
         >
-          Encontre Eventos Incríveis
-        </motion.h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Encontre Eventos <span className="text-primary">Incríveis</span>
+          </h1>
+          <p className="text-lg text-gray-600">
+            Descubra experiências únicas e memoráveis em sua cidade
+          </p>
+        </motion.div>
+
+        {/* Search Bar */}
+        <motion.div 
+          className="max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input 
+              type="text" 
+              placeholder="Pesquisar eventos..." 
+              className="w-full pl-12 pr-4 py-3 rounded-full border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            />
+          </div>
+        </motion.div>
 
         {/* Trending Events Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-16"
         >
-          <h2 className="text-2xl font-semibold flex items-center gap-2 mb-6 text-[#8B5CF6]">
+          <h2 className="text-2xl font-semibold flex items-center gap-2 mb-8 text-[#8B5CF6]">
             <TrendingUp className="w-6 h-6" /> Em Alta
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -107,22 +131,23 @@ const Events = () => {
 
         {/* Filters */}
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mb-16"
         >
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold flex items-center gap-2 mb-6">
+          <Card className="p-8 bg-white/80 backdrop-blur-sm">
+            <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
               <Filter className="w-5 h-5" /> Filtros
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium flex items-center gap-2">
+                <label className="text-sm font-medium flex items-center gap-2 text-gray-700">
                   <MapPin className="w-4 h-4" /> Estado
                 </label>
                 <Select value={state} onValueChange={setState}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione o estado" />
                   </SelectTrigger>
                   <SelectContent>
@@ -135,7 +160,7 @@ const Events = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium flex items-center gap-2">
+                <label className="text-sm font-medium flex items-center gap-2 text-gray-700">
                   <MapPin className="w-4 h-4" /> Cidade
                 </label>
                 <Input 
@@ -143,26 +168,28 @@ const Events = () => {
                   placeholder="Digite a cidade"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                  className="w-full"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium flex items-center gap-2">
+                <label className="text-sm font-medium flex items-center gap-2 text-gray-700">
                   <Calendar className="w-4 h-4" /> Data
                 </label>
                 <Input 
                   type="date" 
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
+                  className="w-full"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium flex items-center gap-2">
+                <label className="text-sm font-medium flex items-center gap-2 text-gray-700">
                   <Clock className="w-4 h-4" /> Horário
                 </label>
                 <Select value={timeOfDay} onValueChange={setTimeOfDay}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione o horário" />
                   </SelectTrigger>
                   <SelectContent>
@@ -180,9 +207,10 @@ const Events = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="space-y-8"
         >
-          <h2 className="text-2xl font-semibold mb-6">Todos os Eventos</h2>
+          <h2 className="text-2xl font-semibold mb-8">Todos os Eventos</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
               <Link key={event.id} to={`/eventos/${event.id}`}>
