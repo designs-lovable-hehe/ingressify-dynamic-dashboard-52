@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
@@ -74,30 +75,31 @@ const EventDetails = () => {
           className="max-w-5xl mx-auto"
         >
           {/* Hero Section */}
-          <div className="rounded-xl overflow-hidden mb-8 shadow-xl relative">
+          <div className="rounded-xl overflow-hidden mb-8 shadow-xl">
             <img
               src={event.image}
               alt={event.title}
               className="w-full h-[500px] object-cover"
             />
-            <div className="absolute top-4 right-4 flex gap-2">
-              {event.tags.map((tag, index) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                  className="bg-white/90 text-gray-800 backdrop-blur-sm"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2">
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg mb-8">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">{event.title}</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-3">{event.title}</h1>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {event.tags.map((tag, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="bg-[#8B5CF6]/10 text-[#8B5CF6] hover:bg-[#8B5CF6]/20"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
                 
                 <div className="flex flex-wrap gap-6 mb-6">
                   <div className="flex items-center text-gray-600">
