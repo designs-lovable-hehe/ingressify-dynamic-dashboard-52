@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import Partners from "./pages/Partners";
+import About from "./pages/About";
 import PartnerLogin from "./pages/PartnerLogin";
 import PartnerRegister from "./pages/PartnerRegister";
 import UserLogin from "./pages/UserLogin";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/eventos" element={<Events />} />
           <Route path="/eventos/:id" element={<EventDetails />} />
           <Route path="/parceiros" element={<Partners />} />
+          <Route path="/sobre" element={<About />} />
           <Route path="/parceiros/login" element={<PartnerLogin />} />
           <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
           <Route path="/login" element={<UserLogin />} />
