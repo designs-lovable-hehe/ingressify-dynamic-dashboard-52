@@ -86,10 +86,10 @@ const Events = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Descubra Experiências <span className="text-primary">Extraordinárias</span>
+            Encontre Eventos <span className="text-primary">Especiais</span>
           </h1>
           <p className="text-lg text-gray-600">
-            Conecte-se com eventos únicos que transformam momentos em memórias inesquecíveis
+            Descubra experiências únicas e crie memórias inesquecíveis
           </p>
         </motion.div>
 
