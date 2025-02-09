@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/Logo";
+import { GeometricBackground } from "@/components/GeometricBackground";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -15,89 +16,105 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="py-6 px-8">
+    <div className="relative flex min-h-screen flex-col bg-gradient-to-b from-white to-gray-50">
+      <GeometricBackground />
+      <div className="container mx-auto px-4 py-8">
         <Logo />
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
+      </div>
+      <div className="container mx-auto flex flex-1 items-center justify-between gap-12 px-4">
+        <div className="max-w-2xl">
+          <motion.h1
+            className="mb-6 text-5xl font-bold text-gray-900"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
+            transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl font-bold leading-tight">
-              Transforme seus eventos em{" "}
-              <span className="text-primary">experiências inesquecíveis</span>
-            </h1>
-            <p className="text-lg text-gray-600 max-w-xl">
-              Seja bem-vindo à plataforma que conecta pessoas a eventos extraordinários.
-              Encontre ou crie eventos que transformam momentos em memórias.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all"
+            Transforme seus eventos em{" "}
+            <span className="text-primary">experiências inesquecíveis</span>
+          </motion.h1>
+          <motion.p
+            className="mb-8 text-xl text-gray-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Seja bem-vindo à plataforma que conecta pessoas a eventos extraordinários.
+            Encontre ou crie eventos que transformam momentos em memórias.
+          </motion.p>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div
+                onClick={() => navigate("/eventos")}
+                className="group block rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl cursor-pointer"
               >
-                <h3 className="text-xl font-semibold mb-3">Encontrar Eventos</h3>
-                <p className="text-gray-600 mb-4">
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">
+                  Encontrar Eventos
+                </h2>
+                <p className="mb-6 text-gray-600">
                   Descubra eventos incríveis, compre ingressos e viva experiências únicas
                 </p>
-                <button
-                  onClick={() => navigate("/eventos")}
-                  className="text-primary flex items-center gap-2 font-medium hover:gap-3 transition-all"
-                >
-                  Explorar eventos <ArrowRight className="w-4 h-4" />
-                </button>
-              </motion.div>
+                <div className="flex items-center font-semibold text-primary transition-transform group-hover:translate-x-2">
+                  Explorar eventos
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </div>
+              </div>
+            </motion.div>
 
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="p-6 bg-primary/5 rounded-2xl shadow-lg hover:shadow-xl transition-all"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <div
+                onClick={() => navigate("/parceiros")}
+                className="group block rounded-2xl bg-primary/10 p-8 shadow-lg transition-all hover:shadow-xl cursor-pointer"
               >
-                <h3 className="text-xl font-semibold mb-3">Área de Parceiros</h3>
-                <p className="text-gray-600 mb-4">
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">
+                  Área de Parceiros
+                </h2>
+                <p className="mb-6 text-gray-600">
                   Organize seus próprios eventos e gerencie vendas de ingressos
                 </p>
-                <button
-                  onClick={() => navigate("/parceiros")}
-                  className="text-primary flex items-center gap-2 font-medium hover:gap-3 transition-all"
-                >
-                  Seja um parceiro <ArrowRight className="w-4 h-4" />
-                </button>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 gap-4"
-          >
-            {images.map((image, index) => (
-              <motion.div
-                key={index}
-                className={`relative rounded-2xl overflow-hidden ${
-                  index % 2 === 0 ? "mt-8" : ""
-                }`}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <img
-                  src={image}
-                  alt={`Event ${index + 1}`}
-                  className="w-full h-[300px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              </motion.div>
-            ))}
-          </motion.div>
+                <div className="flex items-center font-semibold text-primary transition-transform group-hover:translate-x-2">
+                  Seja um parceiro
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </main>
+
+        <motion.div
+          className="hidden flex-1 lg:block"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <div className="relative grid grid-cols-2 gap-4">
+            {images.map((image, index) => (
+              <motion.img
+                key={index}
+                src={image}
+                alt={`Event ${index + 1}`}
+                className="h-64 w-full rounded-2xl object-cover shadow-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+              />
+            ))}
+            <motion.div
+              className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-transparent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.1 }}
+            />
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };
