@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Logo } from "@/components/Logo";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, ArrowRight, Ticket, Shield, Users } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,11 +59,53 @@ const UserLogin = () => {
         </Link>
       </div>
       
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex flex-col lg:flex-row items-center justify-center gap-12 px-4">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-md"
+        >
+          <div className="space-y-6 text-center lg:text-left">
+            <h1 className="text-3xl font-bold text-gray-900">
+              Acesse os melhores eventos
+            </h1>
+            <p className="text-lg text-gray-600">
+              Entre na sua conta para comprar ingressos e gerenciar suas reservas.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+                <Ticket className="w-8 h-8 text-primary mb-2" />
+                <h3 className="font-semibold">Ingressos Garantidos</h3>
+                <p className="text-sm text-gray-600">Compre com segurança e praticidade</p>
+              </div>
+              
+              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+                <Shield className="w-8 h-8 text-primary mb-2" />
+                <h3 className="font-semibold">Pagamento Seguro</h3>
+                <p className="text-sm text-gray-600">Suas transações estão protegidas</p>
+              </div>
+              
+              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+                <Users className="w-8 h-8 text-primary mb-2" />
+                <h3 className="font-semibold">Eventos Exclusivos</h3>
+                <p className="text-sm text-gray-600">Acesso VIP a pré-vendas</p>
+              </div>
+              
+              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
+                <ArrowRight className="w-8 h-8 text-primary mb-2" />
+                <h3 className="font-semibold">Acesso Rápido</h3>
+                <p className="text-sm text-gray-600">Entre nos eventos sem filas</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="w-full max-w-md"
         >
           <div className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl">
@@ -118,7 +160,7 @@ const UserLogin = () => {
 
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
                   disabled={isLoading}
                 >
                   {isLoading ? "Entrando..." : "Entrar"}
@@ -151,3 +193,4 @@ const UserLogin = () => {
 };
 
 export default UserLogin;
+
