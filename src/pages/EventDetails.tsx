@@ -4,7 +4,8 @@ import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Users, User, CreditCard, Star, Ticket } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, MapPin, Users, Building2, CreditCard, Star, Ticket, BadgeCheck, Users2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const EventDetails = () => {
@@ -22,11 +23,16 @@ const EventDetails = () => {
     description: "Um dos maiores festivais de música do Brasil, reunindo grandes artistas nacionais e internacionais em um fim de semana inesquecível. Prepare-se para uma experiência única com shows incríveis, área gastronômica e muito mais!",
     price: "R$ 250,00",
     address: "Av. das Nações Unidas, 1000 - São Paulo, SP",
-    creator: {
-      name: "EventPro Produções",
-      image: "https://images.unsplash.com/photo-1566492031773-4f4e44671857",
+    ageRequirement: "16+",
+    tags: ["Música", "Festival", "Show", "Entretenimento", "Gastronomia"],
+    organizer: {
+      name: "EventPro Produções e Eventos",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c",
       rating: 4.8,
-      events: 127
+      eventsProduced: 127,
+      yearsInBusiness: 15,
+      verifiedBusiness: true,
+      description: "Uma das maiores produtoras de eventos do Brasil, especializada em festivais e shows de grande porte."
     },
     ticketTypes: [
       {
@@ -69,12 +75,23 @@ const EventDetails = () => {
           className="max-w-5xl mx-auto"
         >
           {/* Hero Section */}
-          <div className="rounded-xl overflow-hidden mb-8 shadow-xl">
+          <div className="rounded-xl overflow-hidden mb-8 shadow-xl relative">
             <img
               src={event.image}
               alt={event.title}
               className="w-full h-[500px] object-cover"
             />
+            <div className="absolute top-4 right-4 flex gap-2">
+              {event.tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="bg-white/90 text-gray-800 backdrop-blur-sm"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -95,6 +112,10 @@ const EventDetails = () => {
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-5 h-5 mr-2" />
                     <span>{event.location}</span>
+                  </div>
+                  <div className="flex items-center text-gray-600">
+                    <Users2 className="w-5 h-5 mr-2" />
+                    <span>Idade: {event.ageRequirement}</span>
                   </div>
                 </div>
 
@@ -130,21 +151,35 @@ const EventDetails = () => {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              {/* Creator Card */}
+              {/* Organizer Card */}
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg mb-6">
-                <h2 className="text-xl font-semibold mb-4">Organizador</h2>
-                <div className="flex items-center mb-4">
-                  <img
-                    src={event.creator.image}
-                    alt={event.creator.name}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
-                  />
-                  <div>
-                    <h3 className="font-medium text-gray-900">{event.creator.name}</h3>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Star className="w-4 h-4 text-yellow-400 mr-1" />
-                      <span>{event.creator.rating} • {event.creator.events} eventos</span>
+                <h2 className="text-xl font-semibold mb-4">Empresa Organizadora</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <img
+                      src={event.organizer.image}
+                      alt={event.organizer.name}
+                      className="w-16 h-16 rounded-lg object-cover mr-4"
+                    />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-medium text-gray-900">{event.organizer.name}</h3>
+                        {event.organizer.verifiedBusiness && (
+                          <BadgeCheck className="w-5 h-5 text-[#8B5CF6]" />
+                        )}
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Star className="w-4 h-4 text-yellow-400 mr-1" />
+                        <span>{event.organizer.rating} • {event.organizer.eventsProduced} eventos</span>
+                      </div>
                     </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 text-gray-600 mb-2">
+                      <Building2 className="w-4 h-4" />
+                      <span>{event.organizer.yearsInBusiness} anos no mercado</span>
+                    </div>
+                    <p className="text-sm text-gray-600">{event.organizer.description}</p>
                   </div>
                 </div>
               </div>
