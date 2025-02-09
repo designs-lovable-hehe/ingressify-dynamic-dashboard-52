@@ -1,6 +1,5 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { motion } from "framer-motion";
 
@@ -27,57 +26,30 @@ export function RevenueChart() {
         </CardHeader>
         <CardContent>
           <div className="h-[300px] w-full">
-            <ChartContainer
-              config={{
-                revenue: {
-                  theme: {
-                    light: "#9b87f5",
-                    dark: "#9b87f5",
-                  },
-                },
-              }}
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <RechartsBarChart data={data}>
-                  <XAxis 
-                    dataKey="month" 
-                    axisLine={false}
-                    tickLine={false}
-                    fontSize={12}
-                    stroke="#888888"
-                  />
-                  <YAxis 
-                    axisLine={false}
-                    tickLine={false}
-                    fontSize={12}
-                    stroke="#888888"
-                    tickFormatter={(value) => `R$${value}`}
-                    width={65}
-                  />
-                  <Bar
-                    dataKey="revenue"
-                    fill="var(--color-revenue)"
-                    radius={[4, 4, 0, 0]}
-                  />
-                  <ChartTooltip
-                    cursor={{ fill: 'transparent' }}
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length) {
-                        return (
-                          <div className="rounded-lg border bg-background p-2 shadow-sm">
-                            <div className="grid grid-cols-2 gap-2">
-                              <span className="font-medium">Revenue:</span>
-                              <span>R${payload[0].value}</span>
-                            </div>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </RechartsBarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <ResponsiveContainer width="100%" height="100%">
+              <RechartsBarChart data={data}>
+                <XAxis 
+                  dataKey="month" 
+                  axisLine={false}
+                  tickLine={false}
+                  fontSize={12}
+                  stroke="#888888"
+                />
+                <YAxis 
+                  axisLine={false}
+                  tickLine={false}
+                  fontSize={12}
+                  stroke="#888888"
+                  tickFormatter={(value) => `R$${value}`}
+                  width={65}
+                />
+                <Bar
+                  dataKey="revenue"
+                  fill="#9b87f5"
+                  radius={[4, 4, 0, 0]}
+                />
+              </RechartsBarChart>
+            </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
