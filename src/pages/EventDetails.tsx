@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
@@ -11,7 +10,6 @@ import { motion } from "framer-motion";
 const EventDetails = () => {
   const { id } = useParams();
 
-  // This is a mock event data. In a real application, you would fetch this data based on the ID
   const event = {
     id,
     title: "Festival de Música 2024",
@@ -74,7 +72,6 @@ const EventDetails = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-6xl mx-auto"
         >
-          {/* Hero Section with Improved Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -166,7 +163,6 @@ const EventDetails = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content with Improved Styling */}
             <div className="lg:col-span-2">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -213,74 +209,98 @@ const EventDetails = () => {
               </motion.div>
             </div>
 
-            {/* Sidebar with Enhanced Design */}
-            <div className="lg:col-span-1 space-y-8">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.9 }}
-                className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20"
-              >
-                <h2 className="text-xl font-semibold mb-6">Empresa Organizadora</h2>
-                <div className="space-y-6">
-                  <div className="flex items-center">
-                    <img
-                      src={event.organizer.image}
-                      alt={event.organizer.name}
-                      className="w-16 h-16 rounded-xl object-cover mr-4"
-                    />
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-medium text-gray-900">{event.organizer.name}</h3>
-                        {event.organizer.verifiedBusiness && (
-                          <BadgeCheck className="w-5 h-5 text-[#8B5CF6]" />
-                        )}
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Award className="w-4 h-4 text-yellow-400 mr-1" />
-                        <span>{event.organizer.rating} • {event.organizer.eventsProduced} eventos</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Building2 className="w-4 h-4" />
-                      <span>{event.organizer.yearsInBusiness} anos no mercado</span>
-                    </div>
-                    <p className="text-sm text-gray-600">{event.organizer.description}</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1 }}
-                className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl sticky top-6 border border-white/20"
-              >
-                <h2 className="text-xl font-semibold mb-6">Ingressos</h2>
-                <div className="space-y-4">
-                  {event.ticketTypes.map((ticket) => (
-                    <div
-                      key={ticket.id}
-                      className="p-4 border border-gray-100 rounded-xl hover:border-[#8B5CF6] transition-colors bg-white/60"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-medium text-gray-900">{ticket.name}</h3>
-                          <p className="text-sm text-gray-600">{ticket.available} disponíveis</p>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.9 }}
+              className="lg:col-span-1 space-y-8"
+            >
+              <div className="relative">
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-[#8B5CF6]/10 rounded-full blur-2xl" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F97316]/10 rounded-full blur-2xl" />
+                
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 mb-8">
+                  <h2 className="text-xl font-semibold mb-6">Empresa Organizadora</h2>
+                  <div className="space-y-6">
+                    <div className="flex items-center">
+                      <img
+                        src={event.organizer.image}
+                        alt={event.organizer.name}
+                        className="w-16 h-16 rounded-xl object-cover mr-4"
+                      />
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium text-gray-900">{event.organizer.name}</h3>
+                          {event.organizer.verifiedBusiness && (
+                            <BadgeCheck className="w-5 h-5 text-[#8B5CF6]" />
+                          )}
                         </div>
-                        <span className="font-semibold text-[#8B5CF6]">{ticket.price}</span>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Award className="w-4 h-4 text-yellow-400 mr-1" />
+                          <span>{event.organizer.rating} • {event.organizer.eventsProduced} eventos</span>
+                        </div>
                       </div>
-                      <Button className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] transition-colors">
-                        <Ticket className="w-4 h-4 mr-2" />
-                        Comprar
-                      </Button>
                     </div>
-                  ))}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <Building2 className="w-4 h-4" />
+                        <span>{event.organizer.yearsInBusiness} anos no mercado</span>
+                      </div>
+                      <p className="text-sm text-gray-600">{event.organizer.description}</p>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
+
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 sticky top-6">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <Ticket className="w-6 h-6 text-[#8B5CF6]" />
+                    <span>Ingressos</span>
+                  </h2>
+                  
+                  <div className="space-y-6">
+                    {event.ticketTypes.map((ticket) => (
+                      <motion.div
+                        key={ticket.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        whileHover={{ scale: 1.02 }}
+                        className="relative overflow-hidden p-6 border border-gray-100 rounded-xl hover:border-[#8B5CF6] transition-all duration-300 bg-gradient-to-br from-white/80 to-white/60 backdrop-blur-sm group"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        
+                        <div className="relative">
+                          <div className="flex justify-between items-start mb-4">
+                            <div>
+                              <h3 className="text-xl font-semibold text-gray-900 mb-1">{ticket.name}</h3>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="secondary" className="bg-[#8B5CF6]/10 text-[#8B5CF6] font-medium">
+                                  {ticket.available} disponíveis
+                                </Badge>
+                              </div>
+                            </div>
+                            <span className="text-2xl font-bold text-[#8B5CF6]">{ticket.price}</span>
+                          </div>
+                          
+                          <Button 
+                            className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] transition-colors text-lg py-6 group"
+                          >
+                            <Ticket className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
+                            Comprar Ingresso
+                          </Button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 p-4 bg-[#8B5CF6]/5 rounded-xl">
+                    <p className="text-sm text-gray-600 flex items-center gap-2">
+                      <CreditCard className="w-4 h-4 text-[#8B5CF6]" />
+                      Pagamento seguro e processado em até 24h
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </main>
