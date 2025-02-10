@@ -18,6 +18,7 @@ import CompanyDocuments from "./pages/company/CompanyDocuments";
 import CompanyReview from "./pages/company/CompanyReview";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import NotFound from "./pages/NotFound";
+import ListLogo from "./pages/ListLogo";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/empresa/documentos" element={<CompanyDocuments />} />
           <Route path="/empresa/revisao" element={<CompanyReview />} />
           <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
+          <Route path="/listLogo" element={<ListLogo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
