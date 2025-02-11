@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { GeometricBackground } from "@/components/GeometricBackground";
 import { Header } from "@/components/Header";
@@ -7,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Users, Building2, CreditCard, Award, Ticket, BadgeCheck, Users2, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const EventDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const event = {
     id,
@@ -61,6 +62,12 @@ const EventDetails = () => {
       "Estacionamento gratuito",
       "Segurança 24h"
     ]
+  };
+
+  const handleTicketPurchase = (ticket: any) => {
+    navigate(`/eventos/${id}/checkout`, { 
+      state: { ticketTypes: event.ticketTypes }
+    });
   };
 
   return (
@@ -322,6 +329,7 @@ const EventDetails = () => {
                           
                           <Button 
                             className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#F97316] hover:from-[#7C3AED] hover:to-[#EA580C] transition-all duration-300 text-lg py-6 group shadow-lg hover:shadow-xl"
+                            onClick={() => handleTicketPurchase(ticket)}
                           >
                             <Ticket className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
                             Comprar Ingresso
