@@ -13,17 +13,21 @@ const LogoSVG = () => (
     className="w-full h-full"
   >
     <motion.path
-      d="M100 20C55.8172 20 20 55.8172 20 100C20 144.183 55.8172 180 100 180C144.183 180 180 144.183 180 100C180 55.8172 144.183 20 100 20Z"
+      d="M60 50 L60 150 L80 150 L80 110 L120 110 L120 90 L80 90 L80 70 L140 70 L140 50 Z"
       stroke="#9b87f5"
-      strokeWidth="2"
+      strokeWidth="4"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 2, ease: "easeInOut" }}
+      transition={{ duration: 1.5, ease: "easeInOut" }}
     />
     <motion.path
-      d="M65 100L90 125L135 80"
+      d="M100 50 L100 150 L120 150 L120 50 Z"
       stroke="#7E69AB"
       strokeWidth="4"
+      fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
       initial={{ pathLength: 0 }}
@@ -46,8 +50,9 @@ const ListLogo = () => {
         >
           <h1 className="text-4xl font-bold text-gray-800 mb-4">Nossa Logo</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Nossa logo representa inovação, confiança e excelência no mercado de eventos e venda de ingressos.
-            O design minimalista reflete nossa abordagem moderna e eficiente.
+            Nossa logo representa as iniciais "IN" do Ingresso Nitro, simbolizando inovação e 
+            excelência no mercado de eventos e venda de ingressos. O design moderno e minimalista 
+            reflete nossa abordagem tecnológica e eficiente.
           </p>
         </motion.div>
 
