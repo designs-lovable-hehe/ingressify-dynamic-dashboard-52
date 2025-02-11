@@ -48,6 +48,35 @@ const LogoSVG = () => (
 );
 
 const ListLogo = () => {
+  const handleDownloadSVG = () => {
+    // Create SVG string
+    const svgString = `
+      <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="50" width="120" height="100" rx="8" fill="rgba(255, 255, 255, 0.8)" stroke="#e5e7eb"/>
+        <text x="60" y="120" font-size="48" font-weight="bold">
+          <tspan fill="url(#gradient)">IN</tspan>
+        </text>
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color: #9b87f5"/>
+            <stop offset="100%" style="stop-color: #7E69AB"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    `;
+
+    // Create Blob and download link
+    const blob = new Blob([svgString], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'ingresso-nitro-logo.svg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -112,7 +141,10 @@ const ListLogo = () => {
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Download</h2>
           <div className="flex justify-center gap-4">
-            <button className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all">
+            <button 
+              onClick={handleDownloadSVG}
+              className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all"
+            >
               Download SVG
             </button>
             <button className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all">
