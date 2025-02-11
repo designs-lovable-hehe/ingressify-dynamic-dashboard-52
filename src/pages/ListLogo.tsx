@@ -14,7 +14,7 @@ const LogoSVG = () => (
   >
     {/* I Letter */}
     <motion.path
-      d="M60 50 L60 150 L80 150 L80 50 Z"
+      d="M70 60 L70 140 M60 60 L80 60 M60 140 L80 140"
       stroke="#9b87f5"
       strokeWidth="4"
       fill="none"
@@ -26,7 +26,7 @@ const LogoSVG = () => (
     />
     {/* N Letter */}
     <motion.path
-      d="M100 150 L100 50 L120 50 L140 90 L140 50 L160 50 L160 150 L140 150 L120 110 L120 150 L100 150Z"
+      d="M100 140 L100 60 L120 60 L120 100 L120 60 L140 60 L140 140"
       stroke="#7E69AB"
       strokeWidth="4"
       fill="none"
