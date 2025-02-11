@@ -72,7 +72,7 @@ const ListLogo = () => {
             whileHover={{ scale: 1.05 }}
             className="bg-white p-6 rounded-xl shadow-lg"
           >
-            <div className="w-10 h-10 mx-auto">
+            <div className="w-24 h-24 mx-auto bg-white rounded-lg flex items-center justify-center">
               <LogoSVG />
             </div>
             <h3 className="text-xl font-semibold mt-4 text-gray-800">Logo Principal</h3>
@@ -84,7 +84,7 @@ const ListLogo = () => {
             whileHover={{ scale: 1.05 }}
             className="bg-white p-6 rounded-xl shadow-lg"
           >
-            <div className="w-10 h-10 mx-auto bg-gradient-to-br from-primary to-secondary p-2 rounded-lg">
+            <div className="w-24 h-24 mx-auto bg-white rounded-lg flex items-center justify-center">
               <LogoSVG />
             </div>
             <h3 className="text-xl font-semibold mt-4 text-gray-800">Versão Gradiente</h3>
@@ -96,7 +96,7 @@ const ListLogo = () => {
             whileHover={{ scale: 1.05 }}
             className="bg-white p-6 rounded-xl shadow-lg"
           >
-            <div className="w-10 h-10 mx-auto bg-gray-900 p-2 rounded-lg">
+            <div className="w-24 h-24 mx-auto bg-white rounded-lg flex items-center justify-center">
               <LogoSVG />
             </div>
             <h3 className="text-xl font-semibold mt-4 text-gray-800">Versão Monocromática</h3>
