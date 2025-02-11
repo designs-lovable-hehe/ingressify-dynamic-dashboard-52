@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
+import TicketCheckout from "./pages/TicketCheckout";
 import Partners from "./pages/Partners";
 import About from "./pages/About";
 import PartnerLogin from "./pages/PartnerLogin";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/eventos" element={<Events />} />
           <Route path="/eventos/:id" element={<EventDetails />} />
+          <Route path="/eventos/:id/checkout" element={<TicketCheckout />} />
           <Route path="/parceiros" element={<Partners />} />
           <Route path="/sobre" element={<About />} />
           <Route path="/parceiros/login" element={<PartnerLogin />} />
