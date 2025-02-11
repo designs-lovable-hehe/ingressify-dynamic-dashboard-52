@@ -12,30 +12,38 @@ const LogoSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
     className="w-full h-full"
   >
-    {/* I Letter */}
-    <motion.path
-      d="M70 60 L70 140 M60 60 L80 60 M60 140 L80 140"
-      stroke="#9b87f5"
-      strokeWidth="4"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      initial={{ pathLength: 0 }}
-      animate={{ pathLength: 1 }}
-      transition={{ duration: 1.5, ease: "easeInOut" }}
+    {/* Background Rectangle */}
+    <motion.rect
+      x="40"
+      y="50"
+      width="120"
+      height="100"
+      rx="8"
+      className="fill-white/80 stroke-gray-200"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     />
-    {/* N Letter */}
-    <motion.path
-      d="M100 140 L100 60 L120 60 L120 100 L120 60 L140 60 L140 140"
-      stroke="#7E69AB"
-      strokeWidth="4"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      initial={{ pathLength: 0 }}
-      animate={{ pathLength: 1 }}
-      transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-    />
+    
+    {/* IN Letters */}
+    <motion.text
+      x="60"
+      y="120"
+      className="text-4xl font-bold"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      <tspan fill="url(#gradient)">IN</tspan>
+    </motion.text>
+
+    {/* Gradient Definition */}
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: "#9b87f5" }} />
+        <stop offset="100%" style={{ stopColor: "#7E69AB" }} />
+      </linearGradient>
+    </defs>
   </svg>
 );
 
