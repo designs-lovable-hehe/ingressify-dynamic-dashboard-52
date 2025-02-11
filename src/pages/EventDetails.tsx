@@ -66,7 +66,17 @@ const EventDetails = () => {
 
   const handleTicketPurchase = (ticket: any) => {
     navigate(`/eventos/${id}/checkout`, { 
-      state: { ticketTypes: event.ticketTypes }
+      state: { 
+        ticketType: ticket,
+        event: {
+          id: event.id,
+          title: event.title,
+          date: event.date,
+          time: event.time,
+          image: event.image,
+          location: event.location
+        }
+      }
     });
   };
 
