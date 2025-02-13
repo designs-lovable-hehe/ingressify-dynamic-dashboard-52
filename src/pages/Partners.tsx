@@ -89,53 +89,59 @@ const Partners = () => {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            <div className="flex flex-col gap-6 max-w-4xl mx-auto">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ 
-                    delay: index * 0.1,
+                    delay: index * 0.2,
                     type: "spring",
                     stiffness: 100,
                     damping: 15
                   }}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative"
+                  className={`flex flex-col ${index % 2 === 0 ? 'items-start' : 'items-end'}`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                  <motion.div 
-                    className="relative"
-                    initial={{ scale: 0.95 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ delay: index * 0.2 }}
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className={`p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group relative max-w-2xl ${
+                      index % 2 === 0 ? 'ml-0' : 'mr-0'
+                    }`}
                   >
-                    <div className="flex items-start gap-4">
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      >
-                        <Avatar className="w-12 h-12 border-2 border-primary/10 ring-2 ring-purple-100 ring-offset-2">
-                          <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                          <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                        </Avatar>
-                      </motion.div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{testimonial.name}</h3>
-                        <p className="text-sm text-gray-500">{testimonial.username}</p>
-                      </div>
-                      <Quote className="w-6 h-6 text-primary/20 ml-auto transform group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <motion.p 
-                      className="mt-4 text-gray-600 relative"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: index * 0.3 }}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/10 via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                    <motion.div 
+                      className="relative"
+                      initial={{ scale: 0.95 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ delay: index * 0.2 }}
                     >
-                      {testimonial.text}
-                    </motion.p>
+                      <div className="flex items-start gap-4">
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        >
+                          <Avatar className="w-12 h-12 border-2 border-primary/10 ring-2 ring-purple-100 ring-offset-2">
+                            <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
+                            <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
+                          </Avatar>
+                        </motion.div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">{testimonial.name}</h3>
+                          <p className="text-sm text-gray-500">{testimonial.username}</p>
+                        </div>
+                        <Quote className="w-6 h-6 text-primary/20 ml-auto transform group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                      <motion.p 
+                        className="mt-4 text-gray-600 relative"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: index * 0.3 }}
+                      >
+                        {testimonial.text}
+                      </motion.p>
+                    </motion.div>
                   </motion.div>
                 </motion.div>
               ))}
