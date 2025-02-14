@@ -82,23 +82,38 @@ const UserRegister = () => {
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
-                <Users className="w-8 h-8 text-primary mb-2" />
-                <h3 className="font-semibold">Comunidade</h3>
-                <p className="text-sm text-gray-600">Conecte-se com outros participantes</p>
-              </div>
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-primary/10 group"
+              >
+                <div className="bg-[#9b87f5]/10 p-3 rounded-xl w-fit mb-3 group-hover:bg-[#9b87f5]/20 transition-colors">
+                  <Users className="w-8 h-8 text-[#9b87f5]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Eventos Exclusivos</h3>
+                <p className="text-sm text-gray-600">Acesso prioritário a eventos e experiências únicas</p>
+              </motion.div>
               
-              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
-                <Shield className="w-8 h-8 text-primary mb-2" />
-                <h3 className="font-semibold">Segurança</h3>
-                <p className="text-sm text-gray-600">Seus dados estão protegidos</p>
-              </div>
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-primary/10 group"
+              >
+                <div className="bg-[#9b87f5]/10 p-3 rounded-xl w-fit mb-3 group-hover:bg-[#9b87f5]/20 transition-colors">
+                  <Shield className="w-8 h-8 text-[#9b87f5]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Compra Segura</h3>
+                <p className="text-sm text-gray-600">Transações protegidas e garantia de reembolso</p>
+              </motion.div>
               
-              <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg shadow-sm">
-                <ArrowRight className="w-8 h-8 text-primary mb-2" />
-                <h3 className="font-semibold">Rápido e Fácil</h3>
-                <p className="text-sm text-gray-600">Cadastro em poucos minutos</p>
-              </div>
+              <motion.div 
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/50 backdrop-blur-sm p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-primary/10 group col-span-full"
+              >
+                <div className="bg-[#9b87f5]/10 p-3 rounded-xl w-fit mb-3 group-hover:bg-[#9b87f5]/20 transition-colors">
+                  <ArrowRight className="w-8 h-8 text-[#9b87f5]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Descontos Especiais</h3>
+                <p className="text-sm text-gray-600">Preços exclusivos para membros em todos os eventos</p>
+              </motion.div>
             </div>
           </div>
         </motion.div>
