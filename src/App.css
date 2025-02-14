@@ -45,7 +45,7 @@
 }
 
 .dark .dark-card {
-  @apply bg-card/50 backdrop-blur-lg border-white/5;
+  @apply bg-black/50 backdrop-blur-lg border-white/5;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
