@@ -10,7 +10,6 @@ import { Lock, Mail, ArrowRight, User, Shield, Users } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
@@ -88,8 +87,8 @@ const UserRegister = () => {
                 <div className="bg-[#9b87f5]/10 p-3 rounded-xl w-fit mb-3 group-hover:bg-[#9b87f5]/20 transition-colors">
                   <Users className="w-8 h-8 text-[#9b87f5]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Eventos Exclusivos</h3>
-                <p className="text-sm text-gray-600">Acesso prioritário a eventos e experiências únicas</p>
+                <h3 className="font-semibold text-gray-900 mb-1">Viva Experiências Únicas</h3>
+                <p className="text-sm text-gray-600">Conecte-se com momentos inesquecíveis e faça parte de histórias extraordinárias</p>
               </motion.div>
               
               <motion.div 
@@ -100,7 +99,7 @@ const UserRegister = () => {
                   <Shield className="w-8 h-8 text-[#9b87f5]" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">Compra Segura</h3>
-                <p className="text-sm text-gray-600">Transações protegidas e garantia de reembolso</p>
+                <p className="text-sm text-gray-600">Transações protegidas e garantia de reembolso em todos os eventos</p>
               </motion.div>
               
               <motion.div 
@@ -110,8 +109,8 @@ const UserRegister = () => {
                 <div className="bg-[#9b87f5]/10 p-3 rounded-xl w-fit mb-3 group-hover:bg-[#9b87f5]/20 transition-colors">
                   <ArrowRight className="w-8 h-8 text-[#9b87f5]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Descontos Especiais</h3>
-                <p className="text-sm text-gray-600">Preços exclusivos para membros em todos os eventos</p>
+                <h3 className="font-semibold text-gray-900 mb-1">Tudo em Um Só Lugar</h3>
+                <p className="text-sm text-gray-600">Descubra, escolha e compre ingressos para os melhores eventos na palma da sua mão</p>
               </motion.div>
             </div>
           </div>
