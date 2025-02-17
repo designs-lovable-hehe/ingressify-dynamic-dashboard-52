@@ -21,6 +21,7 @@ import CompanyReview from "./pages/company/CompanyReview";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import NotFound from "./pages/NotFound";
 import ListLogo from "./pages/ListLogo";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/empresa/revisao" element={<CompanyReview />} />
           <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
           <Route path="/listLogo" element={<ListLogo />} />
+          <Route path="/precos" element={<Pricing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
