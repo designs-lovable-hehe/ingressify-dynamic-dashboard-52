@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Logo } from "./Logo";
-import { LogIn, Moon, Sun, CreditCard } from "lucide-react";
+import { LogIn, Moon, Sun } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
@@ -15,7 +15,6 @@ export const Header = () => {
     if (path === '#sobre' && location.pathname === '/sobre') return true;
     if (path === '#parceiros' && location.pathname === '/parceiros') return true;
     if (path === '#contato' && location.pathname.includes('contato')) return true;
-    if (path === '/precos' && location.pathname === '/precos') return true;
     return false;
   };
 
@@ -45,7 +44,7 @@ export const Header = () => {
           <nav className="hidden md:flex space-x-8">
             <motion.a
               href="#eventos"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 isActivePath('#eventos')
                   ? 'bg-primary text-white'
                   : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
@@ -56,7 +55,7 @@ export const Header = () => {
             </motion.a>
             <motion.a
               href="#sobre"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 isActivePath('#sobre')
                   ? 'bg-primary text-white'
                   : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
@@ -67,7 +66,7 @@ export const Header = () => {
             </motion.a>
             <motion.a
               href="#parceiros"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 isActivePath('#parceiros')
                   ? 'bg-primary text-white'
                   : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
@@ -76,19 +75,17 @@ export const Header = () => {
             >
               Parceiros
             </motion.a>
-            <Link to="/precos">
-              <motion.div
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                  isActivePath('/precos')
-                    ? 'bg-primary text-white'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
-                }`}
-                whileHover={{ scale: 1.05 }}
-              >
-                <CreditCard className="w-4 h-4" />
-                <span>Preços</span>
-              </motion.div>
-            </Link>
+            <motion.a
+              href="#contato"
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                isActivePath('#contato')
+                  ? 'bg-primary text-white'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
+              }`}
+              whileHover={{ scale: 1.05 }}
+            >
+              Contato
+            </motion.a>
           </nav>
           <Button
             variant="ghost"
