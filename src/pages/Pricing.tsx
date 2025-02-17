@@ -26,10 +26,10 @@ const PricingTier = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`relative p-8 rounded-3xl backdrop-blur-sm border transition-all duration-300 hover:translate-y-[-8px] ${
+      className={`relative p-8 rounded-3xl backdrop-blur-sm shadow-lg transition-all duration-300 hover:translate-y-[-8px] ${
         highlighted
-          ? 'glass-card bg-gradient-to-b from-primary/10 via-primary/5 to-transparent border-primary/20'
-          : 'glass-card'
+          ? 'bg-gradient-to-br from-primary/20 via-accent/10 to-transparent border-2 border-primary/20'
+          : 'bg-white/40 dark:bg-slate-900/40 border border-white/20 dark:border-white/10'
       }`}
     >
       {highlighted && (
@@ -37,26 +37,26 @@ const PricingTier = ({
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-sm font-medium rounded-full"
+          className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 bg-gradient-to-r from-primary to-accent text-white text-sm font-medium rounded-full shadow-lg"
         >
           Mais Popular
         </motion.div>
       )}
       
-      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${
-        highlighted ? 'bg-primary/20' : 'bg-gray-100 dark:bg-white/10'
+      <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto ${
+        highlighted ? 'bg-gradient-to-br from-primary/20 to-accent/20' : 'bg-gray-100 dark:bg-white/5'
       }`}>
-        <Icon className={`w-8 h-8 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
+        <Icon className={`w-10 h-10 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
       </div>
 
-      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
-      <div className="flex items-baseline mb-4">
-        <span className="text-5xl font-bold gradient-text">
+      <h3 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">{title}</h3>
+      <div className="flex items-baseline justify-center mb-4">
+        <span className={`text-5xl font-bold ${highlighted ? 'text-primary' : 'text-gray-900 dark:text-white'}`}>
           {price}
         </span>
         {price !== "Personalizado" && <span className="text-gray-500 dark:text-gray-400 ml-2 text-lg">/mês</span>}
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-8 min-h-[60px] text-lg">{description}</p>
+      <p className="text-gray-600 dark:text-gray-300 mb-8 min-h-[60px] text-lg text-center">{description}</p>
       
       <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
@@ -67,8 +67,8 @@ const PricingTier = ({
             transition={{ delay: index * 0.1 }}
             className="flex items-center gap-3"
           >
-            <div className={`p-1 rounded-full ${highlighted ? 'bg-primary/10' : 'bg-gray-100 dark:bg-white/10'}`}>
-              <Check className={`w-5 h-5 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
+            <div className={`p-1.5 rounded-full ${highlighted ? 'bg-primary/10' : 'bg-gray-100 dark:bg-white/5'}`}>
+              <Check className={`w-4 h-4 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
             </div>
             <span className="text-gray-700 dark:text-gray-200">{feature}</span>
           </motion.li>
@@ -76,10 +76,10 @@ const PricingTier = ({
       </ul>
 
       <Button
-        className={`w-full py-6 text-lg font-medium transition-all duration-300 ${
+        className={`w-full py-7 text-lg font-medium transition-all duration-300 ${
           highlighted
-            ? 'bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white hover:scale-[1.02]'
-            : 'hover-glow hover:scale-[1.02]'
+            ? 'bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white shadow-xl shadow-primary/20'
+            : 'bg-gray-900 dark:bg-white dark:text-gray-900 hover:opacity-90'
         }`}
       >
         Começar Agora
@@ -134,7 +134,7 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F1F0FB] to-white dark:from-slate-950 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-[#F1F0FB] via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
       <GeometricBackground />
       <Header />
       
@@ -143,7 +143,7 @@ const PricingPage = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold gradient-text mb-6"
+            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
           >
             Escolha o Plano Ideal para Seus Eventos
           </motion.h1>
@@ -170,9 +170,9 @@ const PricingPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-20 text-center max-w-2xl mx-auto dark-glow"
+          className="mt-20 text-center max-w-2xl mx-auto bg-white/30 dark:bg-slate-900/30 p-10 rounded-3xl backdrop-blur-sm border border-white/20 dark:border-white/10"
         >
-          <h2 className="text-3xl font-bold gradient-text mb-4">
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Precisa de Ajuda para Escolher?
           </h2>
           <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
@@ -181,7 +181,7 @@ const PricingPage = () => {
           <Button 
             variant="outline" 
             size="lg" 
-            className="glass-input text-lg font-medium hover:scale-105 transition-transform duration-300"
+            className="bg-white/50 dark:bg-slate-900/50 text-lg font-medium hover:scale-105 transition-transform duration-300 border-2 border-primary/20"
           >
             Fale com um Especialista
           </Button>
