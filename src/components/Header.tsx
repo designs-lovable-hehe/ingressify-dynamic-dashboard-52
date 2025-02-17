@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Logo } from "./Logo";
-import { LogIn, Moon, Sun, CreditCard, Calendar, Info, Users } from "lucide-react";
+import { LogIn, Moon, Sun, CreditCard, CalendarCheck, Info, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
@@ -52,7 +52,7 @@ export const Header = () => {
               }`}
               whileHover={{ scale: 1.05 }}
             >
-              <Calendar className="w-4 h-4" />
+              <CalendarCheck className="w-4 h-4 stroke-[2.5]" />
               <span>Eventos</span>
             </motion.a>
             <motion.a
