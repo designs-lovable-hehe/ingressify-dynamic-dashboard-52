@@ -28,45 +28,58 @@ const PricingTier = ({
       transition={{ duration: 0.5 }}
       className={`relative p-8 rounded-3xl backdrop-blur-sm border transition-all duration-300 hover:translate-y-[-8px] ${
         highlighted
-          ? 'bg-gradient-to-b from-primary/10 via-primary/5 to-transparent border-primary/20 dark:from-primary/20 dark:via-primary/10 dark:to-transparent'
-          : 'bg-white/50 dark:bg-black/20 border-gray-200/50 dark:border-white/10'
+          ? 'glass-card bg-gradient-to-b from-primary/10 via-primary/5 to-transparent border-primary/20'
+          : 'glass-card'
       }`}
     >
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-sm font-medium rounded-full">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+          className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-sm font-medium rounded-full"
+        >
           Mais Popular
-        </div>
+        </motion.div>
       )}
       
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
+      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${
         highlighted ? 'bg-primary/20' : 'bg-gray-100 dark:bg-white/10'
       }`}>
-        <Icon className={`w-6 h-6 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
+        <Icon className={`w-8 h-8 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
       </div>
 
-      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
+      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
       <div className="flex items-baseline mb-4">
-        <span className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <span className="text-5xl font-bold gradient-text">
           {price}
         </span>
-        {price !== "Personalizado" && <span className="text-gray-500 dark:text-gray-400 ml-2">/mês</span>}
+        {price !== "Personalizado" && <span className="text-gray-500 dark:text-gray-400 ml-2 text-lg">/mês</span>}
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-8 min-h-[60px]">{description}</p>
+      <p className="text-gray-600 dark:text-gray-300 mb-8 min-h-[60px] text-lg">{description}</p>
       
       <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
-          <li key={index} className="flex items-center gap-3">
-            <Check className="w-5 h-5 text-primary" />
+          <motion.li 
+            key={index}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="flex items-center gap-3"
+          >
+            <div className={`p-1 rounded-full ${highlighted ? 'bg-primary/10' : 'bg-gray-100 dark:bg-white/10'}`}>
+              <Check className={`w-5 h-5 ${highlighted ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`} />
+            </div>
             <span className="text-gray-700 dark:text-gray-200">{feature}</span>
-          </li>
+          </motion.li>
         ))}
       </ul>
 
       <Button
-        className={`w-full py-6 text-lg ${
+        className={`w-full py-6 text-lg font-medium transition-all duration-300 ${
           highlighted
-            ? 'bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white'
-            : 'bg-gray-900 dark:bg-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100'
+            ? 'bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white hover:scale-[1.02]'
+            : 'hover-glow hover:scale-[1.02]'
         }`}
       >
         Começar Agora
@@ -130,7 +143,7 @@ const PricingPage = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6"
+            className="text-5xl md:text-6xl font-bold gradient-text mb-6"
           >
             Escolha o Plano Ideal para Seus Eventos
           </motion.h1>
@@ -157,18 +170,18 @@ const PricingPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-20 text-center max-w-2xl mx-auto"
+          className="mt-20 text-center max-w-2xl mx-auto dark-glow"
         >
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl font-bold gradient-text mb-4">
             Precisa de Ajuda para Escolher?
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
+          <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
             Nossa equipe está pronta para ajudar você a encontrar o plano perfeito para suas necessidades específicas.
           </p>
           <Button 
             variant="outline" 
             size="lg" 
-            className="dark:border-white/10 dark:text-white dark:hover:bg-white/5"
+            className="glass-input text-lg font-medium hover:scale-105 transition-transform duration-300"
           >
             Fale com um Especialista
           </Button>
