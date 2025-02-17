@@ -5,11 +5,10 @@ import { LogIn, Moon, Sun } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
-import { getInitialTheme, setTheme } from "@/utils/theme";
 
 export const Header = () => {
   const location = useLocation();
-  const [isDark, setIsDark] = useState(getInitialTheme);
+  const [isDark, setIsDark] = useState(false);
 
   const isActivePath = (path: string) => {
     if (path === '#eventos' && location.pathname === '/eventos') return true;
@@ -20,14 +19,21 @@ export const Header = () => {
   };
 
   const toggleTheme = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-    setTheme(newTheme);
+    setIsDark(!isDark);
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
   };
 
-  // Apply theme on initial load
+  // Check for system preference on component mount
   useEffect(() => {
-    setTheme(isDark);
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDark(isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   return (
@@ -90,7 +96,7 @@ export const Header = () => {
             {isDark ? (
               <Sun className="h-5 w-5 text-yellow-500 hover:text-yellow-400 transition-colors" />
             ) : (
-              <Moon className="h-5 w-5 text-slate-700 hover:text-slate-900 transition-colors dark:text-gray-400 dark:hover:text-gray-300" />
+              <Moon className="h-5 w-5 text-slate-700 hover:text-slate-900 transition-colors" />
             )}
           </Button>
           <Link to="/login">
