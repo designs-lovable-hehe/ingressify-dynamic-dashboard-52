@@ -21,13 +21,13 @@ interface ConfirmationCodeEmailProps {
 }
 
 export const ConfirmationCodeEmail = ({
-  code,
+  code = "000000", // Valor padrão caso não seja fornecido
   username = "usuário",
 }: ConfirmationCodeEmailProps) => {
   const previewText = "Seu código de confirmação Ingresso Nitro";
 
-  // Garante que o código tenha 6 dígitos, preenchendo com zeros à esquerda se necessário
-  const formattedCode = code.padStart(6, '0').slice(0, 6);
+  // Garante que o código seja uma string e tenha 6 dígitos
+  const formattedCode = (code || "").toString().padStart(6, '0').slice(0, 6);
   const codeArray = formattedCode.split('');
 
   return (
