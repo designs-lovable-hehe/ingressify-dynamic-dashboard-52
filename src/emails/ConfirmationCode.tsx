@@ -38,47 +38,43 @@ export const ConfirmationCodeEmail = ({
         <Body className="bg-[#E5DEFF] my-auto mx-auto font-sans">
           <Container className="max-w-[600px] mx-auto">
             {/* Header Banner */}
-            <Section className="bg-gradient-to-br from-[#9b87f5] via-[#9b87f5]/90 to-[#7E69AB] p-8 rounded-t-lg">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg flex items-center justify-center">
-                  <Text className="text-2xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] bg-clip-text text-transparent m-0">
-                    IN
-                  </Text>
-                </div>
-                <Text className="text-2xl font-bold text-white m-0">
-                  Ingresso Nitro
+            <Section className="bg-[#9b87f5] p-8 rounded-t-lg text-center">
+              <div className="inline-block bg-white/80 w-10 h-10 align-middle rounded-lg">
+                <Text className="text-[#9b87f5] text-2xl font-bold leading-10 m-0">
+                  IN
                 </Text>
               </div>
-              <Text className="text-white/80 text-center text-[16px] m-0 mt-2">
+              <Text className="text-white text-2xl font-bold inline-block ml-2 align-middle m-0">
+                Ingresso Nitro
+              </Text>
+              <Text className="text-white/80 text-center text-[16px] block mt-2 m-0">
                 Sua plataforma de eventos
               </Text>
             </Section>
 
             {/* Main Content */}
-            <Section className="backdrop-blur-xl bg-white/90 px-8 py-12">
+            <Section className="bg-white/90 px-8 py-12">
               <Text className="text-[#1A1F2C] text-[16px] leading-[24px] mb-6">
                 Olá <strong>{username}</strong>,
               </Text>
               
               <Text className="text-[#1A1F2C] text-[16px] leading-[24px]">
-                Para garantir a segurança da sua conta, use o código abaixo para confirmar sua identidade:
+                Use o código abaixo para confirmar sua identidade:
               </Text>
 
               {/* Code Display */}
-              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg px-6 py-8 my-8">
-                <div className="flex justify-center items-center gap-2">
-                  {codeArray.map((digit, index) => (
-                    <div 
-                      key={index}
-                      className="w-12 h-14 flex items-center justify-center bg-white rounded-lg border-2 border-[#9b87f5] shadow-sm"
-                    >
-                      <Text className="text-[#9b87f5] text-[24px] font-mono font-bold m-0">
-                        {digit}
-                      </Text>
-                    </div>
-                  ))}
-                </div>
-                <Text className="text-[#7E69AB] text-[14px] text-center mt-4 mb-0">
+              <Section className="bg-[#E5DEFF] rounded-lg px-6 py-8 my-8 text-center">
+                {codeArray.map((digit, index) => (
+                  <div 
+                    key={index}
+                    className="inline-block w-12 h-14 bg-white rounded-lg border-2 border-[#9b87f5] mx-1 align-middle"
+                  >
+                    <Text className="text-[#9b87f5] text-[24px] font-mono font-bold leading-[56px] m-0">
+                      {digit}
+                    </Text>
+                  </div>
+                ))}
+                <Text className="text-[#7E69AB] text-[14px] block mt-4 mb-0">
                   Este código expira em 5 minutos
                 </Text>
               </Section>
@@ -90,7 +86,7 @@ export const ConfirmationCodeEmail = ({
               <Hr className="border-[#9b87f5]/20 my-8" />
 
               {/* Security Tips */}
-              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg p-6 mt-6">
+              <Section className="bg-[#E5DEFF] rounded-lg p-6 mt-6">
                 <Text className="text-[#1A1F2C] text-[14px] leading-[24px] m-0">
                   <strong>🔒 Dica de segurança:</strong>
                 </Text>
@@ -101,8 +97,8 @@ export const ConfirmationCodeEmail = ({
             </Section>
 
             {/* Footer */}
-            <Section className="bg-[#1A1F2C] px-8 py-6 rounded-b-lg">
-              <Text className="text-white/80 text-[14px] text-center">
+            <Section className="bg-[#1A1F2C] px-8 py-6 rounded-b-lg text-center">
+              <Text className="text-white/80 text-[14px]">
                 Precisa de ajuda? Entre em contato com nosso{" "}
                 <Link
                   href="mailto:suporte@ingresonitro.com"
@@ -111,7 +107,7 @@ export const ConfirmationCodeEmail = ({
                   suporte
                 </Link>
               </Text>
-              <Text className="text-white/60 text-[12px] text-center mt-4">
+              <Text className="text-white/60 text-[12px] mt-4">
                 © 2024 Ingresso Nitro. Todos os direitos reservados.
               </Text>
             </Section>
