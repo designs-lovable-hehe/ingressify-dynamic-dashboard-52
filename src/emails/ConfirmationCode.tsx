@@ -26,6 +26,10 @@ export const ConfirmationCodeEmail = ({
 }: ConfirmationCodeEmailProps) => {
   const previewText = "Seu código de confirmação Ingresso Nitro";
 
+  // Garante que o código tenha 6 dígitos, preenchendo com zeros à esquerda se necessário
+  const formattedCode = code.padStart(6, '0').slice(0, 6);
+  const codeArray = formattedCode.split('');
+
   return (
     <Html>
       <Head />
@@ -54,11 +58,20 @@ export const ConfirmationCodeEmail = ({
               </Text>
 
               {/* Code Display */}
-              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg px-6 py-8 my-8 text-center">
-                <Text className="text-[#9b87f5] text-[36px] font-mono font-bold tracking-[0.5em] m-0">
-                  {code}
-                </Text>
-                <Text className="text-[#7E69AB] text-[14px] mt-4 mb-0">
+              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg px-6 py-8 my-8">
+                <div className="flex justify-center items-center gap-2">
+                  {codeArray.map((digit, index) => (
+                    <div 
+                      key={index}
+                      className="w-12 h-14 flex items-center justify-center bg-white rounded-lg border-2 border-[#9b87f5] shadow-sm"
+                    >
+                      <Text className="text-[#9b87f5] text-[24px] font-mono font-bold m-0">
+                        {digit}
+                      </Text>
+                    </div>
+                  ))}
+                </div>
+                <Text className="text-[#7E69AB] text-[14px] text-center mt-4 mb-0">
                   Este código expira em 5 minutos
                 </Text>
               </Section>
