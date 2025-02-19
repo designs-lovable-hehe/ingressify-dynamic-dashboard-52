@@ -24,19 +24,19 @@ export const ConfirmationCodeEmail = ({
   code,
   username = "usuário",
 }: ConfirmationCodeEmailProps) => {
-  const previewText = "Seu código de confirmação Ingressify";
+  const previewText = "Seu código de confirmação Ingresso Nitro";
 
   return (
     <Html>
       <Head />
       <Preview>{previewText}</Preview>
       <Tailwind>
-        <Body className="bg-[#F1F0FB] my-auto mx-auto font-sans">
+        <Body className="bg-[#E5DEFF] my-auto mx-auto font-sans">
           <Container className="max-w-[600px] mx-auto">
             {/* Header Banner */}
             <Section className="bg-gradient-to-br from-[#9b87f5] via-[#9b87f5]/90 to-[#7E69AB] p-8 rounded-t-lg">
               <Heading className="text-white text-[32px] font-bold text-center m-0">
-                Ingressify
+                Ingresso Nitro
               </Heading>
               <Text className="text-white/80 text-center text-[16px] m-0 mt-2">
                 Sua plataforma de eventos
@@ -54,7 +54,7 @@ export const ConfirmationCodeEmail = ({
               </Text>
 
               {/* Code Display */}
-              <Section className="backdrop-blur-xl bg-[#F1F0FB]/90 rounded-lg px-6 py-8 my-8 text-center">
+              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg px-6 py-8 my-8 text-center">
                 <Text className="text-[#9b87f5] text-[36px] font-mono font-bold tracking-[0.5em] m-0">
                   {code}
                 </Text>
@@ -70,7 +70,7 @@ export const ConfirmationCodeEmail = ({
               <Hr className="border-[#9b87f5]/20 my-8" />
 
               {/* Security Tips */}
-              <Section className="backdrop-blur-xl bg-[#F1F0FB]/90 rounded-lg p-6 mt-6">
+              <Section className="backdrop-blur-xl bg-[#E5DEFF] rounded-lg p-6 mt-6">
                 <Text className="text-[#1A1F2C] text-[14px] leading-[24px] m-0">
                   <strong>🔒 Dica de segurança:</strong>
                 </Text>
@@ -85,14 +85,14 @@ export const ConfirmationCodeEmail = ({
               <Text className="text-white/80 text-[14px] text-center">
                 Precisa de ajuda? Entre em contato com nosso{" "}
                 <Link
-                  href="mailto:suporte@ingressify.com"
+                  href="mailto:suporte@ingresonitro.com"
                   className="text-[#9b87f5] underline"
                 >
                   suporte
                 </Link>
               </Text>
               <Text className="text-white/60 text-[12px] text-center mt-4">
-                © 2024 Ingressify. Todos os direitos reservados.
+                © 2024 Ingresso Nitro. Todos os direitos reservados.
               </Text>
             </Section>
           </Container>
