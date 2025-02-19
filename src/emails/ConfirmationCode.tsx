@@ -39,9 +39,16 @@ export const ConfirmationCodeEmail = ({
           <Container className="max-w-[600px] mx-auto">
             {/* Header Banner */}
             <Section className="bg-gradient-to-br from-[#9b87f5] via-[#9b87f5]/90 to-[#7E69AB] p-8 rounded-t-lg">
-              <Heading className="text-white text-[32px] font-bold text-center m-0">
-                Ingresso Nitro
-              </Heading>
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="w-10 h-10 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg flex items-center justify-center">
+                  <Text className="text-2xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#7E69AB] bg-clip-text text-transparent m-0">
+                    IN
+                  </Text>
+                </div>
+                <Text className="text-2xl font-bold text-white m-0">
+                  Ingresso Nitro
+                </Text>
+              </div>
               <Text className="text-white/80 text-center text-[16px] m-0 mt-2">
                 Sua plataforma de eventos
               </Text>
