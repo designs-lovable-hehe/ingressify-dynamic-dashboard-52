@@ -1,15 +1,17 @@
+
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Logo } from "@/components/Logo";
 import { Lock, Mail, ArrowRight, User, Shield, Users } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import VerificationModal from "@/components/VerificationModal";
 
 const formSchema = z.object({
   name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
@@ -25,6 +27,8 @@ const UserRegister = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,11 +44,14 @@ const UserRegister = () => {
     setIsLoading(true);
     try {
       console.log(values);
+      // Instead of redirecting, show the verification modal
+      setUserEmail(values.email);
+      setIsModalOpen(true);
+      
       toast({
-        title: "Cadastro realizado com sucesso!",
-        description: "Redirecionando para a página de login...",
+        title: "Cadastro iniciado com sucesso!",
+        description: "Verifique seu email para confirmar sua conta.",
       });
-      navigate("/login");
     } catch (error) {
       toast({
         variant: "destructive",
@@ -56,6 +63,12 @@ const UserRegister = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Optionally redirect to login page after closing modal
+    // navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-primary/10 flex flex-col">
       <div className="container mx-auto px-4 py-8">
@@ -65,6 +78,7 @@ const UserRegister = () => {
       </div>
       
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-center gap-12 px-4">
+        {/* Left column content */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -116,6 +130,7 @@ const UserRegister = () => {
           </div>
         </motion.div>
 
+        {/* Right column - Registration form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -239,6 +254,13 @@ const UserRegister = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Verification Modal */}
+      <VerificationModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        email={userEmail} 
+      />
     </div>
   );
 };
