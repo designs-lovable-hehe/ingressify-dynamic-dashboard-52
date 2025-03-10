@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -248,6 +247,14 @@ const UserRegister = () => {
                   className="font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
                   Faça login aqui
+                </Link>
+              </p>
+              <p className="text-sm text-gray-600 mt-2">
+                <Link
+                  to="/recuperar-acesso"
+                  className="font-semibold text-primary hover:text-primary/80 transition-colors"
+                >
+                  Não consigo acessar minha conta
                 </Link>
               </p>
             </div>

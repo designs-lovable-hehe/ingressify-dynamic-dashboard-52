@@ -14,6 +14,7 @@ import PartnerLogin from "./pages/PartnerLogin";
 import PartnerRegister from "./pages/PartnerRegister";
 import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
+import AccountRecovery from "./pages/AccountRecovery";
 import CompanyBasicInfo from "./pages/company/CompanyBasicInfo";
 import CompanyAddress from "./pages/company/CompanyAddress";
 import CompanyDocuments from "./pages/company/CompanyDocuments";
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/cadastro" element={<UserRegister />} />
+          <Route path="/recuperar-acesso" element={<AccountRecovery />} />
           <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
           <Route path="/empresa/endereco" element={<CompanyAddress />} />
           <Route path="/empresa/documentos" element={<CompanyDocuments />} />
