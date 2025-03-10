@@ -128,10 +128,10 @@ const AccountRecovery = () => {
                 )}
               />
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col space-y-3">
                 <Button
                   type="submit"
-                  className="bg-primary hover:bg-primary/90 text-white transition-colors"
+                  className="w-full bg-primary hover:bg-primary/90 text-white transition-colors"
                   disabled={isLoading}
                 >
                   {isLoading ? "Enviando..." : "Enviar"}
@@ -140,7 +140,7 @@ const AccountRecovery = () => {
                 <Button
                   type="button"
                   onClick={handleResendCode}
-                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-colors"
+                  className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-colors"
                   disabled={isResending || (!emailSent && !form.formState.isValid)}
                 >
                   {isResending ? (
