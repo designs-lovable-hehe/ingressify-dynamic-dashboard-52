@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -8,6 +9,7 @@ import { Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
@@ -24,6 +26,7 @@ interface RegisterFormProps {
 }
 
 const RegisterForm = ({ onSubmitSuccess }: RegisterFormProps) => {
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,8 +45,17 @@ const RegisterForm = ({ onSubmitSuccess }: RegisterFormProps) => {
       console.log(values);
       // Call the parent's onSubmitSuccess function with the email
       onSubmitSuccess(values.email);
+      
+      toast({
+        title: "Cadastro iniciado com sucesso!",
+        description: "Verifique seu email para confirmar sua conta.",
+      });
     } catch (error) {
-      console.error("Error during registration:", error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao fazer cadastro",
+        description: "Verifique seus dados e tente novamente",
+      });
     } finally {
       setIsLoading(false);
     }
