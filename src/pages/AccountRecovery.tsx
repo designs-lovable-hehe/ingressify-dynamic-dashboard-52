@@ -137,21 +137,24 @@ const AccountRecovery = () => {
                   {isLoading ? "Enviando..." : "Enviar"}
                 </Button>
                 
-                <Button
+                <button
                   type="button"
                   onClick={handleResendCode}
-                  className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-colors"
+                  className="text-primary hover:text-primary/80 text-sm flex items-center justify-center mt-2 transition-colors"
                   disabled={isResending || (!emailSent && !form.formState.isValid)}
                 >
                   {isResending ? (
-                    "Reenviando..."
+                    <span className="flex items-center">
+                      <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
+                      Enviando...
+                    </span>
                   ) : (
-                    <>
-                      <RefreshCw className="h-4 w-4 mr-1" />
-                      Reenviar
-                    </>
+                    <span className="flex items-center">
+                      <RefreshCw className="h-3 w-3 mr-1" />
+                      Não recebeu um código de confirmação? Reenvie
+                    </span>
                   )}
-                </Button>
+                </button>
               </div>
             </form>
           </Form>
