@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, ArrowLeft, RefreshCw } from "lucide-react";
+import { Mail, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -34,10 +33,7 @@ const AccountRecovery = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
-      // Here you would call your API to request a confirmation email
       console.log("Requesting confirmation email for:", values.email);
-      
-      // Simulate API call success
       setTimeout(() => {
         toast({
           title: "Email enviado com sucesso!",
@@ -60,10 +56,7 @@ const AccountRecovery = () => {
   const handleResendCode = async () => {
     setIsResending(true);
     try {
-      // Here you would call your API to resend confirmation email
       console.log("Resending confirmation email to:", userEmail || form.getValues("email"));
-      
-      // Simulate API call success
       setTimeout(() => {
         toast({
           title: "Novo código enviado!",
@@ -145,12 +138,10 @@ const AccountRecovery = () => {
                 >
                   {isResending ? (
                     <span className="flex items-center">
-                      <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
                       Enviando...
                     </span>
                   ) : (
-                    <span className="flex items-center">
-                      <RefreshCw className="h-3 w-3 mr-1" />
+                    <span>
                       Não recebeu um código de confirmação? Reenvie
                     </span>
                   )}
