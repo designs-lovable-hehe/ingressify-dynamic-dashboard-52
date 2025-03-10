@@ -26,14 +26,6 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
             <div className="w-20 h-20 flex items-center justify-center bg-[#E5DEFF] rounded-full mb-4">
               <Mail className="h-9 w-9 text-primary" />
             </div>
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 500 }}
-              className="absolute -right-2 -top-2 bg-green-100 rounded-full p-1.5"
-            >
-              <CheckCircle className="h-5 w-5 text-green-600" />
-            </motion.div>
           </div>
           
           <DialogTitle className="text-2xl font-bold text-gray-900">Conta criada com sucesso!</DialogTitle>
@@ -51,6 +43,15 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
             {email}
           </div>
           
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 500 }}
+            className="flex justify-center my-2"
+          >
+            <CheckCircle className="h-7 w-7 text-green-600" />
+          </motion.div>
+          
           <div className="text-center text-gray-600 text-sm">
             Por favor, verifique sua caixa de entrada e spam para completar o cadastro. 
             O link expira em 24 horas.
@@ -62,7 +63,7 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
             transition={{ delay: 0.5 }}
             className="flex items-center justify-center text-sm text-gray-700 gap-2 bg-[#F7F5FF] p-3 rounded-lg border border-[#E5DEFF]"
           >
-            <CheckCircle className="h-4 w-4 text-primary" />
+            <PartyPopper className="h-4 w-4 text-primary" />
             <span>Após a confirmação, você poderá fazer login na plataforma.</span>
           </motion.div>
         </div>
