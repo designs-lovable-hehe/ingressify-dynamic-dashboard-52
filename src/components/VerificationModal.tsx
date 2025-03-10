@@ -20,20 +20,12 @@ interface VerificationModalProps {
 const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white rounded-xl border-0 shadow-xl p-6 text-center">
+      <DialogContent className="sm:max-w-md bg-white rounded-xl border-0 shadow-xl p-6">
         <DialogHeader className="text-center space-y-4">
-          <div className="relative mx-auto">
+          <div className="mx-auto">
             <div className="w-20 h-20 flex items-center justify-center bg-[#E5DEFF] rounded-full mx-auto">
               <Mail className="h-9 w-9 text-primary" />
             </div>
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: "spring", stiffness: 500 }}
-              className="absolute -right-2 -top-2 bg-green-100 rounded-full p-1.5"
-            >
-              <CheckCircle className="h-5 w-5 text-green-600" />
-            </motion.div>
           </div>
           
           <div className="space-y-2">
@@ -71,7 +63,18 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
           </motion.div>
         </div>
         
-        <div className="mt-6">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, type: "spring", stiffness: 400 }}
+          className="mt-6 flex justify-center"
+        >
+          <div className="bg-green-100 rounded-full p-2 mb-2">
+            <CheckCircle className="h-6 w-6 text-green-600" />
+          </div>
+        </motion.div>
+        
+        <div>
           <Button 
             onClick={onClose} 
             className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity py-5 text-base"
