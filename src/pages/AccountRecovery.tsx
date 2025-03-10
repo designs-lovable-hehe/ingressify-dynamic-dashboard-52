@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,9 @@ const AccountRecovery = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,8 +34,8 @@ const AccountRecovery = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
-      // Here you would call your API to request a new confirmation email
-      console.log("Requesting new confirmation email for:", values.email);
+      // Here you would call your API to request a confirmation email
+      console.log("Requesting confirmation email for:", values.email);
       
       // Simulate API call success
       setTimeout(() => {
@@ -40,6 +43,8 @@ const AccountRecovery = () => {
           title: "Email enviado com sucesso!",
           description: "Verifique sua caixa de entrada para instruções.",
         });
+        setUserEmail(values.email);
+        setEmailSent(true);
         setIsLoading(false);
       }, 1500);
     } catch (error) {
@@ -49,6 +54,30 @@ const AccountRecovery = () => {
         description: "Tente novamente mais tarde.",
       });
       setIsLoading(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setIsResending(true);
+    try {
+      // Here you would call your API to resend confirmation email
+      console.log("Resending confirmation email to:", userEmail || form.getValues("email"));
+      
+      // Simulate API call success
+      setTimeout(() => {
+        toast({
+          title: "Novo código enviado!",
+          description: "Verifique sua caixa de entrada para o novo código.",
+        });
+        setIsResending(false);
+      }, 1500);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao reenviar código",
+        description: "Tente novamente mais tarde.",
+      });
+      setIsResending(false);
     }
   };
 
@@ -72,7 +101,7 @@ const AccountRecovery = () => {
             </div>
             <h2 className="text-2xl font-bold text-gray-900">Recuperar Acesso</h2>
             <p className="text-gray-600 mt-2">
-              Digite seu email para receber um novo link de confirmação.
+              Digite seu email para receber um link de confirmação.
             </p>
           </div>
 
@@ -99,13 +128,31 @@ const AccountRecovery = () => {
                 )}
               />
 
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-white transition-colors"
-                disabled={isLoading}
-              >
-                {isLoading ? "Enviando..." : "Enviar link de confirmação"}
-              </Button>
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  type="submit"
+                  className="bg-primary hover:bg-primary/90 text-white transition-colors"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Enviando..." : "Enviar"}
+                </Button>
+                
+                <Button
+                  type="button"
+                  onClick={handleResendCode}
+                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-colors"
+                  disabled={isResending || (!emailSent && !form.formState.isValid)}
+                >
+                  {isResending ? (
+                    "Reenviando..."
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4 mr-1" />
+                      Reenviar
+                    </>
+                  )}
+                </Button>
+              </div>
             </form>
           </Form>
           
