@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, ArrowLeft, CheckCircle } from "lucide-react";
+import { Mail, ArrowLeft, CheckCircle, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ const AccountRecovery = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,6 +58,23 @@ const AccountRecovery = () => {
   const handleResend = () => {
     setIsSuccess(false);
     form.reset();
+  };
+
+  const handleResendCode = () => {
+    const email = form.getValues().email;
+    setIsResending(true);
+    
+    // Here you would call your API to resend the verification code
+    console.log("Resending verification code to:", email);
+    
+    // Simulate API call
+    setTimeout(() => {
+      toast({
+        title: "Código reenviado!",
+        description: "Um novo código foi enviado para o seu email.",
+      });
+      setIsResending(false);
+    }, 1500);
   };
 
   return (
@@ -134,6 +152,20 @@ const AccountRecovery = () => {
                   <p className="font-medium text-gray-800 break-all">
                     {form.getValues().email}
                   </p>
+                  
+                  <div className="mt-6 pt-4 border-t border-[#E5DEFF]">
+                    <p className="text-sm text-gray-600 mb-2">Não recebeu um código?</p>
+                    <Button 
+                      onClick={handleResendCode} 
+                      variant="outline" 
+                      className="bg-white text-primary border-primary hover:bg-primary/5"
+                      disabled={isResending}
+                      size="sm"
+                    >
+                      <RefreshCw className={`h-4 w-4 mr-2 ${isResending ? 'animate-spin' : ''}`} />
+                      {isResending ? "Reenviando..." : "Reenviar código"}
+                    </Button>
+                  </div>
                 </div>
                 
                 <div className="text-center">
