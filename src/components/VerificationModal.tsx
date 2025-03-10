@@ -19,16 +19,16 @@ interface VerificationModalProps {
 const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white/90 backdrop-blur-md border border-primary/20">
+      <DialogContent className="sm:max-w-md bg-white border border-primary/20">
         <DialogHeader className="text-center">
           <div className="mx-auto w-16 h-16 flex items-center justify-center bg-[#E5DEFF] rounded-full mb-4">
             <Mail className="h-8 w-8 text-[#9b87f5]" />
           </div>
-          <DialogTitle className="text-2xl font-bold">Verifique seu email</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-gray-900">Verifique seu email</DialogTitle>
         </DialogHeader>
         
         <div className="mt-2 space-y-4">
-          <DialogDescription className="text-center">
+          <DialogDescription className="text-center text-gray-600">
             Enviamos um link de confirmação para o email:
           </DialogDescription>
           
@@ -36,12 +36,12 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
             {email}
           </div>
           
-          <DialogDescription className="text-center">
+          <DialogDescription className="text-center text-gray-600">
             Por favor, verifique sua caixa de entrada e spam para completar o cadastro. 
             O link expira em 24 horas.
           </DialogDescription>
           
-          <div className="flex items-center justify-center text-sm text-[#8E9196] gap-2 bg-[#F7F5FF] p-3 rounded-lg border border-[#E5DEFF]">
+          <div className="flex items-center justify-center text-sm text-gray-700 gap-2 bg-[#F7F5FF] p-3 rounded-lg border border-[#E5DEFF]">
             <CheckCircle className="h-4 w-4 text-[#9b87f5]" />
             <span>Após a confirmação, você poderá fazer login na plataforma.</span>
           </div>
@@ -54,15 +54,6 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
           >
             Entendi
           </Button>
-          
-          <div className="text-center mt-3">
-            <button 
-              onClick={onClose} 
-              className="text-sm text-[#9b87f5] hover:text-[#8571e0] underline-offset-2 underline transition-colors"
-            >
-              Reenviar email de confirmação
-            </button>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
