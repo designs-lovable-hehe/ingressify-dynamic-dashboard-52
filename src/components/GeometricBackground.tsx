@@ -1,12 +1,25 @@
 
 import { motion } from "framer-motion";
 
-export const GeometricBackground = () => {
+type GeometricBackgroundProps = {
+  status?: "error" | "success" | "loading";
+};
+
+export const GeometricBackground = ({ status }: GeometricBackgroundProps) => {
+  // Determine circle colors based on status
+  const primaryColor = status === "error" ? "bg-red-500/5" : "bg-primary/5";
+  const secondaryColor = status === "error" ? "bg-red-400/5" : "bg-secondary/5";
+  const primaryShapeColor = status === "error" ? "bg-red-500/10" : "bg-primary/10";
+  const secondaryShapeColor = status === "error" ? "bg-red-400/10" : "bg-secondary/10";
+  const primarySquareColor = status === "error" ? "bg-red-500/8" : "bg-primary/8";
+  const secondarySquareColor = status === "error" ? "bg-red-400/8" : "bg-secondary/8";
+  const smallElementColor = status === "error" ? "bg-red-500/20" : "bg-primary/20";
+
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-b from-white to-gray-50">
       {/* Large circles */}
       <motion.div
-        className="absolute -top-20 -left-20 w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-3xl"
+        className={`absolute -top-20 -left-20 w-[40rem] h-[40rem] ${primaryColor} rounded-full blur-3xl`}
         animate={{
           scale: [1, 1.2, 1],
           x: [0, 50, 0],
@@ -20,7 +33,7 @@ export const GeometricBackground = () => {
       />
       
       <motion.div
-        className="absolute -bottom-40 -right-40 w-[45rem] h-[45rem] bg-secondary/5 rounded-full blur-3xl"
+        className={`absolute -bottom-40 -right-40 w-[45rem] h-[45rem] ${secondaryColor} rounded-full blur-3xl`}
         animate={{
           scale: [1.2, 1, 1.2],
           x: [0, -50, 0],
@@ -35,7 +48,7 @@ export const GeometricBackground = () => {
 
       {/* Rotating triangles */}
       <motion.div
-        className="absolute top-1/4 right-1/4 w-40 h-40 bg-primary/10"
+        className={`absolute top-1/4 right-1/4 w-40 h-40 ${primaryShapeColor}`}
         style={{
           clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
         }}
@@ -51,7 +64,7 @@ export const GeometricBackground = () => {
       />
 
       <motion.div
-        className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-secondary/10"
+        className={`absolute bottom-1/4 left-1/4 w-32 h-32 ${secondaryShapeColor}`}
         style={{
           clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
         }}
@@ -68,7 +81,7 @@ export const GeometricBackground = () => {
 
       {/* Floating squares */}
       <motion.div
-        className="absolute top-1/3 left-1/3 w-24 h-24 bg-primary/8 rounded-lg blur-xl"
+        className={`absolute top-1/3 left-1/3 w-24 h-24 ${primarySquareColor} rounded-lg blur-xl`}
         animate={{
           y: [0, -30, 0],
           rotate: [0, 45, 0],
@@ -81,7 +94,7 @@ export const GeometricBackground = () => {
       />
 
       <motion.div
-        className="absolute bottom-1/3 right-1/3 w-32 h-32 bg-secondary/8 rounded-lg blur-xl"
+        className={`absolute bottom-1/3 right-1/3 w-32 h-32 ${secondarySquareColor} rounded-lg blur-xl`}
         animate={{
           y: [0, 30, 0],
           rotate: [45, 0, 45],
@@ -97,7 +110,7 @@ export const GeometricBackground = () => {
       {Array.from({ length: 5 }).map((_, index) => (
         <motion.div
           key={index}
-          className="absolute w-4 h-4 bg-primary/20 rounded-full"
+          className={`absolute w-4 h-4 ${smallElementColor} rounded-full`}
           style={{
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,

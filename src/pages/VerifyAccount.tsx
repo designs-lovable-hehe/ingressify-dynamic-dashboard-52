@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -18,7 +17,6 @@ const VerifyAccount = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate progress bar advancing
     const timer = setInterval(() => {
       setProgress((prevProgress) => {
         if (prevProgress >= 100) {
@@ -29,11 +27,8 @@ const VerifyAccount = () => {
       });
     }, 50);
 
-    // Simulate verification process
     const verifyToken = setTimeout(() => {
       if (token) {
-        // Here you would normally validate the token with your backend
-        // For now, we'll just simulate success (in a real app, this would be an API call)
         setVerificationState("success");
       } else {
         setVerificationState("error");
@@ -73,7 +68,6 @@ const VerifyAccount = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="relative">
-        {/* Animated circles */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="absolute w-28 h-28 rounded-full border-4 border-primary/20"
@@ -101,7 +95,6 @@ const VerifyAccount = () => {
           />
         </div>
         
-        {/* SVG Progress Circle */}
         <div className="w-24 h-24 relative">
           <svg className="w-24 h-24 transform rotate-[-90deg]">
             <motion.circle
@@ -147,7 +140,6 @@ const VerifyAccount = () => {
         Estamos validando seu token de verificação. Por favor, aguarde um momento...
       </p>
       
-      {/* Animated steps */}
       <div className="w-full space-y-3 mb-6">
         {[
           { text: "Validando token", delay: 0 },
@@ -238,7 +230,6 @@ const VerifyAccount = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="relative">
-        {/* Animated circles for error state - now in red */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="absolute w-28 h-28 rounded-full border-4 border-red-400/30"
@@ -305,7 +296,7 @@ const VerifyAccount = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      <GeometricBackground />
+      <GeometricBackground status={verificationState === "error" ? "error" : verificationState === "success" ? "success" : "loading"} />
       
       <motion.div
         initial={{ opacity: 0, y: -20 }}
