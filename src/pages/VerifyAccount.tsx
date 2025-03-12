@@ -237,8 +237,40 @@ const VerifyAccount = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="w-24 h-24 flex items-center justify-center bg-gradient-to-br from-red-100 to-red-200 rounded-full mb-6">
-        <AlertCircle className="h-10 w-10 text-red-600" />
+      <div className="relative">
+        {/* Animated circles for error state - now in red */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            className="absolute w-28 h-28 rounded-full border-4 border-red-400/30"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute w-28 h-28 rounded-full border-4 border-red-500/30"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.5, 0.3, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+        
+        <div className="w-24 h-24 flex items-center justify-center mb-6">
+          <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+            <AlertCircle className="h-10 w-10 text-red-600" />
+          </div>
+        </div>
       </div>
       
       <h2 className="text-2xl font-bold text-gray-900 mb-3">
@@ -262,7 +294,7 @@ const VerifyAccount = () => {
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
           <Button
             asChild
-            className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+            className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:opacity-90 transition-opacity"
           >
             <Link to="/cadastro">Voltar ao cadastro</Link>
           </Button>
