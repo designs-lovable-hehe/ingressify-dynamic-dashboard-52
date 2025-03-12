@@ -6,6 +6,8 @@ import { Check, Loader2, AlertCircle, PartyPopper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
+import { Logo } from "@/components/Logo";
+import { GeometricBackground } from "@/components/GeometricBackground";
 
 const VerifyAccount = () => {
   const [searchParams] = useSearchParams();
@@ -64,13 +66,24 @@ const VerifyAccount = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/10 to-secondary/10 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      <GeometricBackground />
+      
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        className="mb-8 z-10"
+      >
+        <Logo />
+      </motion.div>
+      
       <motion.div
         initial="hidden"
         animate="visible"
         exit="exit"
         variants={variants}
-        className="w-full max-w-md"
+        className="w-full max-w-md z-10"
       >
         <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-md rounded-2xl overflow-hidden">
           <CardContent className="p-8">
