@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, Loader2, AlertCircle, PartyPopper, ExternalLink, RotateCcw, Frown, Smile } from "lucide-react";
+import { Check, Loader2, AlertCircle, PartyPopper, ExternalLink, Frown, Smile } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
@@ -210,9 +210,6 @@ const VerifyAccount = () => {
         whileTap={{ scale: 0.95 }}
         className="flex items-center justify-center gap-3 mb-8"
       >
-        <div className="p-3 bg-red-100 rounded-full opacity-30">
-          <Frown className="h-8 w-8 text-red-600" />
-        </div>
         <div className="p-3 bg-green-100 rounded-full">
           <Smile className="h-8 w-8 text-green-600" />
         </div>
@@ -288,13 +285,10 @@ const VerifyAccount = () => {
         <motion.div 
           whileHover={{ scale: 1.05 }} 
           whileTap={{ scale: 0.95 }}
-          className="flex items-center justify-center gap-3 mb-4"
+          className="flex items-center justify-center mb-4"
         >
           <div className="p-3 bg-red-100 rounded-full">
             <Frown className="h-8 w-8 text-red-600" />
-          </div>
-          <div className="p-3 bg-green-100 rounded-full opacity-30">
-            <Smile className="h-8 w-8 text-green-600" />
           </div>
         </motion.div>
         
