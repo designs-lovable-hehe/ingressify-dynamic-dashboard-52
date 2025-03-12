@@ -13,61 +13,77 @@ const LogoSVG = () => (
     xmlns="http://www.w3.org/2000/svg"
     className="w-full h-full"
   >
-    {/* Background Gradient Rectangle */}
+    {/* Background Rectangle with curved corners */}
     <motion.rect
       x="40"
       y="50"
       width="120"
       height="100"
-      rx="12"
+      rx="16"
       className="fill-gradient-bg"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     />
     
-    {/* Lightning Bolt (Nitro) symbol in background */}
-    <motion.path
-      d="M120 90 L105 120 L115 125 L90 160 L100 130 L90 125 L110 90"
-      className="stroke-white/50"
-      strokeWidth="3"
-      fill="none"
+    {/* Ticket perforations */}
+    <motion.line
+      x1="60"
+      y1="50"
+      x2="60"
+      y2="150"
+      stroke="rgba(255, 255, 255, 0.5)"
+      strokeWidth="1.5"
+      strokeDasharray="5 5"
       initial={{ pathLength: 0 }}
       animate={{ pathLength: 1 }}
-      transition={{ duration: 1, delay: 0.6 }}
+      transition={{ duration: 1, delay: 0.3 }}
     />
     
-    {/* Small ticket symbol */}
-    <motion.path
-      d="M140 70 L150 80 L145 85 L135 75 Z"
-      fill="rgba(255, 255, 255, 0.7)"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", delay: 0.8 }}
+    <motion.line
+      x1="140"
+      y1="50"
+      x2="140"
+      y2="150"
+      stroke="rgba(255, 255, 255, 0.5)"
+      strokeWidth="1.5"
+      strokeDasharray="5 5"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 1, delay: 0.3 }}
     />
     
     {/* IN Letters */}
     <motion.text
-      x="65"
+      x="70"
       y="115"
-      className="text-5xl font-bold text-white"
+      className="text-5xl font-bold"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
       <tspan fill="white">IN</tspan>
     </motion.text>
-
+    
+    {/* Lightning Bolt (Nitro) symbol */}
+    <motion.path
+      d="M115 70 L105 100 L120 100 L100 140 L110 110 L95 110 L115 70"
+      fill="white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.6 }}
+    />
+    
     {/* Speed lines */}
     {[...Array(5)].map((_, i) => (
       <motion.line
         key={i}
-        x1={70 + (i * 5)}
-        y1={130 + (i * 2)}
-        x2={90 + (i * 8)}
-        y2={130 + (i * 2)}
-        strokeWidth="1"
-        stroke="rgba(255, 255, 255, 0.4)"
+        x1={85 + (i * 3)}
+        y1={130 + (i * 3)}
+        x2={105 + (i * 3)}
+        y2={130 + (i * 3)}
+        strokeWidth="1.5"
+        stroke="rgba(255, 255, 255, 0.6)"
         initial={{ opacity: 0, x: 0 }}
         animate={{ 
           opacity: [0, 0.8, 0],
@@ -76,7 +92,7 @@ const LogoSVG = () => (
         transition={{ 
           duration: 1, 
           repeat: Infinity, 
-          delay: i * 0.1,
+          delay: i * 0.15,
           repeatType: "loop"
         }}
       />
@@ -92,9 +108,6 @@ const LogoSVG = () => (
         {`
           .fill-gradient-bg {
             fill: url(#gradient);
-          }
-          .stroke-white\/50 {
-            stroke: rgba(255, 255, 255, 0.5);
           }
         `}
       </style>
