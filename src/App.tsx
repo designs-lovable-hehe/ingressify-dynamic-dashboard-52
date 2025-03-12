@@ -23,6 +23,7 @@ import PartnerDashboard from "./pages/PartnerDashboard";
 import NotFound from "./pages/NotFound";
 import ListLogo from "./pages/ListLogo";
 import Pricing from "./pages/Pricing";
+import VerifyAccount from "./pages/VerifyAccount";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/login" element={<UserLogin />} />
           <Route path="/cadastro" element={<UserRegister />} />
           <Route path="/recuperar-acesso" element={<AccountRecovery />} />
+          <Route path="/verificar-conta" element={<VerifyAccount />} />
           <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
           <Route path="/empresa/endereco" element={<CompanyAddress />} />
           <Route path="/empresa/documentos" element={<CompanyDocuments />} />

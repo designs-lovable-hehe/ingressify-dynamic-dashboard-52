@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Mail, CheckCircle, PartyPopper } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface VerificationModalProps {
   isOpen: boolean;
@@ -67,10 +68,20 @@ const VerificationModal = ({ isOpen, onClose, email }: VerificationModalProps) =
           </motion.div>
         </div>
         
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col gap-3">
+          <Button 
+            asChild
+            className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+          >
+            <Link to={`/verificar-conta?token=sample-token-for-${encodeURIComponent(email)}`}>
+              Verificar conta
+            </Link>
+          </Button>
+          
           <Button 
             onClick={onClose} 
-            className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+            variant="outline"
+            className="w-full"
           >
             Entendi
           </Button>
