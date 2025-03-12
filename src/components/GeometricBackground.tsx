@@ -7,13 +7,47 @@ type GeometricBackgroundProps = {
 
 export const GeometricBackground = ({ status }: GeometricBackgroundProps) => {
   // Determine circle colors based on status
-  const primaryColor = status === "error" ? "bg-red-500/5" : "bg-primary/5";
-  const secondaryColor = status === "error" ? "bg-red-400/5" : "bg-secondary/5";
-  const primaryShapeColor = status === "error" ? "bg-red-500/10" : "bg-primary/10";
-  const secondaryShapeColor = status === "error" ? "bg-red-400/10" : "bg-secondary/10";
-  const primarySquareColor = status === "error" ? "bg-red-500/8" : "bg-primary/8";
-  const secondarySquareColor = status === "error" ? "bg-red-400/8" : "bg-secondary/8";
-  const smallElementColor = status === "error" ? "bg-red-500/20" : "bg-primary/20";
+  const primaryColor = status === "error" 
+    ? "bg-red-500/5" 
+    : status === "success" 
+      ? "bg-green-500/5" 
+      : "bg-primary/5";
+      
+  const secondaryColor = status === "error" 
+    ? "bg-red-400/5" 
+    : status === "success" 
+      ? "bg-green-400/5" 
+      : "bg-secondary/5";
+      
+  const primaryShapeColor = status === "error" 
+    ? "bg-red-500/10" 
+    : status === "success" 
+      ? "bg-green-500/10" 
+      : "bg-primary/10";
+      
+  const secondaryShapeColor = status === "error" 
+    ? "bg-red-400/10" 
+    : status === "success" 
+      ? "bg-green-400/10" 
+      : "bg-secondary/10";
+      
+  const primarySquareColor = status === "error" 
+    ? "bg-red-500/8" 
+    : status === "success" 
+      ? "bg-green-500/8" 
+      : "bg-primary/8";
+      
+  const secondarySquareColor = status === "error" 
+    ? "bg-red-400/8" 
+    : status === "success" 
+      ? "bg-green-400/8" 
+      : "bg-secondary/8";
+      
+  const smallElementColor = status === "error" 
+    ? "bg-red-500/20" 
+    : status === "success" 
+      ? "bg-green-500/20" 
+      : "bg-primary/20";
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-b from-white to-gray-50">
