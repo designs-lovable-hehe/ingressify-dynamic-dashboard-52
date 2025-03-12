@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { Ticket, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 
 export const Logo = () => {
   return (
@@ -31,35 +31,6 @@ export const Logo = () => {
           }}
           transition={{ duration: 6, repeat: Infinity }}
         />
-        
-        {/* Ticket shape - representing "Ingresso" */}
-        <motion.div
-          className="absolute inset-0 opacity-80"
-          initial={{ opacity: 0.8 }}
-          whileHover={{ opacity: 1 }}
-        >
-          <svg viewBox="0 0 48 48" className="w-full h-full">
-            <path 
-              d="M10,8 L38,8 C40,8 42,10 42,12 L42,36 C42,38 40,40 38,40 L10,40 C8,40 6,38 6,36 L6,12 C6,10 8,8 10,8 Z" 
-              fill="none" 
-              stroke="rgba(255, 255, 255, 0.6)" 
-              strokeWidth="1.5"
-              strokeDasharray="2 2"
-            />
-            <line 
-              x1="12" y1="8" x2="12" y2="40" 
-              stroke="rgba(255, 255, 255, 0.4)" 
-              strokeWidth="1.5" 
-              strokeDasharray="2 2"
-            />
-            <line 
-              x1="36" y1="8" x2="36" y2="40" 
-              stroke="rgba(255, 255, 255, 0.4)" 
-              strokeWidth="1.5" 
-              strokeDasharray="2 2"
-            />
-          </svg>
-        </motion.div>
         
         {/* Letters - modern stylized "IN" */}
         <div className="relative text-white z-10 flex font-bold">
@@ -147,15 +118,6 @@ export const Logo = () => {
           >
             Nitro
           </motion.span>
-        </motion.div>
-        <motion.div 
-          className="flex items-center space-x-1"
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <Ticket className="h-3 w-3 text-primary/70" />
-          <span className="text-xs text-gray-500">Velocidade em eventos</span>
         </motion.div>
       </div>
     </motion.div>
