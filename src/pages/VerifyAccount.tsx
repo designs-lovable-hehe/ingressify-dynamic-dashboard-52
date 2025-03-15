@@ -65,7 +65,7 @@ const VerifyAccount = () => {
     }
   };
 
-  // Error animation variants
+  // Enhanced error animation variants
   const errorAnimVariants = {
     initial: { 
       scale: 1,
@@ -327,7 +327,7 @@ const VerifyAccount = () => {
     </motion.div>
   );
 
-  // Animation that plays before showing the error card
+  // Enhanced animation that plays before showing the error card
   const renderErrorAnimation = () => (
     <motion.div 
       className="flex flex-col items-center text-center"
@@ -336,22 +336,64 @@ const VerifyAccount = () => {
       animate="animate"
     >
       <div className="relative">
-        <div className="w-24 h-24 flex items-center justify-center">
+        <motion.div 
+          className="w-24 h-24 flex items-center justify-center"
+          animate={{ 
+            boxShadow: ["0px 0px 0px rgba(239, 68, 68, 0)", "0px 0px 20px rgba(239, 68, 68, 0.5)", "0px 0px 0px rgba(239, 68, 68, 0)"],
+          }}
+          transition={{ duration: 1.5, repeat: 1, repeatType: "reverse" }}
+        >
           <motion.div 
             className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center"
-            animate={{ scale: [1, 1.2, 0.8, 1.1, 0.9, 1] }}
+            animate={{ 
+              scale: [1, 1.2, 0.8, 1.1, 0.9, 1],
+              rotateZ: [0, 5, -5, 3, -3, 0]
+            }}
             transition={{ duration: 0.8 }}
           >
-            <AlertCircle className="h-10 w-10 text-red-600" />
+            <motion.div
+              animate={{
+                opacity: [1, 0.7, 1, 0.7, 1],
+                scale: [1, 1.1, 1, 1.1, 1]
+              }}
+              transition={{ duration: 0.8 }}
+            >
+              <AlertCircle className="h-10 w-10 text-red-600" />
+            </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
+        
+        <motion.div
+          className="absolute -top-4 -right-4 opacity-0"
+          animate={{ 
+            opacity: [0, 1, 0],
+            y: [0, -15, -30],
+            x: [0, 5, 10]
+          }}
+          transition={{ duration: 1, delay: 0.3 }}
+        >
+          <span className="text-red-500 text-lg font-bold">!</span>
+        </motion.div>
+        
+        <motion.div
+          className="absolute -bottom-4 -left-4 opacity-0"
+          animate={{ 
+            opacity: [0, 1, 0],
+            y: [0, 15, 30],
+            x: [0, -5, -10]
+          }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <span className="text-red-500 text-lg font-bold">!</span>
+        </motion.div>
       </div>
       
       <motion.h2 
         className="text-2xl font-bold text-gray-900 mb-3 mt-5"
         animate={{ 
           opacity: [1, 0.7, 0.9, 0.6, 0.8, 0],
-          y: [0, -2, 2, -3, 3, 0] 
+          y: [0, -2, 2, -3, 3, 0],
+          color: ["#111827", "#991B1B", "#111827", "#991B1B", "#111827"]
         }}
         transition={{ duration: 0.8 }}
       >
@@ -360,10 +402,28 @@ const VerifyAccount = () => {
       
       <motion.div 
         className="w-full max-w-xs mx-auto"
-        animate={{ opacity: [1, 0.8, 0.6, 0.4, 0.2, 0] }}
+        animate={{ 
+          opacity: [1, 0.8, 0.6, 0.4, 0.2, 0],
+          scale: [1, 0.98, 0.96, 0.94, 0.92, 0.9]
+        }}
         transition={{ duration: 0.8 }}
       >
-        <Progress value={100} className="h-2 bg-red-100" indicatorClassName="bg-red-500" />
+        <Progress 
+          value={100} 
+          className="h-2 bg-red-100" 
+          indicatorClassName="bg-red-500" 
+        />
+        <motion.div
+          className="h-1 w-full bg-transparent mt-1"
+          animate={{
+            background: ["linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)",
+                        "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.5) 50%, rgba(239,68,68,0) 100%)",
+                        "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)"],
+            backgroundSize: ["200% 100%", "200% 100%", "200% 100%"],
+            backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"]
+          }}
+          transition={{ duration: 1, repeat: 1 }}
+        />
       </motion.div>
     </motion.div>
   );
