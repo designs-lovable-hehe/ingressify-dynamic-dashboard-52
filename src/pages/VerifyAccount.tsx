@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, Loader2, AlertCircle, PartyPopper, ExternalLink, Frown, Smile } from "lucide-react";
+import { Check, Loader2, AlertCircle, PartyPopper, ExternalLink, Frown, Smile, Sparkles, ZapOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
@@ -32,11 +32,10 @@ const VerifyAccount = () => {
       if (token) {
         setVerificationState("success");
       } else {
-        // Add pre-error animation state
         setShowErrorAnimation(true);
         setTimeout(() => {
           setVerificationState("error");
-        }, 800); // Delay showing the error card to allow for animation
+        }, 800);
       }
     }, 2500);
 
@@ -65,7 +64,6 @@ const VerifyAccount = () => {
     }
   };
 
-  // Enhanced error animation variants
   const errorAnimVariants = {
     initial: { 
       scale: 1,
@@ -73,9 +71,9 @@ const VerifyAccount = () => {
       opacity: 1
     },
     animate: { 
-      scale: [1, 1.15, 0.9, 1.05, 0.95, 1],
-      rotate: [0, -3, 3, -2, 2, 0],
-      opacity: [1, 0.9, 0.95, 0.9, 0.95, 0],
+      scale: [1, 1.05, 0.98, 1.02, 0.98, 1],
+      rotate: [0, -1, 1, -0.5, 0.5, 0],
+      opacity: [1, 0.95, 0.9, 0.85, 0.8, 0],
       transition: { 
         duration: 0.8,
         ease: "easeInOut"
@@ -327,7 +325,6 @@ const VerifyAccount = () => {
     </motion.div>
   );
 
-  // Enhanced animation that plays before showing the error card
   const renderErrorAnimation = () => (
     <motion.div 
       className="flex flex-col items-center text-center"
@@ -336,66 +333,124 @@ const VerifyAccount = () => {
       animate="animate"
     >
       <div className="relative">
+        <motion.div
+          className="absolute -inset-4 rounded-full opacity-0"
+          animate={{
+            opacity: [0, 0.2, 0],
+            scale: [0.8, 1.5, 2],
+            background: [
+              "radial-gradient(circle, rgba(239,68,68,0.6) 0%, rgba(239,68,68,0) 70%)",
+              "radial-gradient(circle, rgba(239,68,68,0.3) 0%, rgba(239,68,68,0) 70%)",
+              "radial-gradient(circle, rgba(239,68,68,0) 0%, rgba(239,68,68,0) 70%)"
+            ]
+          }}
+          transition={{ duration: 1.2, repeat: 1, repeatType: "reverse" }}
+        />
+        
         <motion.div 
           className="w-24 h-24 flex items-center justify-center"
-          animate={{ 
-            boxShadow: ["0px 0px 0px rgba(239, 68, 68, 0)", "0px 0px 20px rgba(239, 68, 68, 0.5)", "0px 0px 0px rgba(239, 68, 68, 0)"],
+          animate={{
+            boxShadow: [
+              "0px 0px 0px rgba(239, 68, 68, 0)",
+              "0px 0px 30px rgba(239, 68, 68, 0.6)",
+              "0px 0px 0px rgba(239, 68, 68, 0)"
+            ],
           }}
-          transition={{ duration: 1.5, repeat: 1, repeatType: "reverse" }}
+          transition={{ duration: 1.5, times: [0, 0.5, 1], ease: "easeInOut" }}
         >
           <motion.div 
-            className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center"
+            className="w-20 h-20 rounded-full bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center overflow-hidden"
             animate={{ 
-              scale: [1, 1.2, 0.8, 1.1, 0.9, 1],
-              rotateZ: [0, 5, -5, 3, -3, 0]
+              scale: [1, 1.1, 0.95, 1.05, 0.98, 1],
+              rotateZ: [0, 3, -3, 2, -2, 0],
+              background: [
+                "linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)",
+                "linear-gradient(135deg, #fecaca 0%, #ef4444 30%, #fee2e2 100%)",
+                "linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)"
+              ]
             }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
           >
             <motion.div
               animate={{
-                opacity: [1, 0.7, 1, 0.7, 1],
-                scale: [1, 1.1, 1, 1.1, 1]
+                opacity: [1, 0.8, 1, 0.8, 1],
+                scale: [1, 1.15, 0.95, 1.08, 1],
+                rotateZ: [0, -5, 5, -3, 0]
               }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2 }}
             >
-              <AlertCircle className="h-10 w-10 text-red-600" />
+              <AlertCircle className="h-10 w-10 text-red-600 drop-shadow-md" />
             </motion.div>
           </motion.div>
+          
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              style={{
+                top: `${50 + 35 * Math.sin(i * Math.PI / 2)}%`,
+                left: `${50 + 35 * Math.cos(i * Math.PI / 2)}%`,
+              }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0.5, 1.2, 0.5],
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.1 * i,
+                repeat: 1,
+                repeatType: "reverse"
+              }}
+            >
+              <Sparkles className="h-3 w-3 text-red-400" />
+            </motion.div>
+          ))}
         </motion.div>
         
         <motion.div
-          className="absolute -top-4 -right-4 opacity-0"
+          className="absolute -top-5 -right-5 z-10"
+          initial={{ opacity: 0, y: 10, x: -10 }}
           animate={{ 
             opacity: [0, 1, 0],
-            y: [0, -15, -30],
-            x: [0, 5, 10]
+            y: [10, -5, -20],
+            x: [-10, 5, 15]
           }}
-          transition={{ duration: 1, delay: 0.3 }}
+          transition={{ duration: 1.4, delay: 0.2 }}
         >
-          <span className="text-red-500 text-lg font-bold">!</span>
+          <div className="bg-red-100 p-1 rounded-full shadow-md">
+            <ZapOff className="h-4 w-4 text-red-500" />
+          </div>
         </motion.div>
         
         <motion.div
-          className="absolute -bottom-4 -left-4 opacity-0"
+          className="absolute -bottom-5 -left-5 z-10"
+          initial={{ opacity: 0, y: -10, x: 10 }}
           animate={{ 
             opacity: [0, 1, 0],
-            y: [0, 15, 30],
-            x: [0, -5, -10]
+            y: [-10, 5, 20],
+            x: [10, -5, -15]
           }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1.4, delay: 0.4 }}
         >
-          <span className="text-red-500 text-lg font-bold">!</span>
+          <div className="bg-red-100 p-1 rounded-full shadow-md">
+            <AlertCircle className="h-4 w-4 text-red-500" />
+          </div>
         </motion.div>
       </div>
       
       <motion.h2 
-        className="text-2xl font-bold text-gray-900 mb-3 mt-5"
+        className="text-2xl font-bold mb-3 mt-5"
         animate={{ 
-          opacity: [1, 0.7, 0.9, 0.6, 0.8, 0],
-          y: [0, -2, 2, -3, 3, 0],
-          color: ["#111827", "#991B1B", "#111827", "#991B1B", "#111827"]
+          opacity: [1, 0.9, 0.8, 0.7, 0.5, 0],
+          y: [0, -1, 1, -2, 2, 0],
+          color: ["#111827", "#991B1B", "#111827", "#991B1B", "#111827"],
+          textShadow: [
+            "0 0 0 rgba(239,68,68,0)",
+            "0 0 8px rgba(239,68,68,0.3)",
+            "0 0 0 rgba(239,68,68,0)"
+          ]
         }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
       >
         Verificando sua conta
       </motion.h2>
@@ -403,27 +458,41 @@ const VerifyAccount = () => {
       <motion.div 
         className="w-full max-w-xs mx-auto"
         animate={{ 
-          opacity: [1, 0.8, 0.6, 0.4, 0.2, 0],
-          scale: [1, 0.98, 0.96, 0.94, 0.92, 0.9]
+          opacity: [1, 0.9, 0.7, 0.5, 0.3, 0],
+          scale: [1, 0.99, 0.98, 0.97, 0.96, 0.95]
         }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
       >
         <Progress 
           value={100} 
-          className="h-2 bg-red-100" 
-          indicatorClassName="bg-red-500" 
+          className="h-2.5 bg-red-100 overflow-hidden" 
+          indicatorClassName="bg-gradient-to-r from-red-400 via-red-500 to-red-600" 
         />
+        
         <motion.div
-          className="h-1 w-full bg-transparent mt-1"
+          className="h-0.5 w-full bg-transparent mt-1 rounded-full overflow-hidden"
           animate={{
-            background: ["linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)",
-                        "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.5) 50%, rgba(239,68,68,0) 100%)",
-                        "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)"],
+            background: [
+              "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)",
+              "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.6) 50%, rgba(239,68,68,0) 100%)",
+              "linear-gradient(90deg, rgba(239,68,68,0) 0%, rgba(239,68,68,0.3) 50%, rgba(239,68,68,0) 100%)"
+            ],
             backgroundSize: ["200% 100%", "200% 100%", "200% 100%"],
             backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"]
           }}
-          transition={{ duration: 1, repeat: 1 }}
+          transition={{ duration: 1.2, repeat: 1 }}
         />
+        
+        <motion.p
+          className="text-xs text-center mt-2"
+          animate={{
+            opacity: [1, 0.7, 0.4, 0],
+            color: ["#6b7280", "#ef4444", "#6b7280"]
+          }}
+          transition={{ duration: 1 }}
+        >
+          Processando token de verificação...
+        </motion.p>
       </motion.div>
     </motion.div>
   );
