@@ -15,6 +15,7 @@ const VerifyAccount = () => {
     "loading" | "success" | "error"
   >("loading");
   const [progress, setProgress] = useState(0);
+  const [showErrorAnimation, setShowErrorAnimation] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,7 +32,11 @@ const VerifyAccount = () => {
       if (token) {
         setVerificationState("success");
       } else {
-        setVerificationState("error");
+        // Add pre-error animation state
+        setShowErrorAnimation(true);
+        setTimeout(() => {
+          setVerificationState("error");
+        }, 800); // Delay showing the error card to allow for animation
       }
     }, 2500);
 
@@ -56,6 +61,24 @@ const VerifyAccount = () => {
       y: -20,
       transition: {
         duration: 0.3
+      }
+    }
+  };
+
+  // Error animation variants
+  const errorAnimVariants = {
+    initial: { 
+      scale: 1,
+      rotate: 0,
+      opacity: 1
+    },
+    animate: { 
+      scale: [1, 1.15, 0.9, 1.05, 0.95, 1],
+      rotate: [0, -3, 3, -2, 2, 0],
+      opacity: [1, 0.9, 0.95, 0.9, 0.95, 0],
+      transition: { 
+        duration: 0.8,
+        ease: "easeInOut"
       }
     }
   };
@@ -304,6 +327,47 @@ const VerifyAccount = () => {
     </motion.div>
   );
 
+  // Animation that plays before showing the error card
+  const renderErrorAnimation = () => (
+    <motion.div 
+      className="flex flex-col items-center text-center"
+      variants={errorAnimVariants}
+      initial="initial"
+      animate="animate"
+    >
+      <div className="relative">
+        <div className="w-24 h-24 flex items-center justify-center">
+          <motion.div 
+            className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center"
+            animate={{ scale: [1, 1.2, 0.8, 1.1, 0.9, 1] }}
+            transition={{ duration: 0.8 }}
+          >
+            <AlertCircle className="h-10 w-10 text-red-600" />
+          </motion.div>
+        </div>
+      </div>
+      
+      <motion.h2 
+        className="text-2xl font-bold text-gray-900 mb-3 mt-5"
+        animate={{ 
+          opacity: [1, 0.7, 0.9, 0.6, 0.8, 0],
+          y: [0, -2, 2, -3, 3, 0] 
+        }}
+        transition={{ duration: 0.8 }}
+      >
+        Verificando sua conta
+      </motion.h2>
+      
+      <motion.div 
+        className="w-full max-w-xs mx-auto"
+        animate={{ opacity: [1, 0.8, 0.6, 0.4, 0.2, 0] }}
+        transition={{ duration: 0.8 }}
+      >
+        <Progress value={100} className="h-2 bg-red-100" indicatorClassName="bg-red-500" />
+      </motion.div>
+    </motion.div>
+  );
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <GeometricBackground status={verificationState === "error" ? "error" : verificationState === "success" ? "success" : "loading"} />
@@ -326,7 +390,8 @@ const VerifyAccount = () => {
       >
         <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-md rounded-2xl overflow-hidden">
           <CardContent className="p-8">
-            {verificationState === "loading" && renderVerifyingState()}
+            {verificationState === "loading" && !showErrorAnimation && renderVerifyingState()}
+            {showErrorAnimation && verificationState === "loading" && renderErrorAnimation()}
             {verificationState === "success" && renderSuccessState()}
             {verificationState === "error" && renderErrorState()}
           </CardContent>
