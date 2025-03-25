@@ -96,17 +96,48 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
           </div>
 
           <div className="px-6 py-4">
-            <div className="space-y-2">
-              <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 px-1">
-                <span>Progresso</span>
-                <span>{Math.round(progress)}%</span>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-sm font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Etapa {currentStepIndex + 1} de {steps.length}
+                </span>
+                <span className="text-sm font-medium text-primary/80">
+                  {Math.round(progress)}%
+                </span>
               </div>
-              <Progress value={progress} className="h-1.5 bg-gray-200 dark:bg-gray-700">
-                <div 
-                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-                  style={{ width: `${progress}%` }}
+              
+              <div className="relative h-2 w-full bg-gray-200/50 dark:bg-gray-700/50 rounded-full overflow-hidden backdrop-blur-sm">
+                <motion.div 
+                  className="h-full bg-gradient-to-r from-primary via-primary/90 to-accent rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                 />
-              </Progress>
+                
+                {/* Step markers */}
+                <div className="absolute inset-0 flex justify-between items-center px-1">
+                  {steps.map((_, index) => {
+                    const stepPosition = (index / (steps.length - 1)) * 100;
+                    const isCompleted = currentStepIndex >= index;
+                    
+                    return (
+                      <div 
+                        key={index}
+                        className={`w-2 h-2 rounded-full ${isCompleted 
+                          ? 'bg-white' 
+                          : 'bg-gray-400/30 dark:bg-gray-600/30'}`}
+                        style={{ 
+                          transform: index === 0 
+                            ? 'translateX(0%)' 
+                            : index === steps.length - 1 
+                            ? 'translateX(0%)' 
+                            : 'translateX(-50%)'
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
