@@ -2,27 +2,42 @@
 import { Building2, Users, DollarSign, MessageSquare } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { CreateEventModal } from "@/components/events/CreateEventModal";
 
 const actions = [
   {
     title: "Criar Novo Evento",
     icon: Building2,
+    action: "create-event",
   },
   {
     title: "Ver Participantes",
     icon: Users,
+    action: "view-participants",
   },
   {
     title: "Relatório Financeiro",
     icon: DollarSign,
+    action: "financial-report",
   },
   {
     title: "Central de Mensagens",
     icon: MessageSquare,
+    action: "messages",
   },
 ];
 
 export function QuickActions() {
+  const [showCreateEventModal, setShowCreateEventModal] = useState(false);
+
+  const handleActionClick = (action: string) => {
+    if (action === "create-event") {
+      setShowCreateEventModal(true);
+    }
+    // Handle other actions as needed
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -39,6 +54,7 @@ export function QuickActions() {
               <button
                 key={index}
                 className="p-4 rounded-lg bg-[#9b87f5]/5 hover:bg-[#9b87f5]/10 transition-colors flex items-center space-x-3"
+                onClick={() => handleActionClick(action.action)}
               >
                 <div className="bg-[#9b87f5]/10 p-2 rounded-lg">
                   <action.icon className="w-4 h-4 text-[#9b87f5]" />
@@ -49,6 +65,12 @@ export function QuickActions() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Event Creation Modal */}
+      <CreateEventModal 
+        isOpen={showCreateEventModal} 
+        onClose={() => setShowCreateEventModal(false)} 
+      />
     </motion.div>
   );
 }
