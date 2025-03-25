@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreateEventBasicInfo } from "./CreateEventBasicInfo";
@@ -111,58 +111,58 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
           </div>
 
           <div className="px-6 py-2">
-            <TabsList className="grid grid-cols-4 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
-              {steps.map((step, index) => (
-                <TabsTrigger
-                  key={step.id}
-                  value={step.id}
-                  onClick={() => setCurrentStep(step.id)}
-                  disabled={index > currentStepIndex + 1}
-                  className={`
-                    ${currentStep === step.id ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}
-                    data-[state=active]:text-primary data-[state=active]:shadow-sm
-                    text-sm py-2
-                  `}
-                >
-                  <span className="hidden sm:inline">{step.label}</span>
-                  <span className="sm:hidden">{index + 1}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-
-          <div className="flex-1 p-6 overflow-auto">
             <Tabs value={currentStep} className="w-full">
-              <TabsContent value="basic-info" className="mt-0">
-                <CreateEventBasicInfo 
-                  formData={formData} 
-                  updateFormData={updateFormData} 
-                  onNext={handleNextStep}
-                />
-              </TabsContent>
-              <TabsContent value="location" className="mt-0">
-                <CreateEventLocation 
-                  formData={formData} 
-                  updateFormData={updateFormData} 
-                  onNext={handleNextStep}
-                  onBack={handlePrevStep}
-                />
-              </TabsContent>
-              <TabsContent value="tickets" className="mt-0">
-                <CreateEventTickets 
-                  formData={formData} 
-                  updateFormData={updateFormData} 
-                  onNext={handleNextStep}
-                  onBack={handlePrevStep}
-                />
-              </TabsContent>
-              <TabsContent value="review" className="mt-0">
-                <CreateEventReview 
-                  formData={formData} 
-                  onSubmit={submitEvent}
-                  onBack={handlePrevStep}
-                />
-              </TabsContent>
+              <TabsList className="grid grid-cols-4 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
+                {steps.map((step, index) => (
+                  <TabsTrigger
+                    key={step.id}
+                    value={step.id}
+                    onClick={() => setCurrentStep(step.id)}
+                    disabled={index > currentStepIndex + 1}
+                    className={`
+                      ${currentStep === step.id ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}
+                      data-[state=active]:text-primary data-[state=active]:shadow-sm
+                      text-sm py-2
+                    `}
+                  >
+                    <span className="hidden sm:inline">{step.label}</span>
+                    <span className="sm:hidden">{index + 1}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              
+              <div className="flex-1 p-6 overflow-auto">
+                <TabsContent value="basic-info" className="mt-0">
+                  <CreateEventBasicInfo 
+                    formData={formData} 
+                    updateFormData={updateFormData} 
+                    onNext={handleNextStep}
+                  />
+                </TabsContent>
+                <TabsContent value="location" className="mt-0">
+                  <CreateEventLocation 
+                    formData={formData} 
+                    updateFormData={updateFormData} 
+                    onNext={handleNextStep}
+                    onBack={handlePrevStep}
+                  />
+                </TabsContent>
+                <TabsContent value="tickets" className="mt-0">
+                  <CreateEventTickets 
+                    formData={formData} 
+                    updateFormData={updateFormData} 
+                    onNext={handleNextStep}
+                    onBack={handlePrevStep}
+                  />
+                </TabsContent>
+                <TabsContent value="review" className="mt-0">
+                  <CreateEventReview 
+                    formData={formData} 
+                    onSubmit={submitEvent}
+                    onBack={handlePrevStep}
+                  />
+                </TabsContent>
+              </div>
             </Tabs>
           </div>
         </div>

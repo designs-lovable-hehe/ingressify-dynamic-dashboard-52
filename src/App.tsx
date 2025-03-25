@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,39 +26,42 @@ import ListLogo from "./pages/ListLogo";
 import Pricing from "./pages/Pricing";
 import VerifyAccount from "./pages/VerifyAccount";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/eventos" element={<Events />} />
-          <Route path="/eventos/:id" element={<EventDetails />} />
-          <Route path="/eventos/:id/checkout" element={<TicketCheckout />} />
-          <Route path="/parceiros" element={<Partners />} />
-          <Route path="/sobre" element={<About />} />
-          <Route path="/parceiros/login" element={<PartnerLogin />} />
-          <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
-          <Route path="/login" element={<UserLogin />} />
-          <Route path="/cadastro" element={<UserRegister />} />
-          <Route path="/recuperar-acesso" element={<AccountRecovery />} />
-          <Route path="/verificar-conta" element={<VerifyAccount />} />
-          <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
-          <Route path="/empresa/endereco" element={<CompanyAddress />} />
-          <Route path="/empresa/documentos" element={<CompanyDocuments />} />
-          <Route path="/empresa/revisao" element={<CompanyReview />} />
-          <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
-          <Route path="/listLogo" element={<ListLogo />} />
-          <Route path="/precos" element={<Pricing />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/eventos" element={<Events />} />
+            <Route path="/eventos/:id" element={<EventDetails />} />
+            <Route path="/eventos/:id/checkout" element={<TicketCheckout />} />
+            <Route path="/parceiros" element={<Partners />} />
+            <Route path="/sobre" element={<About />} />
+            <Route path="/parceiros/login" element={<PartnerLogin />} />
+            <Route path="/parceiros/cadastro" element={<PartnerRegister />} />
+            <Route path="/login" element={<UserLogin />} />
+            <Route path="/cadastro" element={<UserRegister />} />
+            <Route path="/recuperar-acesso" element={<AccountRecovery />} />
+            <Route path="/verificar-conta" element={<VerifyAccount />} />
+            <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
+            <Route path="/empresa/endereco" element={<CompanyAddress />} />
+            <Route path="/empresa/documentos" element={<CompanyDocuments />} />
+            <Route path="/empresa/revisao" element={<CompanyReview />} />
+            <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
+            <Route path="/listLogo" element={<ListLogo />} />
+            <Route path="/precos" element={<Pricing />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 export default App;
