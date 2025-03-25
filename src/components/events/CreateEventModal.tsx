@@ -112,7 +112,7 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
 
           <div className="px-6 py-2">
             <Tabs value={currentStep} className="w-full">
-              <TabsList className="grid grid-cols-4 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
+              <TabsList className="grid grid-cols-4 bg-gray-100/80 dark:bg-gray-800 p-1 rounded-lg">
                 {steps.map((step, index) => (
                   <TabsTrigger
                     key={step.id}
@@ -120,9 +120,9 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
                     onClick={() => setCurrentStep(step.id)}
                     disabled={index > currentStepIndex + 1}
                     className={`
-                      ${currentStep === step.id ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}
-                      data-[state=active]:text-primary data-[state=active]:shadow-sm
-                      text-sm py-2
+                      ${currentStep === step.id ? 'bg-primary text-white dark:bg-primary dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300'}
+                      data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:bg-primary dark:data-[state=active]:text-white
+                      text-sm py-2 transition-all duration-200
                     `}
                   >
                     <span className="hidden sm:inline">{step.label}</span>
