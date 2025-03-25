@@ -99,7 +99,7 @@ export default function PartnerDashboard() {
                   onCreateAd={() => setShowCreateAdModal(true)} 
                 />
               </TabsContent>
-            </TabsList>
+            </Tabs>
           </motion.div>
         </div>
       </div>
