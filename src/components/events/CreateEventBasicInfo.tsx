@@ -31,6 +31,7 @@ const eventCategories = [
 
 export function CreateEventBasicInfo({ formData, updateFormData, onNext }: CreateEventBasicInfoProps) {
   const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -51,6 +52,30 @@ export function CreateEventBasicInfo({ formData, updateFormData, onNext }: Creat
       return;
     }
     onNext();
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      updateFormData({ coverImage: file });
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCoverImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -169,19 +194,30 @@ export function CreateEventBasicInfo({ formData, updateFormData, onNext }: Creat
 
         <div className="space-y-2">
           <Label>Imagem de Capa</Label>
-          <div className="border-2 border-dashed rounded-xl p-6 text-center bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-gray-200 dark:border-gray-700">
+          <div 
+            className={cn(
+              "relative overflow-hidden rounded-xl transition-all duration-200",
+              isDragging ? "ring-2 ring-primary scale-[0.99]" : "ring-0"
+            )}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
             {coverImagePreview ? (
-              <div className="relative group">
-                <img 
+              <div className="relative group rounded-xl overflow-hidden h-[200px]">
+                <motion.img 
                   src={coverImagePreview} 
                   alt="Preview" 
-                  className="mx-auto rounded-lg max-h-[200px] object-cover" 
+                  className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300" 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-6">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="text-white border-white hover:bg-white/20 hover:text-white"
+                    className="text-white border-white/30 bg-black/20 backdrop-blur-sm hover:bg-white/20 hover:text-white"
                     onClick={() => {
                       updateFormData({ coverImage: null });
                       setCoverImagePreview(null);
@@ -192,29 +228,36 @@ export function CreateEventBasicInfo({ formData, updateFormData, onNext }: Creat
                 </div>
               </div>
             ) : (
-              <>
-                <Image className="mx-auto h-12 w-12 text-gray-400" />
-                <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white dark:bg-gray-700 font-semibold text-primary hover:text-primary/90 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 px-3 py-1.5"
-                  >
-                    <span>Carregar imagem</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      accept="image/*"
-                      onChange={handleCoverImageChange}
-                    />
-                  </label>
-                  <p className="pl-1">ou arraste e solte</p>
+              <div className="border-2 border-dashed rounded-xl p-8 text-center bg-gradient-to-b from-white/80 to-white/40 dark:from-gray-800/40 dark:to-gray-800/20 backdrop-blur-sm border-gray-200/70 dark:border-gray-700/40 hover:border-primary/30 dark:hover:border-primary/30 transition-colors">
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <div className="p-4 bg-primary/10 rounded-full">
+                    <Image className="h-10 w-10 text-primary/80" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-gray-700 dark:text-gray-300">Arraste sua imagem</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Arraste e solte ou clique para selecionar
+                    </p>
+                    <label
+                      htmlFor="file-upload"
+                      className="relative inline-flex items-center justify-center cursor-pointer rounded-md bg-gradient-to-r from-primary/90 to-primary text-white font-medium text-sm px-4 py-2 shadow-sm shadow-primary/20 hover:shadow-md hover:shadow-primary/30 transition-all duration-200 mt-2"
+                    >
+                      <span>Selecionar Arquivo</span>
+                      <input
+                        id="file-upload"
+                        name="file-upload"
+                        type="file"
+                        className="sr-only"
+                        accept="image/*"
+                        onChange={handleCoverImageChange}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    PNG, JPG, GIF até 10MB
+                  </p>
                 </div>
-                <p className="text-xs leading-5 text-gray-600">
-                  PNG, JPG, GIF até 10MB
-                </p>
-              </>
+              </div>
             )}
           </div>
         </div>
