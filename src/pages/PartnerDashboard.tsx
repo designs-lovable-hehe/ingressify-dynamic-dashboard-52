@@ -1,9 +1,9 @@
-
 import { motion } from "framer-motion";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { QuickActions } from "@/components/dashboard/QuickActions";
+import { EventAdsSection } from "@/components/dashboard/EventAdsSection";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { useState } from "react";
 import { CreateEventModal } from "@/components/events/CreateEventModal";
@@ -50,6 +50,9 @@ export default function PartnerDashboard() {
             </div>
             <RecentActivity />
           </div>
+
+          {/* Event Ads Section */}
+          <EventAdsSection />
 
           {/* Quick Actions */}
           <QuickActions />
