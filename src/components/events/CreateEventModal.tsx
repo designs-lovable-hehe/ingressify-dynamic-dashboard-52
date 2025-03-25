@@ -112,7 +112,7 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
 
           <div className="px-6 py-2">
             <Tabs value={currentStep} className="w-full">
-              <TabsList className="grid grid-cols-4 bg-gray-100/80 dark:bg-gray-800 p-1 rounded-lg">
+              <TabsList className="grid grid-cols-4 gap-2 bg-transparent p-1 rounded-lg">
                 {steps.map((step, index) => (
                   <TabsTrigger
                     key={step.id}
@@ -120,13 +120,23 @@ export function CreateEventModal({ isOpen, onClose }: CreateEventModalProps) {
                     onClick={() => setCurrentStep(step.id)}
                     disabled={index > currentStepIndex + 1}
                     className={`
-                      ${currentStep === step.id ? 'bg-primary text-white dark:bg-primary dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-300'}
-                      data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:bg-primary dark:data-[state=active]:text-white
-                      text-sm py-2 transition-all duration-200
+                      relative px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200
+                      ${currentStep === step.id 
+                        ? 'bg-gradient-to-r from-primary to-primary/90 text-white shadow-md shadow-primary/20 border border-primary/20' 
+                        : 'bg-gray-100/90 dark:bg-gray-800/70 text-gray-600 dark:text-gray-300 hover:bg-gray-200/90 dark:hover:bg-gray-700/70 border border-gray-200/50 dark:border-gray-700/50'}
+                      data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 
+                      data-[state=active]:text-white dark:data-[state=active]:from-primary dark:data-[state=active]:to-primary/90
+                      data-[state=active]:shadow-md data-[state=active]:shadow-primary/20
+                      ${index === 0 ? 'rounded-l-md' : ''}
+                      ${index === steps.length - 1 ? 'rounded-r-md' : ''}
                     `}
                   >
-                    <span className="hidden sm:inline">{step.label}</span>
-                    <span className="sm:hidden">{index + 1}</span>
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="flex items-center justify-center w-5 h-5 text-xs rounded-full bg-white/20">
+                        {index + 1}
+                      </span>
+                      <span className="hidden sm:inline">{step.label}</span>
+                    </div>
                   </TabsTrigger>
                 ))}
               </TabsList>
