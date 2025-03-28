@@ -16,10 +16,7 @@ import PartnerRegister from "./pages/PartnerRegister";
 import UserLogin from "./pages/UserLogin";
 import UserRegister from "./pages/UserRegister";
 import AccountRecovery from "./pages/AccountRecovery";
-import CompanyBasicInfo from "./pages/company/CompanyBasicInfo";
-import CompanyAddress from "./pages/company/CompanyAddress";
-import CompanyDocuments from "./pages/company/CompanyDocuments";
-import CompanyReview from "./pages/company/CompanyReview";
+import CompanyRegistration from "./pages/company/CompanyRegistration";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import NotFound from "./pages/NotFound";
 import ListLogo from "./pages/ListLogo";
@@ -49,10 +46,11 @@ const App = () => (
             <Route path="/cadastro" element={<UserRegister />} />
             <Route path="/recuperar-acesso" element={<AccountRecovery />} />
             <Route path="/verificar-conta" element={<VerifyAccount />} />
-            <Route path="/empresa/informacoes-basicas" element={<CompanyBasicInfo />} />
-            <Route path="/empresa/endereco" element={<CompanyAddress />} />
-            <Route path="/empresa/documentos" element={<CompanyDocuments />} />
-            <Route path="/empresa/revisao" element={<CompanyReview />} />
+            <Route path="/empresa/cadastro" element={<CompanyRegistration />} />
+            <Route path="/empresa/informacoes-basicas" element={<CompanyRegistration />} />
+            <Route path="/empresa/endereco" element={<CompanyRegistration />} />
+            <Route path="/empresa/documentos" element={<CompanyRegistration />} />
+            <Route path="/empresa/revisao" element={<CompanyRegistration />} />
             <Route path="/parceiros/dashboard" element={<PartnerDashboard />} />
             <Route path="/listLogo" element={<ListLogo />} />
             <Route path="/precos" element={<Pricing />} />
