@@ -113,4 +113,13 @@
     content: "";
     @apply absolute inset-0 -z-10 bg-primary/10 blur-xl transition-all duration-300;
   }
+  
+  /* Custom file input styling */
+  input[type="file"] {
+    @apply cursor-pointer;
+  }
+  
+  input[type="file"]::file-selector-button {
+    @apply mr-4 py-2 px-4 rounded-md border-0 text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-pointer;
+  }
 }

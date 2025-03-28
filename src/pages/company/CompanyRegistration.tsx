@@ -391,32 +391,39 @@ const CompanyRegistration = () => {
                   <h2 className="text-xl font-semibold text-gray-900">Documentos e Dados Bancários</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 gap-6 mb-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="businessLicense">Contrato Social / Certificado MEI *</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        id="businessLicense"
-                        type="file"
-                        onChange={(e) => handleFileChange('businessLicense', e)}
-                        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                      />
-                    </div>
+                <div className="grid grid-cols-1 gap-6 mb-8">
+                  <div className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <Label htmlFor="businessLicense" className="text-base">
+                      Contrato Social / Certificado MEI *
+                    </Label>
+                    <Input
+                      id="businessLicense"
+                      type="file"
+                      onChange={(e) => handleFileChange('businessLicense', e)}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-gray-500">
+                      Formatos aceitos: PDF, JPG, PNG (máx. 5MB)
+                    </p>
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="ownerDocument">Documento do Responsável (RG/CNH) *</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        id="ownerDocument"
-                        type="file"
-                        onChange={(e) => handleFileChange('ownerDocument', e)}
-                        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                      />
-                    </div>
+                  <div className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <Label htmlFor="ownerDocument" className="text-base">
+                      Documento do Responsável (RG/CNH) *
+                    </Label>
+                    <Input
+                      id="ownerDocument"
+                      type="file"
+                      onChange={(e) => handleFileChange('ownerDocument', e)}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-gray-500">
+                      Formatos aceitos: PDF, JPG, PNG (máx. 5MB)
+                    </p>
                   </div>
                 </div>
                 
+                <h3 className="text-lg font-medium text-gray-800 mb-4">Informações Bancárias</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="bank">Banco *</Label>
