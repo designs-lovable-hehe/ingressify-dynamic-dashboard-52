@@ -1,545 +1,431 @@
-import React, { useState } from "react";
+
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { GeometricBackground } from "@/components/GeometricBackground";
-import { Header } from "@/components/Header";
+import { Building2, MapPin, FileText, Send, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+import { GeometricBackground } from "@/components/GeometricBackground";
+import { CompanyRegistrationHeader } from "@/components/company/CompanyRegistrationHeader";
+import { FormSection } from "@/components/company/FormSection";
+import { FormField } from "@/components/company/FormField";
+import { AddressAutocomplete } from "@/components/company/AddressAutocomplete";
+import { FileUploader } from "@/components/company/FileUploader";
+import { CompanyReviewSection } from "@/components/company/CompanyReviewSection";
+import StepIndicator from "@/components/StepIndicator";
 import { toast } from "@/components/ui/use-toast";
-import { Building2, MapPin, FileText, CheckCircle2, ArrowRight, Upload } from "lucide-react";
-import { Footer } from "@/components/Footer";
+import { useToast } from "@/components/ui/use-toast";
 
 const CompanyRegistration = () => {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
+  const { toast } = useToast();
+  const [currentStep, setCurrentStep] = useState(1);
   
-  const [formData, setFormData] = useState({
-    companyName: "",
+  // Company data state
+  const [companyData, setCompanyData] = useState({
+    name: "",
     tradingName: "",
     cnpj: "",
-    email: "",
-    phone: "",
-    website: "",
-    description: "",
     segment: "",
-    
-    zipCode: "",
-    street: "",
-    number: "",
-    complement: "",
-    neighborhood: "",
-    city: "",
-    state: "",
-    
-    businessLicense: null,
-    ownerDocument: null,
-    bankDetails: {
-      bank: "",
-      agency: "",
-      account: "",
-      accountType: ""
+    description: "",
+    address: {
+      cep: "",
+      street: "",
+      number: "",
+      complement: "",
+      neighborhood: "",
+      city: "",
+      state: ""
     },
-    
-    termsAccepted: false,
-    privacyPolicyAccepted: false
+    contract: null,
+    addressProof: null,
+    termsAccepted: false
   });
-
-  const updateFormData = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const updateNestedFormData = (parent, field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [parent]: {
-        ...prev[parent],
-        [field]: value
+  
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  // Steps configuration
+  const steps = [
+    { number: 1, title: "Informações", description: "Dados da empresa" },
+    { number: 2, title: "Endereço", description: "Localização" },
+    { number: 3, title: "Documentos", description: "Comprovantes" },
+    { number: 4, title: "Revisão", description: "Finalização" },
+  ];
+  
+  // Update company data
+  const updateCompanyData = (data: any) => {
+    setCompanyData(prev => ({ ...prev, ...data }));
+    // Clear any errors for updated fields
+    const updatedErrors = { ...errors };
+    Object.keys(data).forEach(key => {
+      if (updatedErrors[key]) {
+        delete updatedErrors[key];
       }
-    }));
+    });
+    setErrors(updatedErrors);
   };
-
-  const handleFileChange = (field, e) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      updateFormData(field, file);
+  
+  // Basic validation for each step
+  const validateStep = (step: number) => {
+    let valid = true;
+    const newErrors: Record<string, string> = {};
+    
+    if (step === 1) {
+      if (!companyData.name.trim()) {
+        newErrors.name = "Nome da empresa é obrigatório";
+        valid = false;
+      }
+      
+      if (!companyData.cnpj.trim()) {
+        newErrors.cnpj = "CNPJ é obrigatório";
+        valid = false;
+      } else if (!/^\d{14}$/.test(companyData.cnpj.replace(/\D/g, ''))) {
+        newErrors.cnpj = "CNPJ inválido";
+        valid = false;
+      }
+      
+      if (!companyData.segment.trim()) {
+        newErrors.segment = "Segmento é obrigatório";
+        valid = false;
+      }
+    }
+    
+    if (step === 2) {
+      if (!companyData.address.cep || !companyData.address.street || !companyData.address.number || !companyData.address.city || !companyData.address.state) {
+        newErrors.address = "Todos os campos de endereço são obrigatórios";
+        valid = false;
+      }
+    }
+    
+    if (step === 3) {
+      if (!companyData.contract) {
+        newErrors.contract = "Contrato social é obrigatório";
+        valid = false;
+      }
+      
+      if (!companyData.addressProof) {
+        newErrors.addressProof = "Comprovante de endereço é obrigatório";
+        valid = false;
+      }
+    }
+    
+    setErrors(newErrors);
+    return valid;
+  };
+  
+  // Handle next step
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      if (currentStep < steps.length) {
+        setCurrentStep(currentStep + 1);
+        
+        // Show success toast
+        toast({
+          title: "Etapa concluída!",
+          description: `Informações salvas com sucesso.`,
+          variant: "default",
+        });
+      } else {
+        // Final submission
+        handleSubmit();
+      }
     }
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if (!formData.companyName || !formData.cnpj || !formData.email) {
-      toast({
-        title: "Campos obrigatórios",
-        description: "Preencha todos os campos obrigatórios para continuar.",
-        variant: "destructive",
-      });
-      return;
+  
+  // Handle prev step
+  const handlePrev = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
     }
-    
-    if (!formData.termsAccepted || !formData.privacyPolicyAccepted) {
-      toast({
-        title: "Termos e políticas",
-        description: "Você precisa aceitar os termos de uso e política de privacidade para continuar.",
-        variant: "destructive",
-      });
-      return;
+  };
+  
+  // Jump to specific step (for review edit)
+  const handleEditSection = (section: string) => {
+    switch(section) {
+      case 'basic':
+        setCurrentStep(1);
+        break;
+      case 'address':
+        setCurrentStep(2);
+        break;
+      case 'documents':
+        setCurrentStep(3);
+        break;
+      default:
+        break;
     }
+  };
+  
+  // Format CNPJ while typing
+  const formatCNPJ = (value: string) => {
+    // Remove non-numeric characters
+    const numericValue = value.replace(/\D/g, '');
     
-    setIsSubmitting(true);
+    // Format as CNPJ: XX.XXX.XXX/XXXX-XX
+    if (numericValue.length <= 2) {
+      return numericValue;
+    } else if (numericValue.length <= 5) {
+      return `${numericValue.slice(0, 2)}.${numericValue.slice(2)}`;
+    } else if (numericValue.length <= 8) {
+      return `${numericValue.slice(0, 2)}.${numericValue.slice(2, 5)}.${numericValue.slice(5)}`;
+    } else if (numericValue.length <= 12) {
+      return `${numericValue.slice(0, 2)}.${numericValue.slice(2, 5)}.${numericValue.slice(5, 8)}/${numericValue.slice(8)}`;
+    } else {
+      return `${numericValue.slice(0, 2)}.${numericValue.slice(2, 5)}.${numericValue.slice(5, 8)}/${numericValue.slice(8, 12)}-${numericValue.slice(12, 14)}`;
+    }
+  };
+  
+  // Handle CNPJ change
+  const handleCNPJChange = (value: string) => {
+    const formattedValue = formatCNPJ(value);
+    updateCompanyData({ cnpj: formattedValue });
+  };
+  
+  // Final submission
+  const handleSubmit = () => {
+    // Simulate API call
+    console.log("Submitting company data:", companyData);
     
+    // Show loading toast
+    toast({
+      title: "Enviando dados...",
+      description: "Aguarde enquanto processamos seu cadastro.",
+    });
+    
+    // Simulate API delay
     setTimeout(() => {
+      // Success toast
       toast({
-        title: "Cadastro enviado com sucesso!",
-        description: "Em breve entraremos em contato para confirmar seus dados.",
+        title: "Cadastro realizado com sucesso!",
+        description: "Sua empresa foi cadastrada. Você será redirecionado.",
         variant: "default",
       });
-      navigate("/parceiros/dashboard");
-      setIsSubmitting(false);
-    }, 1500);
-  };
-
-  const segments = [
-    { value: "entertainment", label: "Entretenimento" },
-    { value: "education", label: "Educação" },
-    { value: "technology", label: "Tecnologia" },
-    { value: "sports", label: "Esportes" },
-    { value: "culture", label: "Cultura" },
-    { value: "business", label: "Negócios" },
-    { value: "other", label: "Outro" }
-  ];
-
-  const states = [
-    { value: "AC", label: "Acre" },
-    { value: "AL", label: "Alagoas" },
-    { value: "AP", label: "Amapá" },
-    { value: "AM", label: "Amazonas" },
-    { value: "BA", label: "Bahia" },
-    { value: "CE", label: "Ceará" },
-    { value: "DF", label: "Distrito Federal" },
-    { value: "ES", label: "Espírito Santo" },
-    { value: "GO", label: "Goiás" },
-    { value: "MA", label: "Maranhão" },
-    { value: "MT", label: "Mato Grosso" },
-    { value: "MS", label: "Mato Grosso do Sul" },
-    { value: "MG", label: "Minas Gerais" },
-    { value: "PA", label: "Pará" },
-    { value: "PB", label: "Paraíba" },
-    { value: "PR", label: "Paraná" },
-    { value: "PE", label: "Pernambuco" },
-    { value: "PI", label: "Piauí" },
-    { value: "RJ", label: "Rio de Janeiro" },
-    { value: "RN", label: "Rio Grande do Norte" },
-    { value: "RS", label: "Rio Grande do Sul" },
-    { value: "RO", label: "Rondônia" },
-    { value: "RR", label: "Roraima" },
-    { value: "SC", label: "Santa Catarina" },
-    { value: "SP", label: "São Paulo" },
-    { value: "SE", label: "Sergipe" },
-    { value: "TO", label: "Tocantins" }
-  ];
-
-  const banks = [
-    { value: "001", label: "Banco do Brasil" },
-    { value: "104", label: "Caixa Econômica Federal" },
-    { value: "033", label: "Santander" },
-    { value: "341", label: "Itaú" },
-    { value: "237", label: "Bradesco" },
-    { value: "756", label: "Sicoob" },
-    { value: "077", label: "Inter" },
-    { value: "260", label: "Nubank" }
-  ];
-
-  const accountTypes = [
-    { value: "checking", label: "Conta Corrente" },
-    { value: "savings", label: "Conta Poupança" }
-  ];
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <GeometricBackground />
-      <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 text-center"
+      // Redirect after success
+      setTimeout(() => {
+        navigate("/parceiros/dashboard");
+      }, 2000);
+    }, 2000);
+  };
+  
+  // Render step content
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <FormSection 
+            title="Informações da Empresa" 
+            description="Preencha os dados básicos da sua empresa"
+            icon={<Building2 className="w-5 h-5" />}
           >
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Cadastro de Empresa Parceira</h1>
-            <p className="text-gray-600">
-              Preencha todos os dados abaixo para cadastrar sua empresa como parceira na plataforma
-            </p>
-          </motion.div>
-          
-          <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-10">
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Building2 className="h-6 w-6 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900">Informações da Empresa</h2>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="companyName">Nome da Empresa *</Label>
-                    <Input
-                      id="companyName"
-                      value={formData.companyName}
-                      onChange={(e) => updateFormData('companyName', e.target.value)}
-                      placeholder="Razão Social"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="tradingName">Nome Fantasia</Label>
-                    <Input
-                      id="tradingName"
-                      value={formData.tradingName}
-                      onChange={(e) => updateFormData('tradingName', e.target.value)}
-                      placeholder="Nome Fantasia"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="cnpj">CNPJ *</Label>
-                    <Input
-                      id="cnpj"
-                      value={formData.cnpj}
-                      onChange={(e) => updateFormData('cnpj', e.target.value)}
-                      placeholder="00.000.000/0000-00"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="segment">Segmento *</Label>
-                    <Select 
-                      value={formData.segment} 
-                      onValueChange={(value) => updateFormData('segment', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione um segmento" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {segments.map((segment) => (
-                          <SelectItem key={segment.value} value={segment.value}>
-                            {segment.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Corporativo *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => updateFormData('email', e.target.value)}
-                      placeholder="email@empresa.com"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Telefone *</Label>
-                    <Input
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData('phone', e.target.value)}
-                      placeholder="(00) 00000-0000"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="website">Site</Label>
-                    <Input
-                      id="website"
-                      value={formData.website}
-                      onChange={(e) => updateFormData('website', e.target.value)}
-                      placeholder="www.empresa.com.br"
-                    />
-                  </div>
-                  
-                  <div className="md:col-span-2 space-y-2">
-                    <Label htmlFor="description">Descrição da Empresa</Label>
-                    <Textarea
-                      id="description"
-                      value={formData.description}
-                      onChange={(e) => updateFormData('description', e.target.value)}
-                      placeholder="Conte um pouco sobre sua empresa e seus principais serviços"
-                      className="min-h-[100px]"
-                    />
-                  </div>
-                </div>
-              </section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                id="company-name"
+                label="Nome da Empresa"
+                placeholder="Razão social conforme CNPJ"
+                value={companyData.name}
+                onChange={(value) => updateCompanyData({ name: value })}
+                error={errors.name}
+                required
+                className="md:col-span-2"
+              />
               
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <MapPin className="h-6 w-6 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900">Endereço</h2>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="zipCode">CEP *</Label>
-                    <Input
-                      id="zipCode"
-                      value={formData.zipCode}
-                      onChange={(e) => updateFormData('zipCode', e.target.value)}
-                      placeholder="00000-000"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="street">Rua *</Label>
-                    <Input
-                      id="street"
-                      value={formData.street}
-                      onChange={(e) => updateFormData('street', e.target.value)}
-                      placeholder="Nome da rua"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="number">Número *</Label>
-                    <Input
-                      id="number"
-                      value={formData.number}
-                      onChange={(e) => updateFormData('number', e.target.value)}
-                      placeholder="123"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="complement">Complemento</Label>
-                    <Input
-                      id="complement"
-                      value={formData.complement}
-                      onChange={(e) => updateFormData('complement', e.target.value)}
-                      placeholder="Sala, andar, etc."
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="neighborhood">Bairro *</Label>
-                    <Input
-                      id="neighborhood"
-                      value={formData.neighborhood}
-                      onChange={(e) => updateFormData('neighborhood', e.target.value)}
-                      placeholder="Nome do bairro"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="city">Cidade *</Label>
-                    <Input
-                      id="city"
-                      value={formData.city}
-                      onChange={(e) => updateFormData('city', e.target.value)}
-                      placeholder="Nome da cidade"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="state">Estado *</Label>
-                    <Select 
-                      value={formData.state} 
-                      onValueChange={(value) => updateFormData('state', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione um estado" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {states.map((state) => (
-                          <SelectItem key={state.value} value={state.value}>
-                            {state.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </section>
+              <FormField
+                id="trading-name"
+                label="Nome Fantasia"
+                placeholder="Nome comercial (se diferente da razão social)"
+                value={companyData.tradingName}
+                onChange={(value) => updateCompanyData({ tradingName: value })}
+              />
               
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <FileText className="h-6 w-6 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900">Documentos e Dados Bancários</h2>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-6 mb-8">
-                  <div className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
-                    <Label htmlFor="businessLicense" className="text-base">
-                      Contrato Social / Certificado MEI *
-                    </Label>
-                    <Input
-                      id="businessLicense"
-                      type="file"
-                      onChange={(e) => handleFileChange('businessLicense', e)}
-                      className="w-full"
-                    />
-                    <p className="text-xs text-gray-500">
-                      Formatos aceitos: PDF, JPG, PNG (máx. 5MB)
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3 p-4 border border-gray-200 rounded-lg bg-gray-50">
-                    <Label htmlFor="ownerDocument" className="text-base">
-                      Documento do Responsável (RG/CNH) *
-                    </Label>
-                    <Input
-                      id="ownerDocument"
-                      type="file"
-                      onChange={(e) => handleFileChange('ownerDocument', e)}
-                      className="w-full"
-                    />
-                    <p className="text-xs text-gray-500">
-                      Formatos aceitos: PDF, JPG, PNG (máx. 5MB)
-                    </p>
-                  </div>
-                </div>
-                
-                <h3 className="text-lg font-medium text-gray-800 mb-4">Informações Bancárias</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="bank">Banco *</Label>
-                    <Select 
-                      value={formData.bankDetails.bank}
-                      onValueChange={(value) => updateNestedFormData('bankDetails', 'bank', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione um banco" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {banks.map((bank) => (
-                          <SelectItem key={bank.value} value={bank.value}>
-                            {bank.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="accountType">Tipo de Conta *</Label>
-                    <Select 
-                      value={formData.bankDetails.accountType}
-                      onValueChange={(value) => updateNestedFormData('bankDetails', 'accountType', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {accountTypes.map((type) => (
-                          <SelectItem key={type.value} value={type.value}>
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="agency">Agência *</Label>
-                    <Input
-                      id="agency"
-                      value={formData.bankDetails.agency}
-                      onChange={(e) => updateNestedFormData('bankDetails', 'agency', e.target.value)}
-                      placeholder="0000"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="account">Conta *</Label>
-                    <Input
-                      id="account"
-                      value={formData.bankDetails.account}
-                      onChange={(e) => updateNestedFormData('bankDetails', 'account', e.target.value)}
-                      placeholder="00000-0"
-                    />
-                  </div>
-                </div>
-              </section>
+              <FormField
+                id="cnpj"
+                label="CNPJ"
+                placeholder="XX.XXX.XXX/XXXX-XX"
+                value={companyData.cnpj}
+                onChange={handleCNPJChange}
+                error={errors.cnpj}
+                required
+              />
               
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <CheckCircle2 className="h-6 w-6 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900">Termos e Condições</h2>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <Checkbox 
-                      id="termsAccepted" 
-                      checked={formData.termsAccepted}
-                      onCheckedChange={(checked) => updateFormData('termsAccepted', Boolean(checked))}
-                    />
-                    <Label htmlFor="termsAccepted" className="text-sm leading-tight">
-                      Li e aceito os <a href="#" className="text-primary font-medium hover:underline">Termos de Uso</a> da plataforma Ingresso Nitro
-                    </Label>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <Checkbox 
-                      id="privacyPolicyAccepted" 
-                      checked={formData.privacyPolicyAccepted}
-                      onCheckedChange={(checked) => updateFormData('privacyPolicyAccepted', Boolean(checked))}
-                    />
-                    <Label htmlFor="privacyPolicyAccepted" className="text-sm leading-tight">
-                      Li e aceito a <a href="#" className="text-primary font-medium hover:underline">Política de Privacidade</a> da plataforma Ingresso Nitro
-                    </Label>
-                  </div>
-                </div>
-              </section>
+              <FormField
+                id="segment"
+                label="Segmento"
+                placeholder="Área de atuação da empresa"
+                value={companyData.segment}
+                onChange={(value) => updateCompanyData({ segment: value })}
+                error={errors.segment}
+                required
+              />
               
-              <div className="pt-6 flex justify-end">
-                <Button 
-                  type="submit" 
-                  className="bg-gradient-to-r from-primary to-accent text-white px-8 py-6 h-auto"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    "Processando..."
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      Enviar Cadastro
-                      <ArrowRight className="h-5 w-5" />
-                    </span>
-                  )}
-                </Button>
+              <FormField
+                id="description"
+                label="Descrição"
+                placeholder="Descreva brevemente sua empresa"
+                value={companyData.description}
+                onChange={(value) => updateCompanyData({ description: value })}
+                multiline
+                rows={4}
+                className="md:col-span-2"
+              />
+            </div>
+          </FormSection>
+        );
+        
+      case 2:
+        return (
+          <FormSection 
+            title="Endereço da Empresa" 
+            description="Informe o endereço completo da sua empresa"
+            icon={<MapPin className="w-5 h-5" />}
+          >
+            <AddressAutocomplete
+              value={companyData.address}
+              onChange={(address) => updateCompanyData({ address })}
+              error={errors.address}
+            />
+          </FormSection>
+        );
+        
+      case 3:
+        return (
+          <FormSection 
+            title="Documentação" 
+            description="Envie os documentos necessários para validação"
+            icon={<FileText className="w-5 h-5" />}
+          >
+            <div className="space-y-6">
+              <FileUploader
+                id="contract"
+                label="Contrato Social ou MEI"
+                acceptedFileTypes=".pdf,.jpg,.jpeg,.png"
+                maxFileSize={5}
+                value={companyData.contract}
+                onChange={(file) => updateCompanyData({ contract: file })}
+                error={errors.contract}
+                helpText="Arquivos em formato PDF, JPG ou PNG com tamanho máximo de 5MB"
+                required
+              />
+              
+              <FileUploader
+                id="address-proof"
+                label="Comprovante de Endereço"
+                acceptedFileTypes=".pdf,.jpg,.jpeg,.png"
+                maxFileSize={5}
+                value={companyData.addressProof}
+                onChange={(file) => updateCompanyData({ addressProof: file })}
+                error={errors.addressProof}
+                helpText="Conta de luz, água ou telefone dos últimos 3 meses"
+                required
+              />
+              
+              <div className="mt-4 flex items-center">
+                <input
+                  id="terms"
+                  type="checkbox"
+                  className="h-4 w-4 text-primary focus:ring-primary/50 border-gray-300 rounded"
+                  checked={companyData.termsAccepted}
+                  onChange={(e) => updateCompanyData({ termsAccepted: e.target.checked })}
+                />
+                <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+                  Declaro que as informações fornecidas são verdadeiras e que li e concordo com os{" "}
+                  <a href="#" className="text-primary hover:text-primary/80 font-medium">
+                    Termos e Condições
+                  </a>
+                </label>
               </div>
-            </form>
+            </div>
+          </FormSection>
+        );
+        
+      case 4:
+        return (
+          <CompanyReviewSection 
+            companyData={companyData}
+            onEdit={handleEditSection}
+          />
+        );
+        
+      default:
+        return null;
+    }
+  };
+  
+  // Page title and description based on current step
+  let stepTitle = "";
+  let stepDescription = "";
+  
+  switch (currentStep) {
+    case 1:
+      stepTitle = "Informações Básicas";
+      stepDescription = "Preencha os dados fundamentais da sua empresa";
+      break;
+    case 2:
+      stepTitle = "Endereço";
+      stepDescription = "Informe a localização da sua empresa";
+      break;
+    case 3:
+      stepTitle = "Documentação";
+      stepDescription = "Envie os documentos necessários para validação";
+      break;
+    case 4:
+      stepTitle = "Revisão Final";
+      stepDescription = "Confirme todos os dados antes de finalizar";
+      break;
+  }
+  
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <GeometricBackground />
+      
+      <div className="container mx-auto px-4 py-12 flex-1">
+        <CompanyRegistrationHeader 
+          currentStep={currentStep}
+          totalSteps={steps.length}
+          title={stepTitle}
+          subtitle={stepDescription}
+        />
+        
+        <StepIndicator currentStep={currentStep} steps={steps} />
+        
+        <div className="max-w-4xl mx-auto">
+          {renderStepContent()}
+          
+          <div className="flex justify-between mt-8">
+            {currentStep > 1 ? (
+              <Button
+                variant="outline"
+                onClick={handlePrev}
+                className="bg-white"
+              >
+                Voltar
+              </Button>
+            ) : (
+              <div></div>
+            )}
+            
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={handleNext}
+                className="bg-gradient-to-r from-primary to-accent text-white"
+              >
+                {currentStep < steps.length ? (
+                  <>
+                    Próximo
+                    <Send className="ml-2 h-4 w-4" />
+                  </>
+                ) : (
+                  <>
+                    Finalizar Cadastro
+                    <Check className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+            </motion.div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+      </div>
     </div>
   );
 };
