@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CompanyRegistrationHeader } from "@/components/company/CompanyRegistrationHeader";
@@ -27,7 +26,7 @@ const CompanyRegistration = () => {
       cep: "",
       street: "",
       number: "",
-      complement: "",
+      complement: "", // Changed from required to just an empty string
       neighborhood: "",
       city: "",
       state: ""
@@ -207,7 +206,10 @@ const CompanyRegistration = () => {
             <div className="space-y-8">
               <AddressAutocomplete
                 value={companyData.address}
-                onChange={(address) => setCompanyData({...companyData, address})}
+                onChange={(address) => setCompanyData({...companyData, address: {
+                  ...address,
+                  complement: address.complement || "" // Ensure complement is never undefined
+                }})}
               />
             </div>
           )}
