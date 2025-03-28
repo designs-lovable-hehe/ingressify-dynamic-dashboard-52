@@ -1,489 +1,553 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  Building2, 
-  MapPin, 
-  FileCheck, 
-  Save, 
-  Upload,
-  User,
-  Mail,
-  Phone,
-  Calendar
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import { GeometricBackground } from "@/components/GeometricBackground";
+import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "@/components/ui/use-toast";
+import { Building2, MapPin, FileText, CheckCircle2, ArrowRight, Upload } from "lucide-react";
+import { Footer } from "@/components/Footer";
 
 const CompanyRegistration = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Informações Básicas
-  const [companyName, setCompanyName] = useState("");
-  const [tradingName, setTradingName] = useState("");
-  const [description, setDescription] = useState("");
-  const [cnpj, setCnpj] = useState("");
-  const [foundedAt, setFoundedAt] = useState("");
-  
-  // Responsável
-  const [responsibleName, setResponsibleName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  
-  // Endereço
-  const [cep, setCep] = useState("");
-  const [street, setStreet] = useState("");
-  const [number, setNumber] = useState("");
-  const [complement, setComplement] = useState("");
-  const [neighborhood, setNeighborhood] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  
-  // Documentos
-  const [cnpjDoc, setCnpjDoc] = useState<File | null>(null);
-  const [contractDoc, setContractDoc] = useState<File | null>(null);
-  
-  // Tab atual
-  const [activeTab, setActiveTab] = useState("basic");
+  // Form data state
+  const [formData, setFormData] = useState({
+    // Basic Information
+    companyName: "",
+    tradingName: "",
+    cnpj: "",
+    email: "",
+    phone: "",
+    website: "",
+    description: "",
+    segment: "",
+    
+    // Address
+    zipCode: "",
+    street: "",
+    number: "",
+    complement: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+    
+    // Documents
+    businessLicense: null,
+    ownerDocument: null,
+    bankDetails: {
+      bank: "",
+      agency: "",
+      account: "",
+      accountType: ""
+    },
+    
+    // Terms
+    termsAccepted: false,
+    privacyPolicyAccepted: false
+  });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setFile: (file: File | null) => void) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+  // Handle form field changes
+  const updateFormData = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Handle nested object changes (e.g., bankDetails)
+  const updateNestedFormData = (parent, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [field]: value
+      }
+    }));
+  };
+
+  // Handle file upload
+  const handleFileChange = (field, e) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      updateFormData(field, file);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
     
-    if (!companyName || !tradingName || !cnpj || !street || !number || !neighborhood || !city || !state) {
+    // Validate form
+    if (!formData.companyName || !formData.cnpj || !formData.email) {
       toast({
+        title: "Campos obrigatórios",
+        description: "Preencha todos os campos obrigatórios para continuar.",
         variant: "destructive",
-        title: "Erro",
-        description: "Por favor, preencha todos os campos obrigatórios.",
-      });
-      return;
-    }
-
-    if (!cnpjDoc || !contractDoc) {
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Por favor, faça o upload de todos os documentos necessários.",
       });
       return;
     }
     
-    toast({
-      title: "Sucesso!",
-      description: "Cadastro da empresa finalizado com sucesso.",
-    });
+    if (!formData.termsAccepted || !formData.privacyPolicyAccepted) {
+      toast({
+        title: "Termos e políticas",
+        description: "Você precisa aceitar os termos de uso e política de privacidade para continuar.",
+        variant: "destructive",
+      });
+      return;
+    }
     
-    // Redirect to partner dashboard
-    navigate("/parceiros/dashboard");
+    setIsSubmitting(true);
+    
+    // Simulate API request
+    setTimeout(() => {
+      toast({
+        title: "Cadastro enviado com sucesso!",
+        description: "Em breve entraremos em contato para confirmar seus dados.",
+        variant: "default",
+      });
+      navigate("/parceiros/dashboard");
+      setIsSubmitting(false);
+    }, 1500);
   };
 
+  const segments = [
+    { value: "entertainment", label: "Entretenimento" },
+    { value: "education", label: "Educação" },
+    { value: "technology", label: "Tecnologia" },
+    { value: "sports", label: "Esportes" },
+    { value: "culture", label: "Cultura" },
+    { value: "business", label: "Negócios" },
+    { value: "other", label: "Outro" }
+  ];
+
+  const states = [
+    { value: "AC", label: "Acre" },
+    { value: "AL", label: "Alagoas" },
+    { value: "AP", label: "Amapá" },
+    { value: "AM", label: "Amazonas" },
+    { value: "BA", label: "Bahia" },
+    { value: "CE", label: "Ceará" },
+    { value: "DF", label: "Distrito Federal" },
+    { value: "ES", label: "Espírito Santo" },
+    { value: "GO", label: "Goiás" },
+    { value: "MA", label: "Maranhão" },
+    { value: "MT", label: "Mato Grosso" },
+    { value: "MS", label: "Mato Grosso do Sul" },
+    { value: "MG", label: "Minas Gerais" },
+    { value: "PA", label: "Pará" },
+    { value: "PB", label: "Paraíba" },
+    { value: "PR", label: "Paraná" },
+    { value: "PE", label: "Pernambuco" },
+    { value: "PI", label: "Piauí" },
+    { value: "RJ", label: "Rio de Janeiro" },
+    { value: "RN", label: "Rio Grande do Norte" },
+    { value: "RS", label: "Rio Grande do Sul" },
+    { value: "RO", label: "Rondônia" },
+    { value: "RR", label: "Roraima" },
+    { value: "SC", label: "Santa Catarina" },
+    { value: "SP", label: "São Paulo" },
+    { value: "SE", label: "Sergipe" },
+    { value: "TO", label: "Tocantins" }
+  ];
+
+  const banks = [
+    { value: "001", label: "Banco do Brasil" },
+    { value: "104", label: "Caixa Econômica Federal" },
+    { value: "033", label: "Santander" },
+    { value: "341", label: "Itaú" },
+    { value: "237", label: "Bradesco" },
+    { value: "756", label: "Sicoob" },
+    { value: "077", label: "Inter" },
+    { value: "260", label: "Nubank" }
+  ];
+
+  const accountTypes = [
+    { value: "checking", label: "Conta Corrente" },
+    { value: "savings", label: "Conta Poupança" }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 p-4 py-8">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-4xl mx-auto"
-      >
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
-          <div className="flex items-center gap-3 mb-6">
-            <Building2 className="w-8 h-8 text-primary" />
-            <div>
-              <h2 className="text-2xl font-bold">Cadastro de Empresa</h2>
-              <p className="text-gray-600">Complete todas as informações abaixo para finalizar o cadastro</p>
-            </div>
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <GeometricBackground />
+      <Header />
+      
+      <main className="flex-1 container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 text-center"
+          >
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Cadastro de Empresa Parceira</h1>
+            <p className="text-gray-600">
+              Preencha todos os dados abaixo para cadastrar sua empresa como parceira na plataforma
+            </p>
+          </motion.div>
           
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-            <TabsList className="grid grid-cols-4 w-full">
-              <TabsTrigger value="basic" className="flex items-center gap-1">
-                <Building2 className="w-4 h-4" />
-                <span className="hidden sm:inline">Informações</span>
-              </TabsTrigger>
-              <TabsTrigger value="responsible" className="flex items-center gap-1">
-                <User className="w-4 h-4" />
-                <span className="hidden sm:inline">Responsável</span>
-              </TabsTrigger>
-              <TabsTrigger value="address" className="flex items-center gap-1">
-                <MapPin className="w-4 h-4" />
-                <span className="hidden sm:inline">Endereço</span>
-              </TabsTrigger>
-              <TabsTrigger value="documents" className="flex items-center gap-1">
-                <FileCheck className="w-4 h-4" />
-                <span className="hidden sm:inline">Documentos</span>
-              </TabsTrigger>
-            </TabsList>
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <TabsContent value="basic" className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-xl p-8">
+            <form onSubmit={handleSubmit} className="space-y-10">
+              {/* Seção 1: Informações Básicas */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Building2 className="h-6 w-6 text-primary" />
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-900">Informações da Empresa</h2>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="companyName" className="text-sm font-medium text-gray-700">
-                      Razão Social <span className="text-red-500">*</span>
-                    </label>
+                    <Label htmlFor="companyName">Nome da Empresa *</Label>
                     <Input
                       id="companyName"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      placeholder="Razão social da empresa"
+                      value={formData.companyName}
+                      onChange={(e) => updateFormData('companyName', e.target.value)}
+                      placeholder="Razão Social"
                       required
                     />
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <label htmlFor="tradingName" className="text-sm font-medium text-gray-700">
-                      Nome Fantasia <span className="text-red-500">*</span>
-                    </label>
+                    <Label htmlFor="tradingName">Nome Fantasia</Label>
                     <Input
                       id="tradingName"
-                      value={tradingName}
-                      onChange={(e) => setTradingName(e.target.value)}
-                      placeholder="Nome fantasia da empresa"
-                      required
+                      value={formData.tradingName}
+                      onChange={(e) => updateFormData('tradingName', e.target.value)}
+                      placeholder="Nome Fantasia"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
                   <div className="space-y-2">
-                    <label htmlFor="cnpj" className="text-sm font-medium text-gray-700">
-                      CNPJ <span className="text-red-500">*</span>
-                    </label>
+                    <Label htmlFor="cnpj">CNPJ *</Label>
                     <Input
                       id="cnpj"
-                      value={cnpj}
-                      onChange={(e) => setCnpj(e.target.value)}
+                      value={formData.cnpj}
+                      onChange={(e) => updateFormData('cnpj', e.target.value)}
                       placeholder="00.000.000/0000-00"
                       required
                     />
                   </div>
                   
                   <div className="space-y-2">
-                    <label htmlFor="foundedAt" className="text-sm font-medium text-gray-700">
-                      Data de Fundação
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
-                      <Input
-                        id="foundedAt"
-                        type="date"
-                        value={foundedAt}
-                        onChange={(e) => setFoundedAt(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
+                    <Label htmlFor="segment">Segmento *</Label>
+                    <Select 
+                      value={formData.segment} 
+                      onValueChange={(value) => updateFormData('segment', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um segmento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {segments.map((segment) => (
+                          <SelectItem key={segment.value} value={segment.value}>
+                            {segment.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="description" className="text-sm font-medium text-gray-700">
-                    Descrição da Empresa <span className="text-red-500">*</span>
-                  </label>
-                  <Textarea
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Conte um pouco sobre sua empresa..."
-                    className="h-24"
-                    required
-                  />
-                </div>
-                
-                <div className="pt-4 flex justify-end">
-                  <Button 
-                    type="button" 
-                    onClick={() => setActiveTab("responsible")}
-                    className="bg-gradient-to-r from-primary to-primary/80"
-                  >
-                    Próxima Seção
-                  </Button>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="responsible" className="space-y-4">
-                <div className="space-y-2">
-                  <label htmlFor="responsibleName" className="text-sm font-medium text-gray-700">
-                    Nome do Responsável <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Corporativo *</Label>
                     <Input
-                      id="responsibleName"
-                      value={responsibleName}
-                      onChange={(e) => setResponsibleName(e.target.value)}
-                      className="pl-10"
-                      placeholder="Nome completo do responsável"
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateFormData('email', e.target.value)}
+                      placeholder="email@empresa.com"
                       required
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                    <Label htmlFor="phone">Telefone *</Label>
+                    <Input
+                      id="phone"
+                      value={formData.phone}
+                      onChange={(e) => updateFormData('phone', e.target.value)}
+                      placeholder="(00) 00000-0000"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="website">Site</Label>
+                    <Input
+                      id="website"
+                      value={formData.website}
+                      onChange={(e) => updateFormData('website', e.target.value)}
+                      placeholder="www.empresa.com.br"
+                    />
+                  </div>
+                  
+                  <div className="md:col-span-2 space-y-2">
+                    <Label htmlFor="description">Descrição da Empresa</Label>
+                    <Textarea
+                      id="description"
+                      value={formData.description}
+                      onChange={(e) => updateFormData('description', e.target.value)}
+                      placeholder="Conte um pouco sobre sua empresa e seus principais serviços"
+                      className="min-h-[100px]"
+                    />
+                  </div>
+                </div>
+              </section>
+              
+              {/* Seção 2: Endereço */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-900">Endereço</h2>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="zipCode">CEP *</Label>
+                    <Input
+                      id="zipCode"
+                      value={formData.zipCode}
+                      onChange={(e) => updateFormData('zipCode', e.target.value)}
+                      placeholder="00000-000"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="street">Rua *</Label>
+                    <Input
+                      id="street"
+                      value={formData.street}
+                      onChange={(e) => updateFormData('street', e.target.value)}
+                      placeholder="Nome da rua"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="number">Número *</Label>
+                    <Input
+                      id="number"
+                      value={formData.number}
+                      onChange={(e) => updateFormData('number', e.target.value)}
+                      placeholder="123"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="complement">Complemento</Label>
+                    <Input
+                      id="complement"
+                      value={formData.complement}
+                      onChange={(e) => updateFormData('complement', e.target.value)}
+                      placeholder="Sala, andar, etc."
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="neighborhood">Bairro *</Label>
+                    <Input
+                      id="neighborhood"
+                      value={formData.neighborhood}
+                      onChange={(e) => updateFormData('neighborhood', e.target.value)}
+                      placeholder="Nome do bairro"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="city">Cidade *</Label>
+                    <Input
+                      id="city"
+                      value={formData.city}
+                      onChange={(e) => updateFormData('city', e.target.value)}
+                      placeholder="Nome da cidade"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="state">Estado *</Label>
+                    <Select 
+                      value={formData.state} 
+                      onValueChange={(value) => updateFormData('state', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um estado" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {states.map((state) => (
+                          <SelectItem key={state.value} value={state.value}>
+                            {state.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </section>
+              
+              {/* Seção 3: Documentos e Informações Bancárias */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <FileText className="h-6 w-6 text-primary" />
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-900">Documentos e Dados Bancários</h2>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="businessLicense">Contrato Social / Certificado MEI *</Label>
+                    <div className="flex items-center gap-2">
                       <Input
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        placeholder="email@empresa.com"
-                        required
+                        id="businessLicense"
+                        type="file"
+                        onChange={(e) => handleFileChange('businessLicense', e)}
+                        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                       />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                      Telefone <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
+                    <Label htmlFor="ownerDocument">Documento do Responsável (RG/CNH) *</Label>
+                    <div className="flex items-center gap-2">
                       <Input
-                        id="phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="pl-10"
-                        placeholder="(00) 00000-0000"
-                        required
+                        id="ownerDocument"
+                        type="file"
+                        onChange={(e) => handleFileChange('ownerDocument', e)}
+                        className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                       />
                     </div>
                   </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="bank">Banco *</Label>
+                    <Select 
+                      value={formData.bankDetails.bank}
+                      onValueChange={(value) => updateNestedFormData('bankDetails', 'bank', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione um banco" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {banks.map((bank) => (
+                          <SelectItem key={bank.value} value={bank.value}>
+                            {bank.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="accountType">Tipo de Conta *</Label>
+                    <Select 
+                      value={formData.bankDetails.accountType}
+                      onValueChange={(value) => updateNestedFormData('bankDetails', 'accountType', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {accountTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="agency">Agência *</Label>
+                    <Input
+                      id="agency"
+                      value={formData.bankDetails.agency}
+                      onChange={(e) => updateNestedFormData('bankDetails', 'agency', e.target.value)}
+                      placeholder="0000"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="account">Conta *</Label>
+                    <Input
+                      id="account"
+                      value={formData.bankDetails.account}
+                      onChange={(e) => updateNestedFormData('bankDetails', 'account', e.target.value)}
+                      placeholder="00000-0"
+                    />
+                  </div>
+                </div>
+              </section>
+              
+              {/* Termos e Condições */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <CheckCircle2 className="h-6 w-6 text-primary" />
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-900">Termos e Condições</h2>
                 </div>
                 
-                <div className="pt-4 flex justify-between">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => setActiveTab("basic")}
-                  >
-                    Voltar
-                  </Button>
-                  <Button 
-                    type="button" 
-                    onClick={() => setActiveTab("address")}
-                    className="bg-gradient-to-r from-primary to-primary/80"
-                  >
-                    Próxima Seção
-                  </Button>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="address" className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="cep" className="text-sm font-medium text-gray-700">
-                      CEP <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="cep"
-                      value={cep}
-                      onChange={(e) => setCep(e.target.value)}
-                      placeholder="00000-000"
-                      required
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="termsAccepted" 
+                      checked={formData.termsAccepted}
+                      onCheckedChange={(checked) => updateFormData('termsAccepted', Boolean(checked))}
                     />
+                    <Label htmlFor="termsAccepted" className="text-sm leading-tight">
+                      Li e aceito os <a href="#" className="text-primary font-medium hover:underline">Termos de Uso</a> da plataforma Ingresso Nitro
+                    </Label>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="privacyPolicyAccepted" 
+                      checked={formData.privacyPolicyAccepted}
+                      onCheckedChange={(checked) => updateFormData('privacyPolicyAccepted', Boolean(checked))}
+                    />
+                    <Label htmlFor="privacyPolicyAccepted" className="text-sm leading-tight">
+                      Li e aceito a <a href="#" className="text-primary font-medium hover:underline">Política de Privacidade</a> da plataforma Ingresso Nitro
+                    </Label>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="col-span-2 space-y-2">
-                    <label htmlFor="street" className="text-sm font-medium text-gray-700">
-                      Rua <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="street"
-                      value={street}
-                      onChange={(e) => setStreet(e.target.value)}
-                      placeholder="Nome da rua"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="number" className="text-sm font-medium text-gray-700">
-                      Número <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="number"
-                      value={number}
-                      onChange={(e) => setNumber(e.target.value)}
-                      placeholder="123"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="complement" className="text-sm font-medium text-gray-700">
-                    Complemento
-                  </label>
-                  <Input
-                    id="complement"
-                    value={complement}
-                    onChange={(e) => setComplement(e.target.value)}
-                    placeholder="Apto 123, Bloco B (opcional)"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="neighborhood" className="text-sm font-medium text-gray-700">
-                    Bairro <span className="text-red-500">*</span>
-                  </label>
-                  <Input
-                    id="neighborhood"
-                    value={neighborhood}
-                    onChange={(e) => setNeighborhood(e.target.value)}
-                    placeholder="Nome do bairro"
-                    required
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="city" className="text-sm font-medium text-gray-700">
-                      Cidade <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="city"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      placeholder="Nome da cidade"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label htmlFor="state" className="text-sm font-medium text-gray-700">
-                      Estado <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="state"
-                      value={state}
-                      onChange={(e) => setState(e.target.value)}
-                      placeholder="UF"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-4 flex justify-between">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => setActiveTab("responsible")}
-                  >
-                    Voltar
-                  </Button>
-                  <Button 
-                    type="button" 
-                    onClick={() => setActiveTab("documents")}
-                    className="bg-gradient-to-r from-primary to-primary/80"
-                  >
-                    Próxima Seção
-                  </Button>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="documents" className="space-y-6">
-                <div className="space-y-6">
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary/50 transition-colors">
-                    <input
-                      type="file"
-                      id="cnpjDoc"
-                      className="hidden"
-                      onChange={(e) => handleFileChange(e, setCnpjDoc)}
-                      accept=".pdf,.jpg,.jpeg,.png"
-                    />
-                    <label
-                      htmlFor="cnpjDoc"
-                      className="cursor-pointer flex flex-col items-center gap-2"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Upload className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">
-                        {cnpjDoc ? cnpjDoc.name : "Cartão CNPJ"}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        Clique para fazer upload (PDF, JPG ou PNG)
-                      </span>
-                      {cnpjDoc && (
-                        <span className="text-xs text-emerald-500 font-semibold mt-2">
-                          ✓ Arquivo carregado
-                        </span>
-                      )}
-                    </label>
-                  </div>
-
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary/50 transition-colors">
-                    <input
-                      type="file"
-                      id="contractDoc"
-                      className="hidden"
-                      onChange={(e) => handleFileChange(e, setContractDoc)}
-                      accept=".pdf,.jpg,.jpeg,.png"
-                    />
-                    <label
-                      htmlFor="contractDoc"
-                      className="cursor-pointer flex flex-col items-center gap-2"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Upload className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-700">
-                        {contractDoc ? contractDoc.name : "Contrato Social"}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        Clique para fazer upload (PDF, JPG ou PNG)
-                      </span>
-                      {contractDoc && (
-                        <span className="text-xs text-emerald-500 font-semibold mt-2">
-                          ✓ Arquivo carregado
-                        </span>
-                      )}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="pt-4 flex justify-between">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => setActiveTab("address")}
-                  >
-                    Voltar
-                  </Button>
-                  <Button 
-                    type="submit"
-                    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white"
-                  >
-                    <Save className="w-4 h-4 mr-2" />
-                    Finalizar Cadastro
-                  </Button>
-                </div>
-              </TabsContent>
+              </section>
+              
+              {/* Botão Enviar */}
+              <div className="pt-6 flex justify-end">
+                <Button 
+                  type="submit" 
+                  className="bg-gradient-to-r from-primary to-accent text-white px-8 py-6 h-auto"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    "Processando..."
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      Enviar Cadastro
+                      <ArrowRight className="h-5 w-5" />
+                    </span>
+                  )}
+                </Button>
+              </div>
             </form>
-          </Tabs>
+          </div>
         </div>
-      </motion.div>
+      </main>
+      
+      <Footer />
     </div>
   );
 };
