@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import StepIndicator from "@/components/StepIndicator";
-import { VerificationModal } from "@/components/VerificationModal";
+import VerificationModal from "@/components/VerificationModal";
 
 const steps = [
   { number: 1, title: "Informações Básicas" },
@@ -26,9 +25,8 @@ const CompanyBasicInfo = () => {
   const [cnpj, setCnpj] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [email, setEmail] = useState("empresa@exemplo.com"); // For demo, typically would be from auth context
-  
-  // Field validation states
+  const [email, setEmail] = useState("empresa@exemplo.com");
+
   const [fieldStates, setFieldStates] = useState({
     companyName: { valid: false, touched: false },
     tradingName: { valid: false, touched: false },
@@ -36,7 +34,6 @@ const CompanyBasicInfo = () => {
     cnpj: { valid: false, touched: false },
   });
 
-  // Validation function
   const validateField = (field: string, value: string) => {
     let isValid = false;
     
@@ -51,7 +48,6 @@ const CompanyBasicInfo = () => {
         isValid = value.length >= 10;
         break;
       case 'cnpj':
-        // Basic CNPJ format validation (simplified)
         isValid = value.replace(/[^\d]/g, '').length === 14;
         break;
       default:
@@ -66,7 +62,6 @@ const CompanyBasicInfo = () => {
     return isValid;
   };
 
-  // Format CNPJ as user types
   const formatCnpj = (value: string) => {
     const numbers = value.replace(/\D/g, '');
     
@@ -89,7 +84,6 @@ const CompanyBasicInfo = () => {
     validateField('cnpj', formatted);
   };
 
-  // Check if form is valid
   const isFormValid = () => {
     return fieldStates.companyName.valid &&
       fieldStates.tradingName.valid &&
@@ -100,17 +94,14 @@ const CompanyBasicInfo = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate all fields
     const validCompanyName = validateField('companyName', companyName);
     const validTradingName = validateField('tradingName', tradingName);
     const validDescription = validateField('description', description);
     const validCnpj = validateField('cnpj', cnpj);
     
     if (validCompanyName && validTradingName && validDescription && validCnpj) {
-      // TODO: Save data to backend
       setFormSubmitted(true);
       
-      // Show success toast
       toast({
         title: "Informações salvas",
         description: "Seus dados foram salvos com sucesso!",
@@ -119,7 +110,7 @@ const CompanyBasicInfo = () => {
       
       setTimeout(() => {
         setShowModal(true);
-        // navigate("/empresa/endereco");
+        navigate("/empresa/endereco");
       }, 1000);
     } else {
       toast({
@@ -350,7 +341,6 @@ const CompanyBasicInfo = () => {
           </form>
         </div>
 
-        {/* Floating hint card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -371,7 +361,6 @@ const CompanyBasicInfo = () => {
         </motion.div>
       </motion.div>
 
-      {/* Verification Modal for next step */}
       <VerificationModal 
         isOpen={showModal}
         onClose={() => {
