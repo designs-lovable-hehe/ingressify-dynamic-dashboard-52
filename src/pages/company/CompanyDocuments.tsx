@@ -19,13 +19,13 @@ const CompanyDocuments = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [cnpjDoc, setCnpjDoc] = useState<File | null>(null);
-  const [contractDoc, setContractDoc] = useState<File | null>(null);
+  const [businessLicense, setBusinessLicense] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!cnpjDoc || !contractDoc) {
+    if (!cnpjDoc || !businessLicense) {
       toast({
         variant: "destructive",
         title: "Erro",
@@ -212,35 +212,35 @@ const CompanyDocuments = () => {
                 </div>
 
                 <div 
-                  className={`border-2 ${dragActive === 'contract' ? 'border-primary' : contractDoc ? 'border-green-400' : 'border-dashed border-gray-300'} 
-                  rounded-xl p-6 transition-all duration-300 ${contractDoc ? 'bg-green-50/50' : dragActive === 'contract' ? 'bg-primary/5' : 'bg-white/50'}`}
-                  onDragEnter={(e) => handleDragEnter(e, 'contract')}
+                  className={`border-2 ${dragActive === 'license' ? 'border-primary' : businessLicense ? 'border-green-400' : 'border-dashed border-gray-300'} 
+                  rounded-xl p-6 transition-all duration-300 ${businessLicense ? 'bg-green-50/50' : dragActive === 'license' ? 'bg-primary/5' : 'bg-white/50'}`}
+                  onDragEnter={(e) => handleDragEnter(e, 'license')}
                   onDragLeave={handleDragLeave}
                   onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, setContractDoc)}
+                  onDrop={(e) => handleDrop(e, setBusinessLicense)}
                 >
                   <input
                     type="file"
-                    id="contractDoc"
+                    id="businessLicense"
                     className="hidden"
-                    onChange={(e) => handleFileChange(e, setContractDoc)}
+                    onChange={(e) => handleFileChange(e, setBusinessLicense)}
                     accept=".pdf,.jpg,.jpeg,.png"
                   />
                   
                   <AnimatePresence mode="wait">
-                    {!contractDoc ? (
+                    {!businessLicense ? (
                       <motion.label
-                        key="upload-contract"
+                        key="upload-license"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        htmlFor="contractDoc"
+                        htmlFor="businessLicense"
                         className="cursor-pointer flex flex-col items-center gap-3"
                       >
                         <div className="p-3 rounded-full bg-primary/10">
                           <Upload className="w-6 h-6 text-primary" />
                         </div>
-                        <span className="text-base font-medium text-gray-700">Contrato Social</span>
+                        <span className="text-base font-medium text-gray-700">Alvará de Funcionamento</span>
                         <span className="text-sm text-gray-500 text-center">
                           Arraste e solte seu arquivo aqui, ou clique para selecionar
                         </span>
@@ -250,7 +250,7 @@ const CompanyDocuments = () => {
                       </motion.label>
                     ) : (
                       <motion.div
-                        key="file-contract"
+                        key="file-license"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="flex items-center justify-between"
@@ -260,9 +260,9 @@ const CompanyDocuments = () => {
                             <CheckCircle2 className="w-5 h-5 text-green-600" />
                           </div>
                           <div>
-                            <p className="font-medium text-gray-800">{contractDoc.name}</p>
+                            <p className="font-medium text-gray-800">{businessLicense.name}</p>
                             <p className="text-xs text-gray-500">
-                              {(contractDoc.size / 1024 / 1024).toFixed(2)} MB
+                              {(businessLicense.size / 1024 / 1024).toFixed(2)} MB
                             </p>
                           </div>
                         </div>
@@ -270,7 +270,7 @@ const CompanyDocuments = () => {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          onClick={() => removeFile(setContractDoc)}
+                          onClick={() => removeFile(setBusinessLicense)}
                           className="text-red-500 hover:text-red-700 hover:bg-red-50"
                         >
                           <X className="w-4 h-4" />

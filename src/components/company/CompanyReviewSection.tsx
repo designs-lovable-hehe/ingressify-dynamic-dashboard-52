@@ -180,9 +180,9 @@ export const CompanyReviewSection = ({
                 <FileText className="w-4 h-4 text-green-600" />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Comprovante de Endereço</p>
+                <p className="text-sm font-medium text-gray-900">Alvará de Funcionamento</p>
                 <p className="text-xs text-gray-500">
-                  {companyData.addressProof ? `${companyData.addressProof.name} (${companyData.addressProof.size} bytes)` : "Não enviado"}
+                  {companyData.businessLicense ? `${companyData.businessLicense.name} (${companyData.businessLicense.size} bytes)` : "Não enviado"}
                 </p>
               </div>
             </div>

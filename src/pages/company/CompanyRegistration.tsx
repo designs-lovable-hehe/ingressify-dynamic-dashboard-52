@@ -38,7 +38,7 @@ const CompanyRegistration = () => {
       state: ""
     },
     contract: null,
-    addressProof: null,
+    businessLicense: null,
     termsAccepted: false
   });
   
@@ -104,8 +104,8 @@ const CompanyRegistration = () => {
         valid = false;
       }
       
-      if (!companyData.addressProof) {
-        newErrors.addressProof = "Comprovante de endereço é obrigatório";
+      if (!companyData.businessLicense) {
+        newErrors.businessLicense = "Alvará de funcionamento é obrigatório";
         valid = false;
       }
     }
@@ -309,14 +309,14 @@ const CompanyRegistration = () => {
               />
               
               <FileUploader
-                id="address-proof"
-                label="Comprovante de Endereço"
+                id="business-license"
+                label="Alvará de Funcionamento"
                 acceptedFileTypes=".pdf,.jpg,.jpeg,.png"
                 maxFileSize={5}
-                value={companyData.addressProof}
-                onChange={(file) => updateCompanyData({ addressProof: file })}
-                error={errors.addressProof}
-                helpText="Conta de luz, água ou telefone dos últimos 3 meses"
+                value={companyData.businessLicense}
+                onChange={(file) => updateCompanyData({ businessLicense: file })}
+                error={errors.businessLicense}
+                helpText="Documento que comprova a autorização para funcionamento do estabelecimento"
                 required
               />
               
