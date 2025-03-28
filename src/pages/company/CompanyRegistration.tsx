@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +17,7 @@ const CompanyRegistration = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Form data state
   const [formData, setFormData] = useState({
-    // Basic Information
     companyName: "",
     tradingName: "",
     cnpj: "",
@@ -30,7 +27,6 @@ const CompanyRegistration = () => {
     description: "",
     segment: "",
     
-    // Address
     zipCode: "",
     street: "",
     number: "",
@@ -39,7 +35,6 @@ const CompanyRegistration = () => {
     city: "",
     state: "",
     
-    // Documents
     businessLicense: null,
     ownerDocument: null,
     bankDetails: {
@@ -49,12 +44,10 @@ const CompanyRegistration = () => {
       accountType: ""
     },
     
-    // Terms
     termsAccepted: false,
     privacyPolicyAccepted: false
   });
 
-  // Handle form field changes
   const updateFormData = (field, value) => {
     setFormData(prev => ({
       ...prev,
@@ -62,7 +55,6 @@ const CompanyRegistration = () => {
     }));
   };
 
-  // Handle nested object changes (e.g., bankDetails)
   const updateNestedFormData = (parent, field, value) => {
     setFormData(prev => ({
       ...prev,
@@ -73,7 +65,6 @@ const CompanyRegistration = () => {
     }));
   };
 
-  // Handle file upload
   const handleFileChange = (field, e) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -81,11 +72,9 @@ const CompanyRegistration = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Validate form
     if (!formData.companyName || !formData.cnpj || !formData.email) {
       toast({
         title: "Campos obrigatórios",
@@ -106,7 +95,6 @@ const CompanyRegistration = () => {
     
     setIsSubmitting(true);
     
-    // Simulate API request
     setTimeout(() => {
       toast({
         title: "Cadastro enviado com sucesso!",
@@ -194,7 +182,6 @@ const CompanyRegistration = () => {
           
           <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-10">
-              {/* Seção 1: Informações Básicas */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary/10 rounded-lg">
@@ -301,7 +288,6 @@ const CompanyRegistration = () => {
                 </div>
               </section>
               
-              {/* Seção 2: Endereço */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary/10 rounded-lg">
@@ -397,7 +383,6 @@ const CompanyRegistration = () => {
                 </div>
               </section>
               
-              {/* Seção 3: Documentos e Informações Bancárias */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary/10 rounded-lg">
@@ -406,7 +391,7 @@ const CompanyRegistration = () => {
                   <h2 className="text-xl font-semibold text-gray-900">Documentos e Dados Bancários</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 mb-6">
                   <div className="space-y-2">
                     <Label htmlFor="businessLicense">Contrato Social / Certificado MEI *</Label>
                     <div className="flex items-center gap-2">
@@ -430,7 +415,9 @@ const CompanyRegistration = () => {
                       />
                     </div>
                   </div>
-                  
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="bank">Banco *</Label>
                     <Select 
@@ -491,7 +478,6 @@ const CompanyRegistration = () => {
                 </div>
               </section>
               
-              {/* Termos e Condições */}
               <section>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-primary/10 rounded-lg">
@@ -525,7 +511,6 @@ const CompanyRegistration = () => {
                 </div>
               </section>
               
-              {/* Botão Enviar */}
               <div className="pt-6 flex justify-end">
                 <Button 
                   type="submit" 
